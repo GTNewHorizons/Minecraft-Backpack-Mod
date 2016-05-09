@@ -27,11 +27,17 @@ public class RecipeHelper {
             backpackStack = new ItemStack(ItemsBackpack.backpack, 1, 200);
             GameRegistry.addRecipe(backpackStack, "LLL", "L L", "LLL", 'L', ItemsBackpack.tannedLeather);
         }
+        
+        if(!ConfigurationBackpack.DISABLE_BIG_BACKPACKS && !ConfigurationBackpack.BIG_BY_UPGRADE_ONLY) {
+            // normal middle backpack without dye
+            backpackStack = new ItemStack(ItemsBackpack.backpack, 1, 100);
+            GameRegistry.addRecipe(backpackStack, "LLL", "LNL", "LLL", 'L', Items.leather, 'N', ItemsBackpack.backpack);
+        }
 
         String[] dyes = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown", "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray", "dyeGray", "dyePink", "dyeLime", "dyeYellow", "dyeLightBlue", "dyeMagenta",
                 "dyeOrange", "dyeWhite" };
 
-        // backpacks and big backpacks from black(0) to white(15)
+        // backpacks and big backpacks from black(0) to white(15) and added middle backpack dyes
         for(int i = 1; i < 17; i++) {
             if(!ConfigurationBackpack.DISABLE_BACKPACKS) {
                 // backpacks
@@ -43,6 +49,11 @@ public class RecipeHelper {
                 // big backpacks
                 backpackStack = new ItemStack(ItemsBackpack.backpack, 1, 200 + i);
                 GameRegistry.addRecipe(new ShapedOreRecipe(backpackStack, "LLL", "LDL", "LLL", 'L', ItemsBackpack.tannedLeather, 'D', dyes[i - 1]));
+            }
+            if(!ConfigurationBackpack.DISABLE_BIG_BACKPACKS && !ConfigurationBackpack.BIG_BY_UPGRADE_ONLY) {
+                // middle backpacks
+                backpackStack = new ItemStack(ItemsBackpack.backpack, 1, 100 + i);
+                GameRegistry.addRecipe(new ShapedOreRecipe(backpackStack, "   ", "MD ", "   ", 'M', new ItemStack(ItemsBackpack.backpack, 1, 100), 'D', dyes[i - 1]));
             }
         }
 
