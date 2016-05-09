@@ -65,6 +65,8 @@ public class BackpackSave extends AbstractSave {
                 size = 27;
             } else if(meta < 17 && tier == 2) { // big
                 size = ConfigurationBackpack.BACKPACK_SLOTS_L;
+            } else if(meta < 17 && tier == 1) { // Medium
+                size = ConfigurationBackpack.BACKPACK_SLOTS_M;
             } else if(meta < 17 && tier == 0) { // normal
                 size = ConfigurationBackpack.BACKPACK_SLOTS_S;
             } else if(meta == 17 && tier == 0) { // workbench

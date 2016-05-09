@@ -21,6 +21,7 @@ public class SlotCraftingAdvanced extends SlotCrafting {
     protected IInventory backpackInventory;
     protected ContainerWorkbenchBackpack eventHandler;
     protected World worldObj;
+    protected boolean realResult = false;
 
     public SlotCraftingAdvanced(EntityPlayer player, ContainerWorkbenchBackpack container, int slotIndex, int xPosition, int yPosition, IInventory[] inventories) {
         super(player, inventories[2], container.craftResult, slotIndex, xPosition, yPosition);

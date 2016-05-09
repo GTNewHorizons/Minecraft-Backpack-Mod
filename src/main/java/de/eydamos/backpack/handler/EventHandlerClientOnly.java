@@ -1,6 +1,6 @@
 package de.eydamos.backpack.handler;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.misc.ConfigurationBackpack;
@@ -37,10 +37,8 @@ public class EventHandlerClientOnly {
     }
 
     @SubscribeEvent
-    public void onConfigurationChanged(OnConfigChangedEvent event) {
-        if(event.modID.equals(Constants.MOD_ID)) {
-            ConfigurationBackpack.loadConfiguration();
-        }
+    public void onConfigurationChanged(ConfigChangedEvent event) {
+        ConfigurationBackpack.loadConfiguration();
     }
 
 }

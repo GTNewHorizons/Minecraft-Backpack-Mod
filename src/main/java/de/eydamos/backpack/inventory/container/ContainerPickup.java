@@ -15,13 +15,10 @@ public class ContainerPickup extends ContainerAdvanced {
         }
     }
 
-    public boolean pickupItem(ItemStack itemStack) {
+    public void pickupItem(ItemStack itemStack) {
         if(mergeItemStack(itemStack, 0, inventorySlots.size(), false)) {
             inventory.markDirty();
-            return true;
         }
-
-        return false;
     }
 
     @Override

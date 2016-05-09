@@ -42,7 +42,7 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         int remainingSlots = inventories[1].getSizeInventory();
         // backpack inventory
         for(int row = 0; row < inventoryRows; row++) {
-            int cols = remainingSlots >= slotsPerRow ? slotsPerRow : remainingSlots;
+            int cols = remainingSlots - slotsPerRow >= slotsPerRow ? slotsPerRow : remainingSlots;
             remainingSlots -= cols;
             if(cols * SLOT < maxWidth/* && !hasScrollbar */) {
                 x += (int) Math.round(maxWidth / 2. - cols * SLOT / 2.) + 1;

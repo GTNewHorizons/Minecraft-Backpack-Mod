@@ -1,10 +1,8 @@
 package de.eydamos.backpack.recipes;
 
-import de.eydamos.backpack.misc.Constants;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import de.eydamos.backpack.item.ItemsBackpack;
@@ -85,9 +83,5 @@ public class RecipeHelper {
 
         // intelligent workbench backpack
         GameRegistry.addRecipe(new RecipeIntelligentWorkbenchBackpack());
-
-        RecipeSorter.register(Constants.RECIPE_ENHANCE, RecipeEnhanceBackpack.class, RecipeSorter.Category.SHAPED, "");
-        RecipeSorter.register(Constants.RECIPE_INTELLIGENT, RecipeIntelligentWorkbenchBackpack.class, RecipeSorter.Category.SHAPELESS, "");
-        RecipeSorter.register(Constants.RECIPE_RECOLOR, RecipeRecolorBackpack.class, RecipeSorter.Category.SHAPELESS, "");
     }
 }

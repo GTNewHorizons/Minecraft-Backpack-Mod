@@ -1,7 +1,6 @@
 package de.eydamos.backpack.misc;
 
 import java.io.File;
-
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigurationBackpack {
@@ -10,6 +9,7 @@ public class ConfigurationBackpack {
     public static int ENDER_RECIPE;
     public static int BACKPACK_SLOTS_S;
     public static int BACKPACK_SLOTS_L;
+    public static int BACKPACK_SLOTS_M;
     public static int MAX_BACKPACK_AMOUNT;
     public static boolean RENDER_BACKPACK_MODEL;
     public static boolean OPEN_ONLY_PERSONAL_BACKPACK;
@@ -38,6 +38,10 @@ public class ConfigurationBackpack {
         BACKPACK_SLOTS_S = config.get(Configuration.CATEGORY_GENERAL, "backpackSlotsS", 27, getBackpackSlotComment()).getInt();
         if(BACKPACK_SLOTS_S < 1 || BACKPACK_SLOTS_S > 128) {
             BACKPACK_SLOTS_S = 27;
+        }
+        BACKPACK_SLOTS_M = config.get(Configuration.CATEGORY_GENERAL, "backpackSlotsM", 36, getBackpackSlotComment()).getInt();
+        if(BACKPACK_SLOTS_M < 1 || BACKPACK_SLOTS_M > 128) {
+            BACKPACK_SLOTS_M = 36;
         }
         BACKPACK_SLOTS_L = config.get(Configuration.CATEGORY_GENERAL, "backpackSlotsL", 54, getBackpackSlotComment()).getInt();
         if(BACKPACK_SLOTS_L < 1 || BACKPACK_SLOTS_L > 128) {

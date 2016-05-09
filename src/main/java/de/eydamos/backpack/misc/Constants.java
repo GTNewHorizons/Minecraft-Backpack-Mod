@@ -6,15 +6,12 @@ import de.eydamos.backpack.model.ModelBackpack;
 
 public class Constants {
     public static final String MOD_ID = "Backpack";
-    public static final String MOD_NAME = "Backpack";
-    public static final String MOD_VERSION = "2.0.1";
+    public static final String MOD_NAME = "Backpack Editted for ModdedNetwork";
+    public static final String MOD_VERSION = "2.2.0";
     public static final String FINGERPRINT = "@FINGERPRINT@";
 
     public static final String DOMAIN = "backpack";
-
-    public static final String RECIPE_ENHANCE = DOMAIN + ":enhanceBackpack";
-    public static final String RECIPE_INTELLIGENT = DOMAIN + ":intelligentWorkbench";
-    public static final String RECIPE_RECOLOR = DOMAIN + ":recolorBackpack";
+    public static final String CHANNEL = "BackpackChannel";
 
     public static final String CLASS_PROXY_CLIENT = "de.eydamos.backpack.proxy.ClientProxy";
     public static final String CLASS_PROXY_SERVER = "de.eydamos.backpack.proxy.ServerProxy";
