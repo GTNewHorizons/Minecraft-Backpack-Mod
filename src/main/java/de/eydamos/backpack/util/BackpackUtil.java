@@ -54,13 +54,17 @@ public class BackpackUtil {
             inventoryPickup.setInventoryContent(backpack);
 
             ContainerPickup container = new ContainerPickup(ItemBackpackBase.getInventory(backpack, entityPlayer), new BackpackSave(backpack));
+            boolean hasPickedUp = false;
             for(int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
                 ItemStack pickupItemStack = inventoryPickup.getStackInSlot(i);
                 if(areStacksEqual(pickupItemStack, itemStack, true)) {
-                    container.pickupItem(itemStack);
+                    hasPickedUp = container.pickupItem(itemStack) || hasPickedUp;
                 }
             }
-            container.onContainerClosed(entityPlayer);
+
+            if(hasPickedUp) {
+                container.onContainerClosed(entityPlayer);
+            }
         }
     }
 
@@ -137,9 +141,9 @@ public class BackpackUtil {
         int[] oreIdFirst = OreDictionary.getOreIDs(firstStack);
         int[] oreIdSecond = OreDictionary.getOreIDs(secondStack);
 
-        for(int a = 0; a < oreIdFirst.length; a++) {
-            for(int b = 0; b < oreIdSecond.length; b++) {
-                if(oreIdFirst[a] != oreIdSecond[b]) {
+        for(int a : oreIdFirst) {
+            for(int b : oreIdSecond) {
+                if(a == b) {
                     return true;
                 }
             }
