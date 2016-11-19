@@ -25,6 +25,27 @@ public class SlotBackpack extends Slot {
         if(is != null && is.getItem() instanceof ItemBackpackBase) {
             return false;
         }
+        
+        String[] forbiddenItemClasses = {
+            // Adventure Backpack 2
+            "com.darkona.adventurebackpack.item.ItemAdventureBackpack",
+            // Jabba Dolly
+            "mcp.mobius.betterbarrels.common.items.dolly.ItemBarrelMover",   
+            "mcp.mobius.betterbarrels.common.items.dolly.ItemDiamondMover",
+            // Forestry Backpacks, includes Railcraft and MagicBees addons
+            "forestry.storage.items.ItemBackpack",
+            "forestry.storage.items.ItemBackpackNaturalist"
+            // Backpack Mod
+            //"de.eydamos.backpack.item.ItemBackpack",
+            //"de.eydamos.backpack.item.ItemWorkbenchBackpack"
+            };
+        
+        Item item = is.getItem();
+        
+        for (String itemClass : forbiddenItemClasses) {
+        	if (item.getClass().getName() == (itemClass)) return false;	
+        }
+
         // check for disallowedItems
         String[] disallowedItems = ConfigurationBackpack.DISALLOW_ITEMS.split(",");
         for(String disallowedItem : disallowedItems) {
