@@ -1,17 +1,16 @@
 package de.eydamos.backpack.handler;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent;
+import java.util.HashMap;
+
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.eydamos.backpack.Backpack;
-import de.eydamos.backpack.misc.ConfigurationBackpack;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.network.message.MessagePersonalBackpack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Pre;
-import org.lwjgl.opengl.GL11;
-
-import java.util.HashMap;
 
 public class EventHandlerClientOnly {
     public static HashMap<String, Integer> backpackDamage = new HashMap<String, Integer>();
@@ -35,10 +34,4 @@ public class EventHandlerClientOnly {
             GL11.glPopMatrix();
         }
     }
-
-    @SubscribeEvent
-    public void onConfigurationChanged(ConfigChangedEvent event) {
-        ConfigurationBackpack.loadConfiguration();
-    }
-
 }
