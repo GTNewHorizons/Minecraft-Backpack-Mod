@@ -1,14 +1,11 @@
 package de.eydamos.backpack.helper;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.factory.FactoryBackpack;
 import de.eydamos.backpack.gui.GuiBackpackRename;
+import de.eydamos.backpack.misc.ConfigurationBackpack;
 import de.eydamos.backpack.network.message.MessageGuiCommand;
 import de.eydamos.backpack.network.message.MessageOpenBackpack;
 import de.eydamos.backpack.network.message.MessageOpenGui;
@@ -16,6 +13,10 @@ import de.eydamos.backpack.network.message.MessageOpenPersonalSlot;
 import de.eydamos.backpack.network.message.MessageRenameBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 
 public class GuiHelper {
     @SideOnly(Side.CLIENT)
@@ -24,6 +25,9 @@ public class GuiHelper {
     }
 
     public static void displayBackpack(BackpackSave backpackSave, IInventory inventory, EntityPlayerMP entityPlayer) {
+
+        if (!isDimensionAllowed(entityPlayer)) return;
+
         prepare(entityPlayer);
 
         MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
@@ -34,6 +38,9 @@ public class GuiHelper {
     }
 
     public static void displayPersonalSlot(EntityPlayerMP entityPlayer) {
+
+        if (!isDimensionAllowed(entityPlayer)) return;
+
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         playerSave.setType((byte) -1);
 
@@ -44,6 +51,14 @@ public class GuiHelper {
 
         Container container = FactoryBackpack.getContainer(playerSave, new IInventory[] { entityPlayer.inventory }, entityPlayer);
         openContainer(container, entityPlayer);
+    }
+
+    private static boolean isDimensionAllowed (EntityPlayerMP entityPlayer) {
+        Integer currentDimID = (entityPlayer.worldObj.provider.dimensionId);
+        for (String id : ConfigurationBackpack.FORBIDDEN_DIMENSIONS) {
+            if (id.equals(currentDimID.toString())) return false;
+        }
+        return true;
     }
 
     @SideOnly(Side.CLIENT)
