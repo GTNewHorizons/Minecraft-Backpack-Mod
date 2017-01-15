@@ -21,7 +21,8 @@ public class ConfigurationBackpack {
     public static boolean DISABLE_WORKBENCH_BACKPACKS;
     public static boolean BIG_BY_UPGRADE_ONLY;
     public static String[] DISALLOW_ITEM_IDS;
-    public static String[] DEFAULT_ITEM_IDS = {};
+    public static String[] FORBIDDEN_DIMENSIONS;
+    public static String[] DEFAULT_IDS = {};
 
     public static boolean NEISupport = false;
 
@@ -62,7 +63,8 @@ public class ConfigurationBackpack {
         DISABLE_WORKBENCH_BACKPACKS = config.get(Configuration.CATEGORY_GENERAL, "disableWorkbenchBackpack", false, getDisableWorkbenchBackpacksComment()).getBoolean(false);
         BIG_BY_UPGRADE_ONLY = config.get(Configuration.CATEGORY_GENERAL, "bigByUpgradeOnly", false, getBigByUpgradeOnlyComment()).getBoolean(false);
 
-        DISALLOW_ITEM_IDS = config.get(Configuration.CATEGORY_GENERAL, "disallowItems", DEFAULT_ITEM_IDS, getDisallowItemsComment()).getStringList();
+        DISALLOW_ITEM_IDS = config.get(Configuration.CATEGORY_GENERAL, "disallowItems", DEFAULT_IDS, getDisallowItemsComment()).getStringList();
+        FORBIDDEN_DIMENSIONS = config.get(Configuration.CATEGORY_GENERAL, "forbiddenDimensions", DEFAULT_IDS, getForbiddenDimensionsComment()).getStringList();
 
         if(config.hasChanged()) {
             config.save();
@@ -116,4 +118,9 @@ public class ConfigurationBackpack {
     private static String getDisallowItemsComment() {
         return "##############\n" + "Example:\n" + "disallowItems: minecraft:dirt\n\n" + "This will disallow dirt in backpacks.\n" + "##############";
     }
+    
+    private static String getForbiddenDimensionsComment() {
+        return "##############\n" + "Example:\n" + "forbiddenDimensions: 0\n\n" + "This will disallow backpacks inventory for Overworld (id = 0).\n" + "##############";
+    }
+    
 }
