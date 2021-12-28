@@ -5,8 +5,8 @@ import net.minecraft.util.ResourceLocation;
 import de.eydamos.backpack.model.ModelBackpack;
 
 public class Constants {
-    public static final String MOD_ID = "GRADLETOKEN_MODID";
-    public static final String MOD_NAME = "GRADLETOKEN_MODNAME";
+    public static final String MOD_ID = "Backpack";
+    public static final String MOD_NAME = "Backpack";
     public static final String MOD_VERSION = "GRADLETOKEN_VERSION";
     public static final String FINGERPRINT = "";
 
