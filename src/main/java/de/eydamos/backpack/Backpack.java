@@ -1,13 +1,9 @@
 package de.eydamos.backpack;
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLFingerprintViolationEvent;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -20,7 +16,7 @@ import de.eydamos.backpack.network.PacketHandlerBackpack;
 import de.eydamos.backpack.proxy.CommonProxy;
 import de.eydamos.backpack.recipes.RecipeHelper;
 
-@Mod(modid = Constants.MOD_ID, name = Constants.MOD_NAME, version = Constants.MOD_VERSION, certificateFingerprint = Constants.FINGERPRINT, guiFactory = Constants.CLASS_GUI_FACTORY)
+@Mod(modid = Constants.MOD_ID, name = Constants.MOD_NAME, version = Constants.MOD_VERSION, guiFactory = Constants.CLASS_GUI_FACTORY)
 public class Backpack {
     @Instance(Constants.MOD_ID)
     public static Backpack instance;
@@ -32,15 +28,6 @@ public class Backpack {
     public static SaveFileHandler saveFileHandler = new SaveFileHandler();
 
     public static boolean valid = true;
-
-    @EventHandler
-    public void invalidFingerprint(FMLFingerprintViolationEvent event) {
-        if(!Constants.FINGERPRINT.equals("@FINGERPRINT@")) {
-            valid = false;
-
-            FMLLog.log(Constants.MOD_ID, Level.ERROR, "Invalid fingerprint someone has changed the mod. Please redownload from the forum.");
-        }
-    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
