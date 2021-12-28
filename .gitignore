@@ -1,10 +1,30 @@
-# folder
-/.gradle/
+.gradle
+.settings
+/.idea/
+/run/
+/build/
 /eclipse/
+.classpath
+.project
+/bin/
+/config/
+/crash-reports/
+/logs/
+options.txt
+/saves/
+usernamecache.json
+banned-ips.json
+banned-players.json
+eula.txt
+ops.json
+server.properties
+servers.dat
+usercache.json
+whitelist.json
 /out/
-
-# project files
 *.iml
 *.ipr
 *.iws
-.idea
+src/main/resources/mixins.*.json
+*.bat
+.DS_Store
