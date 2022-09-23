@@ -70,7 +70,7 @@ public class ConfigurationBackpack {
 
 
         ///
-        PLAY_OPEN_SOUND = config.get(Configuration.CATEGORY_GENERAL, "playSound", false, getPlaySoundComment()).getBoolean(true);
+        PLAY_OPEN_SOUND = config.get(Configuration.CATEGORY_GENERAL, "playSound", true, getPlaySoundComment()).getBoolean(true);
 
 
         if(config.hasChanged()) {
