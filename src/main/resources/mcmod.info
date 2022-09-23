@@ -1,12 +1,12 @@
 [
 {
-  "modid": "Backpack",
-  "name": "Backpack",
+  "modid": "${modId}",
+  "name": "${modName}",
   "description": "Provides the player with multiple, colored backpacks, which each has the space of a normal chest.",
-  "version": "${version}",
+  "version": "${modVersion}",
   "credits": "(Backpacks *-1.2.5)MightyPork, (Icons)Simsala123 and SentientXIII, (Model)Ivanovsky",
   "logoFile": "",
-  "mcversion": "1.7.x",
+  "mcversion": "${minecraftVersion}",
   "url": "http://www.minecraftforum.net/topic/1492661-",
   "updateUrl": "",
   "authors": ["Eydamos"],

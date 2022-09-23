@@ -10,6 +10,8 @@ public class Constants {
     public static final String MOD_VERSION = "2.2.1";
     public static final String FINGERPRINT = "@FINGERPRINT@";
 
+
+
     public static final String DOMAIN = "backpack";
     public static final String CHANNEL = "BackpackChannel";
 
