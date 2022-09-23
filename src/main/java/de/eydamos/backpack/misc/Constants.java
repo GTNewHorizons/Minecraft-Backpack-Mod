@@ -1,13 +1,13 @@
 package de.eydamos.backpack.misc;
 
+import de.eydamos.backpack.model.ModelBackpackL;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.util.ResourceLocation;
-import de.eydamos.backpack.model.ModelBackpack;
 
 public class Constants {
     public static final String MOD_ID = "Backpack";
     public static final String MOD_NAME = "Backpack Editted for ModdedNetwork";
-    public static final String MOD_VERSION = "2.2.0";
+    public static final String MOD_VERSION = "2.2.1";
     public static final String FINGERPRINT = "@FINGERPRINT@";
 
     public static final String DOMAIN = "backpack";
@@ -22,8 +22,7 @@ public class Constants {
     public static final ResourceLocation guiCombined = new ResourceLocation(DOMAIN, "textures/gui/guiCombined.png");
     public static final ResourceLocation modelTexture = new ResourceLocation(DOMAIN, "textures/model/backpack.png");
 
-    public static final ModelBiped model = new ModelBackpack();
-
+ 
     public class Guis {
         public static final byte OPEN_PERSONAL_BACKPACK = 0;
         public static final byte OPEN_PERSONAL_SLOT = 1;
@@ -53,6 +52,7 @@ public class Constants {
         public static final String INTELLIGENT = "intelligent";
         public static final String TYPE = "type";
         public static final String PERSONAL_BACKPACK_OPEN = "personalBackpackOpen";
+        public static final String PERSONAL_BACKPACK_META = "pBackpackMeta";
     }
 
     public class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {}

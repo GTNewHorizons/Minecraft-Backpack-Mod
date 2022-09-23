@@ -25,6 +25,7 @@ public class ConfigurationBackpack {
     public static String[] DEFAULT_IDS = {};
 
     public static boolean NEISupport = false;
+    public static boolean PLAY_OPEN_SOUND = false;
 
     public static void init(File configFile) {
         if(config == null) {
@@ -65,6 +66,12 @@ public class ConfigurationBackpack {
 
         DISALLOW_ITEM_IDS = config.get(Configuration.CATEGORY_GENERAL, "disallowItems", DEFAULT_IDS, getDisallowItemsComment()).getStringList();
         FORBIDDEN_DIMENSIONS = config.get(Configuration.CATEGORY_GENERAL, "forbiddenDimensions", DEFAULT_IDS, getForbiddenDimensionsComment()).getStringList();
+
+
+
+        ///
+        PLAY_OPEN_SOUND = config.get(Configuration.CATEGORY_GENERAL, "playSound", false, getPlaySoundComment()).getBoolean(true);
+
 
         if(config.hasChanged()) {
             config.save();
@@ -121,6 +128,10 @@ public class ConfigurationBackpack {
     
     private static String getForbiddenDimensionsComment() {
         return "##############\n" + "Example:\n" + "forbiddenDimensions: 0\n\n" + "This will disallow backpacks inventory for Overworld (id = 0).\n" + "##############";
+    }
+
+    private static String getPlaySoundComment() {
+        return "##############\n" + "If true backpack will play opening sound effect\n" + "##############";
     }
     
 }
