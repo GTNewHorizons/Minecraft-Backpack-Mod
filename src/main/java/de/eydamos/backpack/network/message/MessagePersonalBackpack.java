@@ -8,7 +8,10 @@ import de.eydamos.backpack.handler.EventHandlerClientOnly;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+
+import java.util.UUID;
 
 public class MessagePersonalBackpack implements IMessage, IMessageHandler<MessagePersonalBackpack, IMessage> {
     protected String playerUUID = "";
@@ -41,6 +44,7 @@ public class MessagePersonalBackpack implements IMessage, IMessageHandler<Messag
     public IMessage onMessage(MessagePersonalBackpack message, MessageContext ctx) {
         IMessage returnMessage = null;
         if(BackpackUtil.isServerSide()) {
+
             PlayerSave playerSave = new PlayerSave(message.playerUUID);
             ItemStack backpack = playerSave.getPersonalBackpack();
             if(backpack != null) {
@@ -49,7 +53,8 @@ public class MessagePersonalBackpack implements IMessage, IMessageHandler<Messag
                 returnMessage = new MessagePersonalBackpack(message.playerUUID);
             }
         } else {
-            EventHandlerClientOnly.backpackDamage.put(message.playerUUID, message.backpackDamage);
+            //Client
+            EventHandlerClientOnly.updateTag(message.playerUUID , message.backpackDamage);
         }
         return returnMessage;
     }

@@ -13,6 +13,7 @@ import de.eydamos.backpack.network.message.MessageOpenPersonalSlot;
 import de.eydamos.backpack.network.message.MessageRenameBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
+import de.eydamos.backpack.util.BackpackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
@@ -35,6 +36,11 @@ public class GuiHelper {
 
         Container container = FactoryBackpack.getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
         openContainer(container, entityPlayer);
+
+        BackpackUtil.playOpenSound(entityPlayer);
+
+
+
     }
 
     public static void displayPersonalSlot(EntityPlayerMP entityPlayer) {

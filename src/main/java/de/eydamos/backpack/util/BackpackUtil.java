@@ -1,7 +1,13 @@
 package de.eydamos.backpack.util;
 
+import java.awt.*;
 import java.util.UUID;
 
+import de.eydamos.backpack.Backpack;
+import de.eydamos.backpack.misc.ConfigurationBackpack;
+import net.minecraft.client.renderer.entity.RenderSheep;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +24,24 @@ import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 
 public class BackpackUtil {
+
+
+
+
+
+    public static void playOpenSound(Entity ent) {
+
+        if(ConfigurationBackpack.PLAY_OPEN_SOUND){
+            String soundName = Constants.MOD_ID + ":OpenBackpack";
+            float volume = 0.7f;
+            float maxSpeed = 0.2f;
+            float minSpeed = 0.9f;
+            ent.worldObj.playSoundAtEntity(ent, soundName, volume, (float) ((Math.random() * maxSpeed) + minSpeed));
+
+        }
+
+    }
+
     public static boolean isEnderBackpack(ItemStack itemStack) {
         return itemStack != null && itemStack.getItemDamage() == ItemsBackpack.ENDERBACKPACK;
     }
