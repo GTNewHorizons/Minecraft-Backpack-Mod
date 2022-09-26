@@ -1,5 +1,3 @@
 package de.eydamos.guiadvanced.part;
 
-public class BrewingStand {
-
-}
+public class BrewingStand {}

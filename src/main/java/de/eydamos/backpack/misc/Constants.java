@@ -1,13 +1,11 @@
 package de.eydamos.backpack.misc;
 
-import de.eydamos.backpack.model.ModelBackpackL;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.util.ResourceLocation;
 
 public class Constants {
     public static final String MOD_ID = "Backpack";
     public static final String MOD_NAME = "Backpack Editted for ModdedNetwork";
-	 public static final String MOD_VERSION = "GRADLETOKEN_VERSION";
+    public static final String MOD_VERSION = "GRADLETOKEN_VERSION";
 
     public static final String DOMAIN = "backpack";
     public static final String CHANNEL = "BackpackChannel";
@@ -21,7 +19,6 @@ public class Constants {
     public static final ResourceLocation guiCombined = new ResourceLocation(DOMAIN, "textures/gui/guiCombined.png");
     public static final ResourceLocation modelTexture = new ResourceLocation(DOMAIN, "textures/model/backpack.png");
 
- 
     public class Guis {
         public static final byte OPEN_PERSONAL_BACKPACK = 0;
         public static final byte OPEN_PERSONAL_SLOT = 1;

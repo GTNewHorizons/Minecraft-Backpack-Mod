@@ -15,7 +15,7 @@ public class GuiAdvanced extends ContainerWindow {
     protected void keyTyped(char charTyped, int keyCode) {
         super.keyTyped(charTyped, keyCode);
 
-        if(KeyInputHandler.personalBackpack.getKeyCode() == keyCode) {
+        if (KeyInputHandler.personalBackpack.getKeyCode() == keyCode) {
             mc.thePlayer.closeScreen();
         }
     }

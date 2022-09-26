@@ -12,12 +12,12 @@ import net.minecraftforge.common.config.Configuration;
 public class GuiConfiguration extends GuiConfig {
     public GuiConfiguration(GuiScreen guiScreen) {
         super(
-            guiScreen,
-            new ConfigElement(ConfigurationBackpack.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(),
-            Constants.MOD_ID,
-            false,
-            false,
-            I18n.format(Localizations.LABEL_BACKPACK_CONFIG)
-        );
+                guiScreen,
+                new ConfigElement(ConfigurationBackpack.config.getCategory(Configuration.CATEGORY_GENERAL))
+                        .getChildElements(),
+                Constants.MOD_ID,
+                false,
+                false,
+                I18n.format(Localizations.LABEL_BACKPACK_CONFIG));
     }
 }

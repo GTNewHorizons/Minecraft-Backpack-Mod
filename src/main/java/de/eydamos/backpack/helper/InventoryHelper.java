@@ -1,16 +1,16 @@
 package de.eydamos.backpack.helper;
 
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.saves.BackpackSave;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.saves.BackpackSave;
 
 public class InventoryHelper {
     /**
      * This method will read the ItemStacks from the given ItemStack's
      * NBTCompount with the given key and load them into the given inventory.
-     * 
+     *
      * @param backpackSave
      *            The BackpackSave with the NBTCompound to read from.
      * @param name
@@ -25,7 +25,7 @@ public class InventoryHelper {
     /**
      * This method will read the ItemStacks from the given ItemStack's
      * NBTCompount with the given key and load them into the given inventory.
-     * 
+     *
      * @param backpackSave
      *            The BackpackSave with the NBTCompound to read from.
      * @param inventoryName
@@ -35,19 +35,20 @@ public class InventoryHelper {
      * @param clearInventory
      *            If the inventory should be cleared before reading the content.
      */
-    public static void readInventory(BackpackSave backpackSave, String inventoryName, ItemStack[] inventory, boolean clearInventory) {
-        if(clearInventory) {
-            for(int i = 0; i < inventory.length; i++) {
+    public static void readInventory(
+            BackpackSave backpackSave, String inventoryName, ItemStack[] inventory, boolean clearInventory) {
+        if (clearInventory) {
+            for (int i = 0; i < inventory.length; i++) {
                 inventory[i] = null;
             }
         }
 
         NBTTagList inventoryList = backpackSave.getInventory(inventoryName);
-        for(int i = 0; i < inventoryList.tagCount(); i++) {
+        for (int i = 0; i < inventoryList.tagCount(); i++) {
             NBTTagCompound slotEntry = inventoryList.getCompoundTagAt(i);
             int slot = slotEntry.getByte(Constants.NBT.SLOT) & 0xff;
 
-            if(slot >= 0 && slot < inventory.length) {
+            if (slot >= 0 && slot < inventory.length) {
                 inventory[slot] = ItemStack.loadItemStackFromNBT(slotEntry);
             }
         }
@@ -56,7 +57,7 @@ public class InventoryHelper {
     /**
      * Will save the ItemStacks from the given Inventory in the NBTCompound of
      * the given ItemStack under the given key.
-     * 
+     *
      * @param backpackSave
      *            The backpackSave to write on.
      * @param inventoryName
@@ -66,8 +67,8 @@ public class InventoryHelper {
      */
     public static void writeInventory(BackpackSave backpackSave, String inventoryName, ItemStack[] inventory) {
         NBTTagList inventoryList = new NBTTagList();
-        for(int i = 0; i < inventory.length; i++) {
-            if(inventory[i] != null) {
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null) {
                 NBTTagCompound slotEntry = new NBTTagCompound();
                 slotEntry.setByte(Constants.NBT.SLOT, (byte) i);
                 inventory[i].writeToNBT(slotEntry);

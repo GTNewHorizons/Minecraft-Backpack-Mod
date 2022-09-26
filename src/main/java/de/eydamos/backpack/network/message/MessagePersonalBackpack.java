@@ -8,17 +8,15 @@ import de.eydamos.backpack.handler.EventHandlerClientOnly;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-
 import java.util.UUID;
+import net.minecraft.item.ItemStack;
 
 public class MessagePersonalBackpack implements IMessage, IMessageHandler<MessagePersonalBackpack, IMessage> {
     protected String playerUUID = "";
     protected int backpackDamage = -1;
 
     public MessagePersonalBackpack() {}
-    
+
     public MessagePersonalBackpack(String UUID) {
         playerUUID = UUID;
     }
@@ -43,20 +41,19 @@ public class MessagePersonalBackpack implements IMessage, IMessageHandler<Messag
     @Override
     public IMessage onMessage(MessagePersonalBackpack message, MessageContext ctx) {
         IMessage returnMessage = null;
-        if(BackpackUtil.isServerSide()) {
+        if (BackpackUtil.isServerSide()) {
 
             PlayerSave playerSave = new PlayerSave(message.playerUUID);
             ItemStack backpack = playerSave.getPersonalBackpack();
-            if(backpack != null) {
+            if (backpack != null) {
                 returnMessage = new MessagePersonalBackpack(message.playerUUID, backpack.getItemDamage());
             } else {
                 returnMessage = new MessagePersonalBackpack(message.playerUUID);
             }
         } else {
-            //Client
-            EventHandlerClientOnly.updateTag(message.playerUUID , message.backpackDamage);
+            // Client
+            EventHandlerClientOnly.updateTag(message.playerUUID, message.backpackDamage);
         }
         return returnMessage;
     }
-
 }

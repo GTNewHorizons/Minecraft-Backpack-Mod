@@ -1,10 +1,10 @@
 package de.eydamos.guiadvanced.form;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import de.eydamos.guiadvanced.misc.AbstractGuiPart;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import de.eydamos.guiadvanced.misc.AbstractGuiPart;
 
 public class Textbox extends GuiTextField implements AbstractGuiPart {
     protected int relativePositionX;
@@ -38,8 +38,9 @@ public class Textbox extends GuiTextField implements AbstractGuiPart {
 
     @Override
     public void setAbsolutePosition(int guiLeft, int guiTop) {
-        ObfuscationReflectionHelper.setPrivateValue(GuiTextField.class, this, guiLeft + relativePositionX, "xPosition", "f");
-        ObfuscationReflectionHelper.setPrivateValue(GuiTextField.class, this, guiTop + relativePositionY, "yPosition", "g");
+        ObfuscationReflectionHelper.setPrivateValue(
+                GuiTextField.class, this, guiLeft + relativePositionX, "xPosition", "f");
+        ObfuscationReflectionHelper.setPrivateValue(
+                GuiTextField.class, this, guiTop + relativePositionY, "yPosition", "g");
     }
-
 }

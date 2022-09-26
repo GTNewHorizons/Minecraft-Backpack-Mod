@@ -14,5 +14,4 @@ public interface AbstractGui {
     public void removeSubPart(AbstractGuiPart removeSubPart);
 
     public void clearSubParts();
-
 }

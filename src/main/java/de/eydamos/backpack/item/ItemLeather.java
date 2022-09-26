@@ -1,12 +1,12 @@
 package de.eydamos.backpack.item;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemLeather extends Item {
     protected IIcon[] icons;
@@ -24,7 +24,7 @@ public class ItemLeather extends Item {
      */
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
-        if(this == ItemsBackpack.boundLeather) {
+        if (this == ItemsBackpack.boundLeather) {
             setUnlocalizedName(ItemsBackpack.UNLOCALIZED_NAME_BOUND_LEATHER);
         } else {
             setUnlocalizedName(ItemsBackpack.UNLOCALIZED_NAME_TANNED_LEATHER);
@@ -46,7 +46,7 @@ public class ItemLeather extends Item {
 
     /**
      * Returns the icon index based on the item damage.
-     * 
+     *
      * @param damage
      *            The damage to check for.
      * @return The icon index.
@@ -54,7 +54,7 @@ public class ItemLeather extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int damage) {
-        if(this == ItemsBackpack.boundLeather) {
+        if (this == ItemsBackpack.boundLeather) {
             return icons[0];
         } else {
             return icons[1];

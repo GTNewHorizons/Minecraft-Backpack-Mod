@@ -1,5 +1,3 @@
 package de.eydamos.guiadvanced.form;
 
-public class IconButton {
-
-}
+public class IconButton {}

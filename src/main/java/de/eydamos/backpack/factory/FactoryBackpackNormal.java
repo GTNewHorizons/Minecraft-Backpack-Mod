@@ -1,10 +1,5 @@
 package de.eydamos.backpack.factory;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryEnderChest;
-import net.minecraft.inventory.Slot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.gui.GuiBackpack;
@@ -15,13 +10,18 @@ import de.eydamos.backpack.inventory.slot.SlotBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.subpart.GuiSlot;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryEnderChest;
+import net.minecraft.inventory.Slot;
 
 public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
     @Override
     public ContainerAdvanced getContainer(BackpackSave backpack, IInventory[] inventories, EntityPlayer entityPlayer) {
         ContainerAdvanced container;
-        if(inventories[1] instanceof AbstractInventoryBackpack || inventories[1] instanceof InventoryEnderChest) {
+        if (inventories[1] instanceof AbstractInventoryBackpack || inventories[1] instanceof InventoryEnderChest) {
             container = new ContainerAdvanced(inventories, backpack);
         } else {
             container = new ContainerAdvanced();
@@ -41,13 +41,13 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
         int remainingSlots = inventories[1].getSizeInventory();
         // backpack inventory
-        for(int row = 0; row < inventoryRows; row++) {
+        for (int row = 0; row < inventoryRows; row++) {
             int cols = remainingSlots - slotsPerRow >= slotsPerRow ? slotsPerRow : remainingSlots;
             remainingSlots -= cols;
-            if(cols * SLOT < maxWidth/* && !hasScrollbar */) {
+            if (cols * SLOT < maxWidth /* && !hasScrollbar */) {
                 x += (int) Math.round(maxWidth / 2. - cols * SLOT / 2.) + 1;
             }
-            for(int col = 0; col < cols; ++col) {
+            for (int col = 0; col < cols; ++col) {
                 container.addSlot(new SlotBackpack(inventories[1], col + row * 9, x, y));
                 x += SLOT;
             }
@@ -61,8 +61,8 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         y += 14; // space for label
 
         // player inventory
-        for(int row = 0; row < 3; row++) {
-            for(int col = 0; col < 9; col++) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
                 container.addSlot(new Slot(inventories[0], col + row * 9 + 9, x, y));
                 x += SLOT;
             }
@@ -76,7 +76,7 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         y += 6;
 
         // hotbar
-        for(int col = 0; col < 9; col++) {
+        for (int col = 0; col < 9; col++) {
             container.addSlot(new Slot(inventories[0], col, x, y));
             x += SLOT;
         }
@@ -103,7 +103,7 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         int textPositionY = 17 + inventoryRows * SLOT + 2;
 
         GuiSlot guiSlot;
-        for(int i = 0; i < container.inventorySlots.size(); i++) {
+        for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
             guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
             guiBackpack.addSubPart(guiSlot);
@@ -114,5 +114,4 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
         return guiBackpack;
     }
-
 }

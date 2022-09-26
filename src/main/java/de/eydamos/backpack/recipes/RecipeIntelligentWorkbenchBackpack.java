@@ -1,13 +1,13 @@
 package de.eydamos.backpack.recipes;
 
+import de.eydamos.backpack.item.ItemWorkbenchBackpack;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.util.NBTItemStackUtil;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import de.eydamos.backpack.item.ItemWorkbenchBackpack;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.util.NBTItemStackUtil;
 
 public class RecipeIntelligentWorkbenchBackpack implements IRecipe {
     private ItemStack result;
@@ -19,17 +19,17 @@ public class RecipeIntelligentWorkbenchBackpack implements IRecipe {
         boolean book = false;
 
         ItemStack slotStack;
-        for(int i = 0; i < craftingGridInventory.getSizeInventory(); i++) {
+        for (int i = 0; i < craftingGridInventory.getSizeInventory(); i++) {
             slotStack = craftingGridInventory.getStackInSlot(i);
 
-            if(slotStack != null) {
-                if(slotStack.getItem() instanceof ItemWorkbenchBackpack) {
-                    if(backpack != null) {
+            if (slotStack != null) {
+                if (slotStack.getItem() instanceof ItemWorkbenchBackpack) {
+                    if (backpack != null) {
                         return false;
                     }
                     backpack = slotStack;
-                } else if(slotStack.getItem() == Items.writable_book) {
-                    if(book) {
+                } else if (slotStack.getItem() == Items.writable_book) {
+                    if (book) {
                         return false;
                     }
                     book = true;
@@ -39,7 +39,7 @@ public class RecipeIntelligentWorkbenchBackpack implements IRecipe {
             }
         }
 
-        if(backpack != null && book) {
+        if (backpack != null && book) {
             result = backpack.copy();
             NBTItemStackUtil.setBoolean(result, Constants.NBT.INTELLIGENT, true);
         }

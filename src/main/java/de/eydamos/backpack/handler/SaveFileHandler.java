@@ -5,11 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.DimensionManager;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,17 +21,17 @@ public class SaveFileHandler {
     public void init() {
         worldDir = DimensionManager.getCurrentSaveRootDirectory();
         backpackDir = new File(worldDir, "backpacks/backpacks");
-        if(!backpackDir.exists()) {
+        if (!backpackDir.exists()) {
             backpackDir.mkdirs();
         }
         playerDir = new File(worldDir, "backpacks/player");
-        if(!playerDir.exists()) {
+        if (!playerDir.exists()) {
             playerDir.mkdirs();
         }
     }
 
     public NBTTagCompound loadBackpack(String UUID) {
-        if(!backpackSaveExists(UUID)) {
+        if (!backpackSaveExists(UUID)) {
             return new NBTTagCompound();
         }
 
@@ -49,7 +47,7 @@ public class SaveFileHandler {
     }
 
     public NBTTagCompound loadPlayer(String UUID) {
-        if(!playerSaveExists(UUID)) {
+        if (!playerSaveExists(UUID)) {
             return new NBTTagCompound();
         }
 
@@ -73,12 +71,11 @@ public class SaveFileHandler {
 
         File file = new File(directory, fileName + ".dat");
 
-        if(file.exists()) {
+        if (file.exists()) {
             try {
                 nbtTagCompound = CompressedStreamTools.readCompressed(new FileInputStream(file));
                 return nbtTagCompound;
-            }
-            catch (IOException ioException) {
+            } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         }
@@ -87,11 +84,10 @@ public class SaveFileHandler {
 
         file = new File(directory, fileName + ".dat_old");
 
-        if(file.exists()) {
+        if (file.exists()) {
             try {
                 nbtTagCompound = CompressedStreamTools.readCompressed(new FileInputStream(file));
-            }
-            catch (IOException ioException) {
+            } catch (IOException ioException) {
                 ioException.printStackTrace();
                 logger.warn("[Backpack] Couldn't load data at all.");
             }
@@ -108,27 +104,25 @@ public class SaveFileHandler {
         try {
             CompressedStreamTools.writeCompressed(data, new FileOutputStream(fileNew));
 
-            if(fileOld.exists()) {
+            if (fileOld.exists()) {
                 fileOld.delete();
             }
 
             file.renameTo(fileOld);
 
-            if(file.exists()) {
+            if (file.exists()) {
                 file.delete();
             }
 
             fileNew.renameTo(file);
 
-            if(fileNew.exists()) {
+            if (fileNew.exists()) {
                 fileNew.delete();
             }
-        }
-        catch (FileNotFoundException fileNotFoundException) {
+        } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
             logger.warn("[Backpack] Couldn't save data.");
-        }
-        catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
             logger.warn("[Backpack] Couldn't save data.");
         }
@@ -139,15 +133,15 @@ public class SaveFileHandler {
         File fileOld = new File(directory, fileName + ".dat_old");
         File file = new File(directory, fileName + ".dat");
 
-        if(fileOld.exists()) {
+        if (fileOld.exists()) {
             fileOld.delete();
         }
 
-        if(file.exists()) {
+        if (file.exists()) {
             file.delete();
         }
 
-        if(fileNew.exists()) {
+        if (fileNew.exists()) {
             fileNew.delete();
         }
     }

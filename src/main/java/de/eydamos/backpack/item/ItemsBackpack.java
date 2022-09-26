@@ -1,8 +1,8 @@
 package de.eydamos.backpack.item;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemsBackpack {
     public static Item backpack;
@@ -15,13 +15,9 @@ public class ItemsBackpack {
     public static final String UNLOCALIZED_NAME_BACKPACK_WORKBENCH = "workbenchbackpack";
     public static final String UNLOCALIZED_NAME_BOUND_LEATHER = "boundLeather";
     public static final String UNLOCALIZED_NAME_TANNED_LEATHER = "tannedLeather";
-    
+
     public static final int ENDERBACKPACK = 31999;
-    public static final String[] BACKPACK_TIERS = {
-        "",
-        "medium",
-        "big"
-    };
+    public static final String[] BACKPACK_TIERS = {"", "medium", "big"};
     public static final String[] BACKPACK_COLORS = {
         "",
         "black",

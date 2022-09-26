@@ -16,7 +16,11 @@ import de.eydamos.backpack.network.PacketHandlerBackpack;
 import de.eydamos.backpack.proxy.CommonProxy;
 import de.eydamos.backpack.recipes.RecipeHelper;
 
-@Mod(modid = Constants.MOD_ID, name = Constants.MOD_NAME, version = Constants.MOD_VERSION, guiFactory = Constants.CLASS_GUI_FACTORY)
+@Mod(
+        modid = Constants.MOD_ID,
+        name = Constants.MOD_NAME,
+        version = Constants.MOD_VERSION,
+        guiFactory = Constants.CLASS_GUI_FACTORY)
 public class Backpack {
     @Instance(Constants.MOD_ID)
     public static Backpack instance;
@@ -31,7 +35,7 @@ public class Backpack {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        if(valid) {
+        if (valid) {
             // get the configuration and let forge guess the filename
             ConfigurationBackpack.init(event.getSuggestedConfigurationFile());
 
@@ -41,13 +45,14 @@ public class Backpack {
             // key bindings
             proxy.registerKeybindings();
 
-            FMLInterModComms.sendRuntimeMessage(Constants.MOD_ID, "VersionChecker", "addVersionCheck", Constants.UPDATE_FILE);
+            FMLInterModComms.sendRuntimeMessage(
+                    Constants.MOD_ID, "VersionChecker", "addVersionCheck", Constants.UPDATE_FILE);
         }
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        if(valid) {
+        if (valid) {
             // register recipes
             RecipeHelper.registerRecipes();
 

@@ -2,7 +2,11 @@ package de.eydamos.guiadvanced.util;
 
 public class RenderHelper {
     public enum BackgroundRepeat {
-        NONE, REPEAT, REPEAT_X, REPEAT_Y, STRETCH
+        NONE,
+        REPEAT,
+        REPEAT_X,
+        REPEAT_Y,
+        STRETCH
     }
 
     public static void drawOuterCornerTopLeft(int posX, int posY) {

@@ -1,12 +1,12 @@
 package de.eydamos.backpack.inventory;
 
-import net.minecraft.item.ItemStack;
 import de.eydamos.backpack.saves.BackpackSave;
+import net.minecraft.item.ItemStack;
 
 public class InventoryBasic extends AbstractInventoryBackpack<BackpackSave> {
 
     public InventoryBasic(String name, boolean translated, int slots) {
-        if(translated) {
+        if (translated) {
             customName = name;
         } else {
             defaultName = name;
@@ -18,7 +18,7 @@ public class InventoryBasic extends AbstractInventoryBackpack<BackpackSave> {
     public void setInventorySlotContents(int slotIndex, ItemStack newContent) {
         super.setInventorySlotContents(slotIndex, newContent);
 
-        if(eventHandler != null) {
+        if (eventHandler != null) {
             eventHandler.onCraftMatrixChanged(this);
         }
     }
@@ -28,5 +28,4 @@ public class InventoryBasic extends AbstractInventoryBackpack<BackpackSave> {
 
     @Override
     public void writeToNBT(BackpackSave backpackSave) {}
-
 }

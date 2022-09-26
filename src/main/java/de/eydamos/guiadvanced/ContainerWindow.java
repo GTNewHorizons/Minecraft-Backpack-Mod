@@ -1,13 +1,12 @@
 package de.eydamos.guiadvanced;
 
-import java.util.ArrayList;
-
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 import de.eydamos.guiadvanced.misc.AbstractGui;
 import de.eydamos.guiadvanced.misc.AbstractGuiPart;
 import de.eydamos.guiadvanced.util.RenderHelper;
+import java.util.ArrayList;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
 
 public class ContainerWindow extends GuiContainer implements AbstractGui {
     protected ArrayList<AbstractGuiPart> subParts = new ArrayList<AbstractGuiPart>();
@@ -40,9 +39,9 @@ public class ContainerWindow extends GuiContainer implements AbstractGui {
     public void initGui() {
         super.initGui();
 
-        for(AbstractGuiPart guiPart : subParts) {
+        for (AbstractGuiPart guiPart : subParts) {
             guiPart.setAbsolutePosition(guiLeft, guiTop);
-            if(guiPart instanceof GuiButton) {
+            if (guiPart instanceof GuiButton) {
                 buttonList.add(guiPart);
             }
         }
@@ -78,9 +77,8 @@ public class ContainerWindow extends GuiContainer implements AbstractGui {
         RenderHelper.drawOuterCornerBottomRight(guiLeft + xSize - 4, guiTop + ySize - 4);
 
         // draw subparts
-        for(AbstractGuiPart guiPart : subParts) {
+        for (AbstractGuiPart guiPart : subParts) {
             guiPart.draw(mc, mouseX, mouseY, something);
         }
     }
-
 }

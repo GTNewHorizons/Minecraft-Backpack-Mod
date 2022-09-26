@@ -6,5 +6,4 @@ public class GuiBackpackSlot extends GuiAdvanced {
     public GuiBackpackSlot(ContainerAdvanced container) {
         super(container);
     }
-
 }

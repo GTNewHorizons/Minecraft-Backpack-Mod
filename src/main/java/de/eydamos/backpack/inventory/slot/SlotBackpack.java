@@ -13,8 +13,7 @@ public class SlotBackpack extends Slot {
         super(inventory, slotIndex, xPos, yPos);
     }
 
-    private static final String[] FORBIDDEN_CLASSES =
-    {
+    private static final String[] FORBIDDEN_CLASSES = {
         // Adventure Backpack 2
         "com.darkona.adventurebackpack.item.ItemAdventureBackpack",
         // Backpack Mod
@@ -40,55 +39,55 @@ public class SlotBackpack extends Slot {
      */
     @Override
     public boolean isItemValid(ItemStack is) {
-        
-    	if(is == null) return false;
-    	
-    	Item itemCurrent = is.getItem();
-    	
-    	// check for forbiddenItemClasses
-    	for (String itemClass : FORBIDDEN_CLASSES) {
-    	    if (itemCurrent.getClass().getName().equals(itemClass)) return false;	
-    	}
 
-    	// check for disallowedItems
-    	for (String itemDisallowed : ConfigurationBackpack.DISALLOW_ITEM_IDS) {
-    	    if (Item.itemRegistry.getNameForObject(itemCurrent).equals(itemDisallowed)) return false;
-    	}
-    		
-    	    /*String[] disallowedItems = ConfigurationBackpack.DISALLOW_ITEMS.split(",");
-    	    for(String disallowedItem : disallowedItems) {
-    		Object[] disallowedData = getDisallowedData(disallowedItem);
-    		// if Integer check id
-    		if(disallowedData[0] instanceof Item) {
-    		    if((Item) disallowedData[0] == is.getItem()) {
-    			// if disallwedData has 2 values check item damage
-    			if(disallowedData.length == 2) {
-    			    if((Integer) disallowedData[1] == is.getItemDamage()) {
-    				return false;
-    			    }
-    			} else {
-    			    return false;
-    			}
-    		    }
-    		} else {
-    		    int[] ids = OreDictionary.getOreIDs(is);
-    		    for(int id : ids) {
-    			// if not an integer it is a string so check for ore dictionary name
-    			if(id == OreDictionary.getOreID((String)disallowedData[0])) {
-    			    return false;
-    			}
-    		    }
-    		}
-    	    }*/
-    		
-    	return super.isItemValid(is);
+        if (is == null) return false;
+
+        Item itemCurrent = is.getItem();
+
+        // check for forbiddenItemClasses
+        for (String itemClass : FORBIDDEN_CLASSES) {
+            if (itemCurrent.getClass().getName().equals(itemClass)) return false;
+        }
+
+        // check for disallowedItems
+        for (String itemDisallowed : ConfigurationBackpack.DISALLOW_ITEM_IDS) {
+            if (Item.itemRegistry.getNameForObject(itemCurrent).equals(itemDisallowed)) return false;
+        }
+
+        /*String[] disallowedItems = ConfigurationBackpack.DISALLOW_ITEMS.split(",");
+           for(String disallowedItem : disallowedItems) {
+        Object[] disallowedData = getDisallowedData(disallowedItem);
+        // if Integer check id
+        if(disallowedData[0] instanceof Item) {
+            if((Item) disallowedData[0] == is.getItem()) {
+        	// if disallwedData has 2 values check item damage
+        	if(disallowedData.length == 2) {
+        	    if((Integer) disallowedData[1] == is.getItemDamage()) {
+        		return false;
+        	    }
+        	} else {
+        	    return false;
+        	}
+            }
+        } else {
+            int[] ids = OreDictionary.getOreIDs(is);
+            for(int id : ids) {
+        	// if not an integer it is a string so check for ore dictionary name
+        	if(id == OreDictionary.getOreID((String)disallowedData[0])) {
+        	    return false;
+        	}
+            }
+        }
+           }*/
+
+        return super.isItemValid(is);
     }
 
     private Object[] getDisallowedData(String disallowedItem) {
         String[] disallowedWithMeta = disallowedItem.split(":");
         Object[] result = new Object[disallowedWithMeta.length];
         result[0] = GameData.getItemRegistry().getObject(disallowedWithMeta[0]);
-        if(result.length == 2 && disallowedWithMeta[1].matches("^-?\\d+$")) {
+        if (result.length == 2 && disallowedWithMeta[1].matches("^-?\\d+$")) {
             result[1] = Integer.valueOf(disallowedWithMeta[1]);
         }
         return result;

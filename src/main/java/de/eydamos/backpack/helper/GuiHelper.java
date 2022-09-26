@@ -34,13 +34,11 @@ public class GuiHelper {
         MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
         Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
 
-        Container container = FactoryBackpack.getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
+        Container container = FactoryBackpack.getContainer(
+                backpackSave, new IInventory[] {entityPlayer.inventory, inventory}, entityPlayer);
         openContainer(container, entityPlayer);
 
         BackpackUtil.playOpenSound(entityPlayer);
-
-
-
     }
 
     public static void displayPersonalSlot(EntityPlayerMP entityPlayer) {
@@ -55,11 +53,12 @@ public class GuiHelper {
         MessageOpenPersonalSlot message = new MessageOpenPersonalSlot(entityPlayer.currentWindowId);
         Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
 
-        Container container = FactoryBackpack.getContainer(playerSave, new IInventory[] { entityPlayer.inventory }, entityPlayer);
+        Container container =
+                FactoryBackpack.getContainer(playerSave, new IInventory[] {entityPlayer.inventory}, entityPlayer);
         openContainer(container, entityPlayer);
     }
 
-    private static boolean isDimensionAllowed (EntityPlayerMP entityPlayer) {
+    private static boolean isDimensionAllowed(EntityPlayerMP entityPlayer) {
         Integer currentDimID = (entityPlayer.worldObj.provider.dimensionId);
         for (String id : ConfigurationBackpack.FORBIDDEN_DIMENSIONS) {
             if (id.equals(currentDimID.toString())) return false;
@@ -89,7 +88,7 @@ public class GuiHelper {
     }
 
     protected static void prepare(EntityPlayerMP entityPlayer) {
-        if(entityPlayer.openContainer != entityPlayer.inventoryContainer) {
+        if (entityPlayer.openContainer != entityPlayer.inventoryContainer) {
             entityPlayer.closeScreen();
         }
 

@@ -1,9 +1,9 @@
 package de.eydamos.guiadvanced.subpart;
 
-import net.minecraft.client.Minecraft;
 import de.eydamos.guiadvanced.misc.AbstractGuiPart;
 import de.eydamos.guiadvanced.util.Rectangle;
 import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
+import net.minecraft.client.Minecraft;
 
 public class GuiSlot implements AbstractGuiPart {
     protected int xPosition;
@@ -99,5 +99,4 @@ public class GuiSlot implements AbstractGuiPart {
         xPosition = guiLeft + relativePositionX;
         yPosition = guiTop + relativePositionY;
     }
-
 }

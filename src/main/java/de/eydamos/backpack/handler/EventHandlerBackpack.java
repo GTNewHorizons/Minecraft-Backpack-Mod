@@ -30,42 +30,35 @@ import net.minecraftforge.event.world.WorldEvent;
 
 public class EventHandlerBackpack {
 
-
-
-
     @SubscribeEvent
     public void serverTick(PlayerTickEvent event) {
 
-        //On client
-        if(ConfigurationBackpack.RENDER_BACKPACK_MODEL){
-            if(event.side == Side.CLIENT && event.phase == TickEvent.Phase.END){
-                int ticks =  event.player.ticksExisted;
-                //Update players bags 3 sec
-                if(ticks % (3*20) == 0) {
-                    String pUid  = event.player.getUniqueID().toString();
+        // On client
+        if (ConfigurationBackpack.RENDER_BACKPACK_MODEL) {
+            if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
+                int ticks = event.player.ticksExisted;
+                // Update players bags 3 sec
+                if (ticks % (3 * 20) == 0) {
+                    String pUid = event.player.getUniqueID().toString();
                     Backpack.packetHandler.networkWrapper.sendToServer(new MessagePersonalBackpack(pUid));
                 }
-
             }
-
         }
 
-
-
-        if(ConfigurationBackpack.MAX_BACKPACK_AMOUNT > 0) {
-            if(event.side == Side.SERVER) {
+        if (ConfigurationBackpack.MAX_BACKPACK_AMOUNT > 0) {
+            if (event.side == Side.SERVER) {
                 EntityPlayerMP player = (EntityPlayerMP) event.player;
 
                 int counter = 0;
-                if(new PlayerSave(player).hasPersonalBackpack()) {
+                if (new PlayerSave(player).hasPersonalBackpack()) {
                     counter++;
                 }
 
                 ItemStack[] inventory = player.inventory.mainInventory;
-                for(int i = 0; i < inventory.length; i++) {
-                    if(inventory[i] != null && inventory[i].getItem() instanceof ItemBackpackBase) {
+                for (int i = 0; i < inventory.length; i++) {
+                    if (inventory[i] != null && inventory[i].getItem() instanceof ItemBackpackBase) {
                         counter++;
-                        if(counter > ConfigurationBackpack.MAX_BACKPACK_AMOUNT) {
+                        if (counter > ConfigurationBackpack.MAX_BACKPACK_AMOUNT) {
                             player.entityDropItem(inventory[i].copy(), 0);
                             inventory[i] = null;
                         }
@@ -73,11 +66,14 @@ public class EventHandlerBackpack {
                 }
 
                 counter -= ConfigurationBackpack.MAX_BACKPACK_AMOUNT;
-                if(counter > 0) {
+                if (counter > 0) {
                     IChatComponent message = new ChatComponentText("[Backpacks] ");
-                    message.appendSibling(new ChatComponentTranslation(Localizations.MESSAGE_ALLOWED_BACKPACKS, ConfigurationBackpack.MAX_BACKPACK_AMOUNT));
+                    message.appendSibling(new ChatComponentTranslation(
+                            Localizations.MESSAGE_ALLOWED_BACKPACKS, ConfigurationBackpack.MAX_BACKPACK_AMOUNT));
                     player.addChatMessage(message);
-                    message = new ChatComponentText("[Backpacks] ").appendSibling(new ChatComponentTranslation(Localizations.MESSAGE_DROPPED_BACKPACKS, counter));
+                    message = new ChatComponentText("[Backpacks] ")
+                            .appendSibling(
+                                    new ChatComponentTranslation(Localizations.MESSAGE_DROPPED_BACKPACKS, counter));
                     player.addChatMessage(message);
                 }
             }
@@ -87,10 +83,10 @@ public class EventHandlerBackpack {
     @SubscribeEvent
     public void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
         if (event.modID.equalsIgnoreCase(Constants.MOD_ID)) {
-        	ConfigurationBackpack.loadConfiguration();
+            ConfigurationBackpack.loadConfiguration();
         }
     }
-    
+
     @SubscribeEvent
     public void playerPickup(EntityItemPickupEvent event) {
         BackpackUtil.pickupItem(event.entityPlayer, event.item.getEntityItem());
@@ -107,8 +103,9 @@ public class EventHandlerBackpack {
 
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         ItemStack backpack = playerSave.getPersonalBackpack();
-        if(backpack != null) {
-            event.drops.add(new EntityItem(entityPlayer.worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, backpack));
+        if (backpack != null) {
+            event.drops.add(new EntityItem(
+                    entityPlayer.worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, backpack));
             playerSave.setPersonalBackpack(null);
         }
     }
@@ -116,8 +113,8 @@ public class EventHandlerBackpack {
     @SubscribeEvent
     public void itemCrafted(ItemCraftedEvent event) {
         ItemStack craftedItem = event.crafting;
-        if(craftedItem != null && craftedItem.getItem() == ItemsBackpack.workbenchBackpack) {
-            if(NBTItemStackUtil.hasTag(craftedItem, Constants.NBT.INTELLIGENT)) {
+        if (craftedItem != null && craftedItem.getItem() == ItemsBackpack.workbenchBackpack) {
+            if (NBTItemStackUtil.hasTag(craftedItem, Constants.NBT.INTELLIGENT)) {
                 BackpackSave backpackSave = new BackpackSave(craftedItem);
                 backpackSave.setIntelligent();
                 NBTItemStackUtil.removeTag(craftedItem, Constants.NBT.INTELLIGENT);

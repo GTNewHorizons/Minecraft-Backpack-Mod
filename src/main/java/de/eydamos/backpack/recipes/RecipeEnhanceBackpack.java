@@ -1,12 +1,12 @@
 package de.eydamos.backpack.recipes;
 
+import de.eydamos.backpack.item.ItemBackpackBase;
+import de.eydamos.backpack.item.ItemLeather;
+import de.eydamos.backpack.item.ItemsBackpack;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
-import de.eydamos.backpack.item.ItemBackpackBase;
-import de.eydamos.backpack.item.ItemLeather;
-import de.eydamos.backpack.item.ItemsBackpack;
 
 public class RecipeEnhanceBackpack implements IRecipe {
     private ItemStack result;
@@ -16,28 +16,28 @@ public class RecipeEnhanceBackpack implements IRecipe {
         result = null;
         ItemStack backpack = null;
 
-        if(craftingGridInventory.getSizeInventory() < 9) {
+        if (craftingGridInventory.getSizeInventory() < 9) {
             return false;
         }
 
         ItemStack slotStack;
-        for(int i = 0; i < craftingGridInventory.getSizeInventory(); i++) {
+        for (int i = 0; i < craftingGridInventory.getSizeInventory(); i++) {
             slotStack = craftingGridInventory.getStackInSlot(i);
 
-            if(slotStack != null) {
-                if(i == 4) {
-                    if(!(slotStack.getItem() instanceof ItemBackpackBase)) {
+            if (slotStack != null) {
+                if (i == 4) {
+                    if (!(slotStack.getItem() instanceof ItemBackpackBase)) {
                         return false;
                     }
-                    if(slotStack.getItemDamage() / 100 > 0) {
+                    if (slotStack.getItemDamage() / 100 > 0) {
                         return false;
                     }
                     backpack = slotStack;
                 } else {
-                    if(!(slotStack.getItem() instanceof ItemLeather)) {
+                    if (!(slotStack.getItem() instanceof ItemLeather)) {
                         return false;
                     }
-                    if(slotStack.getItem() != ItemsBackpack.tannedLeather) {
+                    if (slotStack.getItem() != ItemsBackpack.tannedLeather) {
                         return false;
                     }
                 }
@@ -46,7 +46,7 @@ public class RecipeEnhanceBackpack implements IRecipe {
             }
         }
 
-        if(backpack != null) {
+        if (backpack != null) {
             result = backpack.copy();
             result.setItemDamage(result.getItemDamage() + 200);
         }
