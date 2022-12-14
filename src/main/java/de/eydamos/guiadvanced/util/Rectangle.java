@@ -1,14 +1,12 @@
 package de.eydamos.guiadvanced.util;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.client.FMLClientHandler;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class Rectangle {
     protected int width;
@@ -63,18 +61,18 @@ public class Rectangle {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;
-        if(repeat == BackgroundRepeat.NONE) {
+        if (repeat == BackgroundRepeat.NONE) {
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(x, y + height, z, u * f, (v + height) * f1);
             tessellator.addVertexWithUV(x + width, y + height, z, (u + width) * f, (v + height) * f1);
             tessellator.addVertexWithUV(x + width, y, z, (u + width) * f, v * f1);
             tessellator.addVertexWithUV(x, y, z, u * f, v * f1);
             tessellator.draw();
-        } else if(repeat == BackgroundRepeat.REPEAT) {
+        } else if (repeat == BackgroundRepeat.REPEAT) {
             int drawHeight = vMax = Math.min(height, vMax);
             int drawWidth = uMax = Math.min(width, uMax);
-            for(int i = 0; i <= width; i += uMax) {
-                for(int j = 0; j <= height; j += vMax) {
+            for (int i = 0; i <= width; i += uMax) {
+                for (int j = 0; j <= height; j += vMax) {
                     drawWidth = i + uMax > width ? width : i + uMax;
                     drawHeight = j + vMax > height ? height : j + vMax;
                     tessellator.startDrawingQuads();
@@ -85,10 +83,10 @@ public class Rectangle {
                     tessellator.draw();
                 }
             }
-        } else if(repeat == BackgroundRepeat.REPEAT_X) {
+        } else if (repeat == BackgroundRepeat.REPEAT_X) {
             int drawHeight = vMax = Math.min(height, vMax);
             int drawWidth;
-            for(int i = 0; i <= width; i += uMax) {
+            for (int i = 0; i <= width; i += uMax) {
                 drawWidth = i + uMax > width ? width : i + uMax;
                 tessellator.startDrawingQuads();
                 tessellator.addVertexWithUV(x + i, y + drawHeight, z, u * f, (v + drawHeight) * f1);
@@ -97,10 +95,10 @@ public class Rectangle {
                 tessellator.addVertexWithUV(x + i, y, z, u * f, v * f1);
                 tessellator.draw();
             }
-        } else if(repeat == BackgroundRepeat.REPEAT_Y) {
+        } else if (repeat == BackgroundRepeat.REPEAT_Y) {
             int drawWidth = uMax = Math.min(width, uMax);
             int drawHeight;
-            for(int i = 0; i <= height; i += vMax) {
+            for (int i = 0; i <= height; i += vMax) {
                 drawHeight = i + vMax > height ? height : i + vMax;
                 tessellator.startDrawingQuads();
                 tessellator.addVertexWithUV(x, y + drawHeight, z, u * f, (v + vMax) * f1);

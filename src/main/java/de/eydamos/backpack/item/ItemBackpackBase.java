@@ -1,20 +1,5 @@
 package de.eydamos.backpack.item;
 
-import java.util.List;
-
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-
-import org.lwjgl.input.Keyboard;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.helper.GuiHelper;
@@ -25,6 +10,18 @@ import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.NBTItemStackUtil;
+import java.util.List;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
 
 public class ItemBackpackBase extends Item {
     public ItemBackpackBase() {
@@ -35,7 +32,7 @@ public class ItemBackpackBase extends Item {
 
     /**
      * Returns the sub items.
-     * 
+     *
      * @param itemId
      *            the id of the item
      * @param tab
@@ -46,14 +43,14 @@ public class ItemBackpackBase extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List subItems) {
-        if(item == ItemsBackpack.backpack) {
-            for(int tier = 0; tier < 3; tier++) {
-                for(int i = 0; i < 17; i++) {
+        if (item == ItemsBackpack.backpack) {
+            for (int tier = 0; tier < 3; tier++) {
+                for (int i = 0; i < 17; i++) {
                     subItems.add(new ItemStack(item, 1, tier * 100 + i));
                 }
             }
             subItems.add(new ItemStack(item, 1, ItemsBackpack.ENDERBACKPACK));
-        } else if(item == ItemsBackpack.workbenchBackpack) {
+        } else if (item == ItemsBackpack.workbenchBackpack) {
             subItems.add(new ItemStack(item, 1, 17));
             subItems.add(new ItemStack(item, 1, 217));
         }
@@ -63,7 +60,7 @@ public class ItemBackpackBase extends Item {
      * Callback for item usage. If the item does something special on right
      * clicking, he will have one of those. Return True if something happen and
      * false if it don't. This is for ITEMS, not BLOCKS
-     * 
+     *
      * @param stack
      *            The ItemStack which is used
      * @param player
@@ -86,7 +83,17 @@ public class ItemBackpackBase extends Item {
      *            The z position on the block which got clicked
      */
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World worldObj, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(
+            ItemStack stack,
+            EntityPlayer player,
+            World worldObj,
+            int x,
+            int y,
+            int z,
+            int side,
+            float hitX,
+            float hitY,
+            float hitZ) {
         /*
         TileEntity te = worldObj.getTileEntity(x, y, z);
         if(te != null && (te instanceof IInventory || te instanceof TileEntityEnderChest)) {
@@ -149,7 +156,7 @@ public class ItemBackpackBase extends Item {
 
     /**
      * Handles what should be done on right clicking the item.
-     * 
+     *
      * @param itemStack
      *            The ItemStack which is right clicked.
      * @param world
@@ -161,20 +168,21 @@ public class ItemBackpackBase extends Item {
      */
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
-        if(null == itemStack.getTagCompound()) {
+        if (null == itemStack.getTagCompound()) {
             onCreated(itemStack, world, entityPlayer);
         }
-        if(!BackpackUtil.isServerSide(world)) {
+        if (!BackpackUtil.isServerSide(world)) {
             // display rename GUI if player is sneaking
-            if(entityPlayer.isSneaking() && !BackpackUtil.isEnderBackpack(itemStack)) {
+            if (entityPlayer.isSneaking() && !BackpackUtil.isEnderBackpack(itemStack)) {
                 GuiHelper.displayRenameGui();
             }
             return itemStack;
         }
 
         // when the player is not sneaking
-        if(!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
-            GuiHelper.displayBackpack(new BackpackSave(itemStack), getInventory(itemStack, entityPlayer), (EntityPlayerMP) entityPlayer);
+        if (!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
+            GuiHelper.displayBackpack(
+                    new BackpackSave(itemStack), getInventory(itemStack, entityPlayer), (EntityPlayerMP) entityPlayer);
         }
         return itemStack;
     }
@@ -192,10 +200,10 @@ public class ItemBackpackBase extends Item {
         int tier = damage / 100 < 3 ? damage / 100 : 0;
         int meta = damage % 100;
         name += (tier == 0 ? "" : '.') + ItemsBackpack.BACKPACK_TIERS[tier];
-        if(meta > 0 && meta < 17) { // add color
+        if (meta > 0 && meta < 17) { // add color
             name += (tier == 0 ? '.' : '_') + ItemsBackpack.BACKPACK_COLORS[damage % 100];
         }
-        if(meta == 99) { // ender backpack
+        if (meta == 99) { // ender backpack
             name += (tier == 0 ? '.' : '_') + ItemsBackpack.BACKPACK_COLORS[17];
         }
         return name;
@@ -203,7 +211,7 @@ public class ItemBackpackBase extends Item {
 
     /**
      * Returns the item name to display in the tooltip.
-     * 
+     *
      * @param itemstack
      *            The ItemStack to use for check.
      * @return The name of the backpack for the tooltip.
@@ -211,7 +219,7 @@ public class ItemBackpackBase extends Item {
     @Override
     public String getItemStackDisplayName(ItemStack itemStack) {
         // it ItemStack has a NBTTagCompound load name from it.
-        if(NBTItemStackUtil.hasTag(itemStack, Constants.NBT.CUSTOM_NAME)) {
+        if (NBTItemStackUtil.hasTag(itemStack, Constants.NBT.CUSTOM_NAME)) {
             return NBTItemStackUtil.getString(itemStack, Constants.NBT.CUSTOM_NAME);
         }
         return StatCollector.translateToLocal(getUnlocalizedName(itemStack) + ".name");
@@ -229,16 +237,14 @@ public class ItemBackpackBase extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List information, boolean advancedTooltip) {
-        if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            if(itemStack.getItemDamage() != ItemsBackpack.ENDERBACKPACK) {
+    public void addInformation(
+            ItemStack itemStack, EntityPlayer entityPlayer, List information, boolean advancedTooltip) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+            if (itemStack.getItemDamage() != ItemsBackpack.ENDERBACKPACK) {
                 // TODO BackpackUtil.getTier()
-                information.add(
-                        EnumChatFormatting.YELLOW + 
-                        StatCollector.translateToLocal(Localizations.TIER) + 
-                        " " + 
-                        (itemStack.getItemDamage() / 100 + 1)
-                );
+                information.add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal(Localizations.TIER)
+                        + " "
+                        + (itemStack.getItemDamage() / 100 + 1));
                 BackpackSave backpackSave = new BackpackSave(itemStack);
                 NBTTagList itemList = backpackSave.getInventory(Constants.NBT.INVENTORY_BACKPACK);
                 int used = itemList.tagCount();
@@ -251,7 +257,7 @@ public class ItemBackpackBase extends Item {
     }
 
     public static IInventory getInventory(ItemStack itemStack, EntityPlayer entityPlayer) {
-        if(BackpackUtil.isEnderBackpack(itemStack)) {
+        if (BackpackUtil.isEnderBackpack(itemStack)) {
             return entityPlayer.getInventoryEnderChest();
         }
 

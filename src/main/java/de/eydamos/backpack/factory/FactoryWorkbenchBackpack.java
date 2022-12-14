@@ -1,9 +1,5 @@
 package de.eydamos.backpack.factory;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.gui.GuiWorkbenchBackpack;
@@ -22,6 +18,10 @@ import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.subpart.GuiSlot;
 import de.eydamos.guiadvanced.subpart.Icon;
 import de.eydamos.guiadvanced.util.Alignment;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 
 public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
     protected final int BIG_X_SPACING = 30;
@@ -33,7 +33,7 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         InventoryCraftingGrid craftingGrid = new InventoryCraftingGrid(inventories[1]);
         InventoryRecipes recipes = null;
 
-        if(backpack.isIntelligent()) {
+        if (backpack.isIntelligent()) {
             recipes = new InventoryRecipes(craftingGrid);
         }
 
@@ -43,7 +43,7 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         containerInventories[3] = recipes;
 
         ContainerWorkbenchBackpack container;
-        if(inventories[1] instanceof AbstractInventoryBackpack) {
+        if (inventories[1] instanceof AbstractInventoryBackpack) {
             container = new ContainerWorkbenchBackpack(containerInventories, backpack);
         } else {
             container = new ContainerWorkbenchBackpack(craftingGrid);
@@ -54,7 +54,7 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
 
         int xSpacing;
         int x;
-        if(backpack.isIntelligent()) {
+        if (backpack.isIntelligent()) {
             xSpacing = X_SPACING;
             x = xSpacing + 72;
         } else {
@@ -74,8 +74,8 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         container.addBoundary(Boundaries.CRAFTING);
 
         // crafting grid
-        for(int row = 0; row < 3; row++) {
-            for(int col = 0; col < 3; col++) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
                 container.addSlot(new SlotPhantom(craftingGrid, col + row * 3, x, y));
                 x += SLOT;
             }
@@ -85,12 +85,12 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
 
         container.addBoundary(Boundaries.CRAFTING_END);
 
-        if(backpack.isIntelligent()) {
+        if (backpack.isIntelligent()) {
             // recipes
             y = 17;
             x += 108;
-            for(int row = 0; row < 3; row++) {
-                for(int col = 0; col < 3; col++) {
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 3; col++) {
                     container.addSlot(new SlotPhantom(recipes, col + row * 3, x, y));
                     x += SLOT;
                 }
@@ -106,13 +106,13 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
 
         int remainingSlots = inventories[1].getSizeInventory();
         // backpack inventory
-        for(int row = 0; row < inventories[1].getSizeInventory() / backpack.getSlotsPerRow(); row++) {
+        for (int row = 0; row < inventories[1].getSizeInventory() / backpack.getSlotsPerRow(); row++) {
             int cols = remainingSlots - 9 >= 9 ? 9 : remainingSlots;
             remainingSlots -= cols;
-            if(cols * SLOT < 9 * SLOT/* && !hasScrollbar */) {
+            if (cols * SLOT < 9 * SLOT /* && !hasScrollbar */) {
                 x += (int) Math.round(9 * SLOT / 2. - cols * SLOT / 2.) + 1;
             }
-            for(int col = 0; col < cols; ++col) {
+            for (int col = 0; col < cols; ++col) {
                 container.addSlot(new SlotBackpack(inventories[1], col + row * 9, x, y));
                 x += SLOT;
             }
@@ -126,8 +126,8 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         y += 14; // space for label
 
         // player inventory
-        for(int row = 0; row < 3; row++) {
-            for(int col = 0; col < 9; col++) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
                 container.addSlot(new Slot(inventories[0], col + row * 9 + 9, x, y));
                 x += SLOT;
             }
@@ -141,7 +141,7 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         y += 6;
 
         // hotbar
-        for(int col = 0; col < 9; col++) {
+        for (int col = 0; col < 9; col++) {
             container.addSlot(new Slot(inventories[0], col, x, y));
             x += SLOT;
         }
@@ -164,9 +164,9 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         GuiWorkbenchBackpack guiBackpack = new GuiWorkbenchBackpack(container);
 
         GuiSlot guiSlot;
-        for(int i = 0; i < container.inventorySlots.size(); i++) {
+        for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
-            if(i == 0) {
+            if (i == 0) {
                 guiSlot = new GuiSlot(slot.xDisplayPosition - 5, slot.yDisplayPosition - 5, 26);
             } else {
                 guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
@@ -174,7 +174,7 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
             guiBackpack.addSubPart(guiSlot);
         }
 
-        if(!backpack.isIntelligent()) {
+        if (!backpack.isIntelligent()) {
             // arrow
             guiBackpack.addSubPart(new Icon(0, 238, 90, 35, 22, 15));
             // clear button
@@ -189,7 +189,7 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
 
         int textPositionX = 28;
         Alignment alignment = Alignment.LEFT;
-        if(backpack.isIntelligent()) {
+        if (backpack.isIntelligent()) {
             textPositionX = guiBackpack.getWidth() / 2;
             alignment = Alignment.CENTER;
         }
@@ -204,5 +204,4 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
 
         return guiBackpack;
     }
-
 }

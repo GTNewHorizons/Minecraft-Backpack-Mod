@@ -1,16 +1,15 @@
 package de.eydamos.backpack.inventory;
 
-import java.util.Arrays;
-
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import de.eydamos.backpack.helper.InventoryHelper;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.util.BackpackUtil;
+import java.util.Arrays;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
 
 public class InventoryCraftingGrid extends InventoryCrafting implements ISaveableInventory<BackpackSave> {
     protected AbstractInventoryBackpack backpackInventory = null;
@@ -20,7 +19,7 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
 
     public InventoryCraftingGrid(IInventory inventoryBackpack) {
         super(null, 3, 3);
-        if(inventoryBackpack instanceof AbstractInventoryBackpack<?>) {
+        if (inventoryBackpack instanceof AbstractInventoryBackpack<?>) {
             backpackInventory = (AbstractInventoryBackpack) inventoryBackpack;
         }
 
@@ -37,10 +36,10 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
 
     @Override
     public void setInventorySlotContents(int slotPosition, ItemStack newItemStack) {
-        if(useInventoryMode) {
+        if (useInventoryMode) {
             int correspondingSlot = findCorrespondingSlot(slotPosition);
             // if there is a corresponding slot set the item
-            if(correspondingSlot != -1) {
+            if (correspondingSlot != -1) {
                 backpackInventory.setInventorySlotContents(correspondingSlot, newItemStack);
                 return;
             }
@@ -56,9 +55,9 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
 
     @Override
     public ItemStack getStackInSlot(int slotPosition) {
-        if(useInventoryMode) {
+        if (useInventoryMode) {
             int correspondingSlot = findCorrespondingSlot(slotPosition);
-            if(correspondingSlot == -1) {
+            if (correspondingSlot == -1) {
                 return null;
             } else {
                 return backpackInventory.getStackInSlot(correspondingSlot);
@@ -74,7 +73,7 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
 
     @Override
     public void writeToNBT(BackpackSave backpackSave) {
-        if(isDirty) {
+        if (isDirty) {
             InventoryHelper.writeInventory(backpackSave, Constants.NBT.INVENTORY_CRAFTING_GRID, getStackList());
 
             isDirty = false;
@@ -92,13 +91,13 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
     /**
      * Sets if the craftMatrix should use the backpacks inventory to provide
      * it's content.
-     * 
+     *
      * @param value
      *            The new value for the mode.
      */
     public void setUseInventoryMode(boolean value) {
         useInventoryMode = value;
-        if(value == false) {
+        if (value == false) {
             Arrays.fill(mapping, -1);
         }
     }
@@ -106,26 +105,26 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
     /**
      * Will try to find a slot with the same ItemStack as the given slot from
      * the craft matrix.
-     * 
+     *
      * @param recipeSlotPosition
      *            The index of the slot in the craft matrix.
      * @return The slot number with the same content or -1 if nothing was found.
      */
     protected int findCorrespondingSlot(int recipeSlotPosition) {
-        if(mapping[recipeSlotPosition] != -1) {
+        if (mapping[recipeSlotPosition] != -1) {
             return mapping[recipeSlotPosition];
         }
         ItemStack craftingGridStack = super.getStackInSlot(recipeSlotPosition);
-        for(int i = 0; i < backpackInventory.getSizeInventory(); i++) {
+        for (int i = 0; i < backpackInventory.getSizeInventory(); i++) {
             ItemStack inventoryStack = backpackInventory.getStackInSlot(i);
-            if(BackpackUtil.areStacksEqual(craftingGridStack, inventoryStack)) {
+            if (BackpackUtil.areStacksEqual(craftingGridStack, inventoryStack)) {
                 mapping[recipeSlotPosition] = i;
                 return i;
             }
         }
-        for(int i = 0; i < backpackInventory.getSizeInventory(); i++) {
+        for (int i = 0; i < backpackInventory.getSizeInventory(); i++) {
             ItemStack inventoryStack = backpackInventory.getStackInSlot(i);
-            if(BackpackUtil.areStacksEqualByOD(craftingGridStack, inventoryStack)) {
+            if (BackpackUtil.areStacksEqualByOD(craftingGridStack, inventoryStack)) {
                 mapping[recipeSlotPosition] = i;
                 return i;
             }

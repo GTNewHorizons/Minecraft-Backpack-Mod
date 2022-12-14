@@ -12,7 +12,7 @@ public class SlotPhantom extends Slot {
 
     /**
      * If the stack in this slot can be changed.
-     * 
+     *
      * @return True if the slot can be changed, false otherwise.
      */
     public boolean canChangeStack() {
@@ -23,5 +23,4 @@ public class SlotPhantom extends Slot {
     public boolean canTakeStack(EntityPlayer player) {
         return false;
     }
-
 }

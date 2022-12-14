@@ -1,10 +1,10 @@
 package de.eydamos.backpack.inventory;
 
-import net.minecraft.item.ItemStack;
 import de.eydamos.backpack.helper.InventoryHelper;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
+import net.minecraft.item.ItemStack;
 
 public class InventoryPickup extends AbstractInventoryBackpack<BackpackSave> {
     protected boolean changeable;
@@ -17,10 +17,10 @@ public class InventoryPickup extends AbstractInventoryBackpack<BackpackSave> {
 
     @Override
     public void setInventorySlotContents(int slotIndex, ItemStack newContent) {
-        if(changeable) {
+        if (changeable) {
             super.setInventorySlotContents(slotIndex, newContent);
 
-            if(eventHandler != null) {
+            if (eventHandler != null) {
                 eventHandler.onCraftMatrixChanged(this);
             }
         }
@@ -33,7 +33,7 @@ public class InventoryPickup extends AbstractInventoryBackpack<BackpackSave> {
 
     @Override
     public void writeToNBT(BackpackSave backpackSave) {
-        if(isDirty) {
+        if (isDirty) {
             InventoryHelper.writeInventory(backpackSave, Constants.NBT.INVENTORY_PICKUP_ITEMS, inventoryContent);
 
             isDirty = false;
@@ -41,7 +41,7 @@ public class InventoryPickup extends AbstractInventoryBackpack<BackpackSave> {
     }
 
     public void setInventoryContent(ItemStack backpack) {
-        if(backpack == null) {
+        if (backpack == null) {
             inventoryContent = new ItemStack[9];
             changeable = false;
         } else {
@@ -49,5 +49,4 @@ public class InventoryPickup extends AbstractInventoryBackpack<BackpackSave> {
             changeable = true;
         }
     }
-
 }

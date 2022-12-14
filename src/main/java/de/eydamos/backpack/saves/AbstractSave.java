@@ -10,7 +10,7 @@ public abstract class AbstractSave {
     public AbstractSave(NBTTagCompound data) {
         nbtTagCompound = data;
 
-        if(nbtTagCompound == null) {
+        if (nbtTagCompound == null) {
             nbtTagCompound = new NBTTagCompound();
         }
     }

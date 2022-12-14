@@ -1,9 +1,9 @@
 package de.eydamos.guiadvanced.subpart;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 import de.eydamos.guiadvanced.misc.AbstractGuiPart;
 import de.eydamos.guiadvanced.util.Rectangle;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 
 public class Icon implements AbstractGuiPart {
     protected int xPosition;
@@ -65,7 +65,7 @@ public class Icon implements AbstractGuiPart {
     @Override
     public void draw(Minecraft mc, int mouseX, int mouseY, float something) {
         Rectangle icon = new Rectangle(width, height);
-        if(image != null) {
+        if (image != null) {
             icon.setBackground(image);
         }
         icon.setBackgroundPosition(uPosition, vPosition);
@@ -78,5 +78,4 @@ public class Icon implements AbstractGuiPart {
         xPosition = guiLeft + relativePositionX;
         yPosition = guiTop + relativePositionY;
     }
-
 }

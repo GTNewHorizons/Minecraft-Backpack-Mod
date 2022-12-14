@@ -1,11 +1,11 @@
 package de.eydamos.backpack.inventory;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import de.eydamos.backpack.helper.InventoryHelper;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 
 public class InventoryRecipes extends InventoryBasic {
     protected IInventory craftingGrid = null;
@@ -19,7 +19,7 @@ public class InventoryRecipes extends InventoryBasic {
     @Override
     public void setInventorySlotContents(int slotIndex, ItemStack newContent) {
         super.setInventorySlotContents(slotIndex, newContent);
-        for(int i = 0; i < craftingGrid.getSizeInventory(); i++) {
+        for (int i = 0; i < craftingGrid.getSizeInventory(); i++) {
             ItemStack itemStack = craftingGrid.getStackInSlot(i);
             recipesIngredients[slotIndex][i] = itemStack == null ? null : itemStack.copy();
         }
@@ -28,7 +28,7 @@ public class InventoryRecipes extends InventoryBasic {
     @Override
     public void readFromNBT(BackpackSave backpackSave) {
         InventoryHelper.readInventory(backpackSave, Constants.NBT.INVENTORY_RECIPES, inventoryContent);
-        for(int i = 0; i < recipesIngredients.length; i++) {
+        for (int i = 0; i < recipesIngredients.length; i++) {
             InventoryHelper.readInventory(backpackSave, Constants.NBT.INVENTORY_RECIPE + i, recipesIngredients[i]);
         }
     }
@@ -36,13 +36,13 @@ public class InventoryRecipes extends InventoryBasic {
     @Override
     public void writeToNBT(BackpackSave backpackSave) {
         InventoryHelper.writeInventory(backpackSave, Constants.NBT.INVENTORY_RECIPES, inventoryContent);
-        for(int i = 0; i < recipesIngredients.length; i++) {
+        for (int i = 0; i < recipesIngredients.length; i++) {
             InventoryHelper.writeInventory(backpackSave, Constants.NBT.INVENTORY_RECIPE + i, recipesIngredients[i]);
         }
     }
 
     public void loadRecipe(int slotIndex) {
-        for(int i = 0; i < recipesIngredients[slotIndex].length; i++) {
+        for (int i = 0; i < recipesIngredients[slotIndex].length; i++) {
             craftingGrid.setInventorySlotContents(i, recipesIngredients[slotIndex][i]);
         }
     }

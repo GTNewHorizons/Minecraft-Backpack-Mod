@@ -1,10 +1,10 @@
 package de.eydamos.backpack.inventory;
 
+import de.eydamos.backpack.inventory.container.ContainerAdvanced;
+import de.eydamos.backpack.saves.AbstractSave;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import de.eydamos.backpack.inventory.container.ContainerAdvanced;
-import de.eydamos.backpack.saves.AbstractSave;
 
 public abstract class AbstractInventoryBackpack<S extends AbstractSave> implements IInventory, ISaveableInventory<S> {
     protected ItemStack[] inventoryContent;
@@ -16,7 +16,7 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
 
     @Override
     public int getSizeInventory() {
-        if(null == inventoryContent) {
+        if (null == inventoryContent) {
             return 0;
         }
         return inventoryContent.length;
@@ -24,7 +24,7 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        if(null != inventoryContent) {
+        if (null != inventoryContent) {
             return inventoryContent[slot];
         }
         return null;
@@ -34,14 +34,14 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
     public ItemStack decrStackSize(int slot, int amount) {
         ItemStack itemstack = null;
 
-        if(getStackInSlot(slot) != null) {
-            if(getStackInSlot(slot).stackSize <= amount) {
+        if (getStackInSlot(slot) != null) {
+            if (getStackInSlot(slot).stackSize <= amount) {
                 itemstack = getStackInSlot(slot);
                 setInventorySlotContents(slot, null);
             } else {
                 itemstack = getStackInSlot(slot).splitStack(amount);
 
-                if(getStackInSlot(slot).stackSize == 0) {
+                if (getStackInSlot(slot).stackSize == 0) {
                     setInventorySlotContents(slot, null);
                 }
             }
@@ -54,7 +54,7 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
     public ItemStack getStackInSlotOnClosing(int slot) {
         ItemStack itemstack = null;
 
-        if(getStackInSlot(slot) != null) {
+        if (getStackInSlot(slot) != null) {
             itemstack = getStackInSlot(slot);
             inventoryContent[slot] = null;
         }
@@ -64,10 +64,10 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
 
     @Override
     public void setInventorySlotContents(int slotIndex, ItemStack newContent) {
-        if(null != inventoryContent && inventoryContent.length > slotIndex) {
+        if (null != inventoryContent && inventoryContent.length > slotIndex) {
             inventoryContent[slotIndex] = newContent;
 
-            if(newContent != null && newContent.stackSize > getInventoryStackLimit()) {
+            if (newContent != null && newContent.stackSize > getInventoryStackLimit()) {
                 newContent.stackSize = getInventoryStackLimit();
             }
 
@@ -101,12 +101,10 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
     }
 
     @Override
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
@@ -115,7 +113,7 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
 
     /**
      * Set the custom name of the backpack.
-     * 
+     *
      * @param name
      */
     public void setCustomName(String name) {

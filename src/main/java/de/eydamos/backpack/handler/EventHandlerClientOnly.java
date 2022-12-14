@@ -1,37 +1,47 @@
 package de.eydamos.backpack.handler;
 
-import java.util.HashMap;
-
-import org.lwjgl.opengl.GL11;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.network.message.MessagePersonalBackpack;
+import de.eydamos.backpack.model.BackpackModelWorker;
+import java.util.UUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Pre;
 
 public class EventHandlerClientOnly {
-    public static HashMap<String, Integer> backpackDamage = new HashMap<String, Integer>();
+
+    BackpackModelWorker backRenderer = new BackpackModelWorker();
 
     @SubscribeEvent
     public void render(Pre event) {
+
         EntityPlayer entityPlayer = event.entityPlayer;
-        String UUID = entityPlayer.getUniqueID().toString();
+        NBTTagCompound playerData = entityPlayer.getEntityData();
+        if (!playerData.hasKey(Constants.NBT.PERSONAL_BACKPACK_META)) {
+            // Nope
+            return;
+        }
 
-        Backpack.packetHandler.networkWrapper.sendToServer(new MessagePersonalBackpack(UUID));
+        int backMeta = playerData.getInteger(Constants.NBT.PERSONAL_BACKPACK_META);
+        // Doing some render
+        backRenderer.renderAt(entityPlayer, backMeta);
+    }
 
-        if(backpackDamage.containsKey(UUID) && backpackDamage.get(UUID) != -1) {
-            GL11.glPushMatrix();
+    public static void updateTag(String uuid, int meta) {
 
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        World worldClient = Minecraft.getMinecraft().theWorld;
 
-            Minecraft.getMinecraft().renderEngine.bindTexture(Constants.modelTexture);
-
-            Constants.model.render(entityPlayer, 0F, 0F, 0F, 0F, 0F, 0.0625F);
-
-            GL11.glPopMatrix();
+        if (worldClient != null) {
+            // Try to find player
+            EntityPlayer player = worldClient.func_152378_a(UUID.fromString(uuid));
+            // No player
+            if (player == null) {
+                return;
+            }
+            // Uptade tag
+            player.getEntityData().setInteger(Constants.NBT.PERSONAL_BACKPACK_META, meta);
         }
     }
 }

@@ -1,9 +1,9 @@
 package de.eydamos.backpack.inventory.slot;
 
+import de.eydamos.backpack.item.ItemBackpackBase;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import de.eydamos.backpack.item.ItemBackpackBase;
 
 public class SlotBackpackOnly extends Slot {
 

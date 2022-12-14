@@ -1,15 +1,13 @@
 package de.eydamos.guiadvanced.form;
 
+import de.eydamos.guiadvanced.misc.AbstractGuiPart;
+import de.eydamos.guiadvanced.util.Rectangle;
+import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
-
 import org.lwjgl.opengl.GL11;
-
-import de.eydamos.guiadvanced.misc.AbstractGuiPart;
-import de.eydamos.guiadvanced.util.Rectangle;
-import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
 
 public class Button extends GuiButton implements AbstractGuiPart {
     protected int relativePositionX;
@@ -54,10 +52,13 @@ public class Button extends GuiButton implements AbstractGuiPart {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        if(visible) {
+        if (visible) {
             FontRenderer fontrenderer = mc.fontRenderer;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            field_146123_n = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
+            field_146123_n = mouseX >= xPosition
+                    && mouseY >= yPosition
+                    && mouseX < xPosition + width
+                    && mouseY < yPosition + height;
             int offset = getHoverState(field_146123_n);
             GL11.glEnable(GL11.GL_BLEND);
             OpenGlHelper.glBlendFunc(770, 771, 1, 0);
@@ -111,16 +112,15 @@ public class Button extends GuiButton implements AbstractGuiPart {
             mouseDragged(mc, mouseX, mouseY);
             int l = 14737632;
 
-            if(packedFGColour != 0) {
+            if (packedFGColour != 0) {
                 l = packedFGColour;
-            } else if(!enabled) {
+            } else if (!enabled) {
                 l = 10526880;
-            } else if(field_146123_n) {
+            } else if (field_146123_n) {
                 l = 16777120;
             }
 
             drawCenteredString(fontrenderer, displayString, xPosition + width / 2 + 1, yPosition + (height - 8) / 2, l);
         }
     }
-
 }

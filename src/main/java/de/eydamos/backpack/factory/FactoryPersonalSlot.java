@@ -1,9 +1,5 @@
 package de.eydamos.backpack.factory;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.gui.GuiBackpack;
@@ -21,6 +17,10 @@ import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.subpart.GuiSlot;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 
 public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
 
@@ -28,7 +28,7 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
     public ContainerAdvanced getContainer(PlayerSave player, IInventory[] inventories, EntityPlayer entityPlayer) {
         AbstractInventoryBackpack inventorySlot;
 
-        if(BackpackUtil.isServerSide()) {
+        if (BackpackUtil.isServerSide()) {
             inventorySlot = new InventoryBackpackSlot(player);
         } else {
             inventorySlot = new InventoryBasic(Localizations.INVENTORY_PERSONAL, false, 1);
@@ -54,7 +54,7 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
         x = X_SPACING;
         y += 15 + SLOT;
         // pickup inventory
-        for(int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
+        for (int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
             container.addSlot(new SlotPhantom(inventoryPickup, i, x, y));
             x += SLOT;
         }
@@ -64,8 +64,8 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
         x = X_SPACING;
         y += 24;
         // player inventory
-        for(int row = 0; row < 3; row++) {
-            for(int col = 0; col < 9; col++) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 9; col++) {
                 container.addSlot(new Slot(inventories[0], col + row * 9 + 9, x, y));
                 x += SLOT;
             }
@@ -79,7 +79,7 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
         y += 6;
 
         // hotbar
-        for(int col = 0; col < 9; col++) {
+        for (int col = 0; col < 9; col++) {
             container.addSlot(new Slot(inventories[0], col, x, y));
             x += SLOT;
         }
@@ -102,16 +102,17 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
         GuiBackpack guiBackpack = new GuiBackpack(container);
 
         GuiSlot guiSlot;
-        for(int i = 0; i < container.inventorySlots.size(); i++) {
+        for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
             guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
             guiBackpack.addSubPart(guiSlot);
         }
 
-        guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, container.getInventoryToSave().getInventoryName()));
-        guiBackpack.addSubPart(new Label(X_SPACING, 38, 0x404040, container.getInventoryPickup().getInventoryName()));
+        guiBackpack.addSubPart(
+                new Label(X_SPACING, 6, 0x404040, container.getInventoryToSave().getInventoryName()));
+        guiBackpack.addSubPart(new Label(
+                X_SPACING, 38, 0x404040, container.getInventoryPickup().getInventoryName()));
 
         return guiBackpack;
     }
-
 }

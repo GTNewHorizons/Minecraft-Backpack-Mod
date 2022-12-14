@@ -1,12 +1,12 @@
 package de.eydamos.backpack.saves;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.NBTUtil;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class PlayerSave extends AbstractSave {
     protected byte type;
@@ -31,7 +31,7 @@ public class PlayerSave extends AbstractSave {
     public void setPersonalBackpackOpen(String backpackUUID) {
         NBTUtil.setString(nbtTagCompound, Constants.NBT.PERSONAL_BACKPACK_OPEN, backpackUUID);
 
-        if(!manualSaving) {
+        if (!manualSaving) {
             save();
         }
     }
@@ -39,7 +39,7 @@ public class PlayerSave extends AbstractSave {
     public void unsetPersonalBackpackOpen() {
         NBTUtil.removeTag(nbtTagCompound, Constants.NBT.PERSONAL_BACKPACK_OPEN);
 
-        if(!manualSaving) {
+        if (!manualSaving) {
             save();
         }
     }
@@ -49,15 +49,16 @@ public class PlayerSave extends AbstractSave {
     }
 
     public ItemStack getPersonalBackpack() {
-        if(NBTUtil.hasTag(nbtTagCompound, Constants.NBT.INVENTORY_PERSONAL_BACKPACK)) {
-            return ItemStack.loadItemStackFromNBT(NBTUtil.getCompoundTag(nbtTagCompound, Constants.NBT.INVENTORY_PERSONAL_BACKPACK));
+        if (NBTUtil.hasTag(nbtTagCompound, Constants.NBT.INVENTORY_PERSONAL_BACKPACK)) {
+            return ItemStack.loadItemStackFromNBT(
+                    NBTUtil.getCompoundTag(nbtTagCompound, Constants.NBT.INVENTORY_PERSONAL_BACKPACK));
         }
 
         return null;
     }
 
     public void setPersonalBackpack(ItemStack itemStack) {
-        if(itemStack == null) {
+        if (itemStack == null) {
             NBTUtil.removeTag(nbtTagCompound, Constants.NBT.INVENTORY_PERSONAL_BACKPACK);
         } else {
             NBTTagCompound backpack = new NBTTagCompound();
@@ -65,7 +66,7 @@ public class PlayerSave extends AbstractSave {
             NBTUtil.setCompoundTag(nbtTagCompound, Constants.NBT.INVENTORY_PERSONAL_BACKPACK, backpack);
         }
 
-        if(!manualSaving) {
+        if (!manualSaving) {
             save();
         }
     }
@@ -82,7 +83,7 @@ public class PlayerSave extends AbstractSave {
 
     @Override
     public void save() {
-        if(UID != null && BackpackUtil.isServerSide()) {
+        if (UID != null && BackpackUtil.isServerSide()) {
             Backpack.saveFileHandler.savePlayer(nbtTagCompound, UID);
         }
 
@@ -91,10 +92,9 @@ public class PlayerSave extends AbstractSave {
 
     @Override
     protected void load(String UUID) {
-        if(UUID != null && BackpackUtil.isServerSide()) {
+        if (UUID != null && BackpackUtil.isServerSide()) {
             UID = UUID;
             nbtTagCompound = Backpack.saveFileHandler.loadPlayer(UID);
         }
     }
-
 }

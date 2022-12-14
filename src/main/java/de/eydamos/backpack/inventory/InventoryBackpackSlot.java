@@ -1,8 +1,8 @@
 package de.eydamos.backpack.inventory;
 
-import net.minecraft.item.ItemStack;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.PlayerSave;
+import net.minecraft.item.ItemStack;
 
 public class InventoryBackpackSlot extends AbstractInventoryBackpack<PlayerSave> {
 
@@ -14,7 +14,7 @@ public class InventoryBackpackSlot extends AbstractInventoryBackpack<PlayerSave>
 
     public InventoryBackpackSlot(PlayerSave playerSave) {
         this();
-        if(playerSave != null) {
+        if (playerSave != null) {
             readFromNBT(playerSave);
         }
     }
@@ -23,7 +23,7 @@ public class InventoryBackpackSlot extends AbstractInventoryBackpack<PlayerSave>
     public void setInventorySlotContents(int slotIndex, ItemStack newContent) {
         super.setInventorySlotContents(slotIndex, newContent);
 
-        if(eventHandler != null) {
+        if (eventHandler != null) {
             eventHandler.onCraftMatrixChanged(this);
         }
     }
@@ -35,11 +35,10 @@ public class InventoryBackpackSlot extends AbstractInventoryBackpack<PlayerSave>
 
     @Override
     public void writeToNBT(PlayerSave playerSave) {
-        if(isDirty) {
+        if (isDirty) {
             playerSave.setPersonalBackpack(inventoryContent[0]);
 
             isDirty = false;
         }
     }
-
 }

@@ -14,5 +14,4 @@ public interface AbstractGuiPart {
     public void draw(Minecraft mc, int mouseX, int mouseY, float something);
 
     public void setAbsolutePosition(int guiLeft, int guiTop);
-
 }
