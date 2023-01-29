@@ -1,18 +1,19 @@
 package de.eydamos.backpack.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemBackpack extends ItemBackpackBase {
+
     protected IIcon[] icons;
 
     /**
      * Creates an instance of the backpack item and sets some default values.
      *
-     * @param id
-     *            The item id.
+     * @param id The item id.
      */
     public ItemBackpack() {
         super();
@@ -42,8 +43,7 @@ public class ItemBackpack extends ItemBackpackBase {
     /**
      * Returns the icon index based on the item damage.
      *
-     * @param damage
-     *            The damage to check for.
+     * @param damage The damage to check for.
      * @return The icon index.
      */
     @Override

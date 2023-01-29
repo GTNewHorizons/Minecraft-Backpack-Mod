@@ -1,5 +1,17 @@
 package de.eydamos.backpack.inventory.container;
 
+import java.util.List;
+import java.util.Map;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.world.World;
+
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.InventoryCraftingGrid;
 import de.eydamos.backpack.inventory.InventoryRecipes;
@@ -10,19 +22,10 @@ import de.eydamos.backpack.util.BackpackUtil;
 import invtweaks.api.container.ChestContainer;
 import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
-import java.util.List;
-import java.util.Map;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.world.World;
 
 @ChestContainer
 public class ContainerWorkbenchBackpack extends ContainerAdvanced {
+
     protected InventoryRecipes recipes = null;
     protected InventoryCraftingGrid craftingGrid = null;
     public IInventory craftResult = new InventoryCraftResult();
@@ -37,9 +40,8 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
 
     /**
      *
-     * @param inventories
-     *            Array of inventories. Expected are: 0 PlayerInventory, 1
-     *            BackpackInventory, 2 InventoryCraftingGrid, 3 InventoryRecipes
+     * @param inventories Array of inventories. Expected are: 0 PlayerInventory, 1 BackpackInventory, 2
+     *                    InventoryCraftingGrid, 3 InventoryRecipes
      * @param backpackIS
      */
     public ContainerWorkbenchBackpack(IInventory[] inventories, BackpackSave save) {
@@ -67,8 +69,7 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
                     if (saveMode) {
                         saveMode = false;
                         if (getSlot(0).getStack() != null) {
-                            recipes.setInventorySlotContents(
-                                    slot.getSlotIndex(), getSlot(0).getStack().copy());
+                            recipes.setInventorySlotContents(slot.getSlotIndex(), getSlot(0).getStack().copy());
                         }
                     } else {
                         recipes.loadRecipe(slot.getSlotIndex());
@@ -83,17 +84,16 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
     }
 
     /**
-     * Sets the content of the crafting result slot based on the content of the
-     * crafting grid.
+     * Sets the content of the crafting result slot based on the content of the crafting grid.
      *
-     * @param inventory
-     *            The inventory that has changed.
+     * @param inventory The inventory that has changed.
      */
     @Override
     public void onCraftMatrixChanged(IInventory inventory) {
         if (inventory == craftingGrid || inventory == craftResult) {
             craftResult.setInventorySlotContents(
-                    0, CraftingManager.getInstance().findMatchingRecipe(craftingGrid, worldObj));
+                    0,
+                    CraftingManager.getInstance().findMatchingRecipe(craftingGrid, worldObj));
         }
         detectAndSendChanges();
     }
@@ -136,8 +136,7 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
     }
 
     /**
-     * Sets the save mode to true so a slot click in the recipe matrix will save
-     * the ItemStack from the result slot.
+     * Sets the save mode to true so a slot click in the recipe matrix will save the ItemStack from the result slot.
      */
     public void setSaveMode() {
         Slot slot = getSlot(0);

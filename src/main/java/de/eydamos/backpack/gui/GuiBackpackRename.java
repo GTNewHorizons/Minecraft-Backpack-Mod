@@ -1,5 +1,10 @@
 package de.eydamos.backpack.gui;
 
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
+
+import org.lwjgl.input.Keyboard;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.misc.Localizations;
@@ -7,11 +12,9 @@ import de.eydamos.guiadvanced.Window;
 import de.eydamos.guiadvanced.form.Button;
 import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.form.Textbox;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.resources.I18n;
-import org.lwjgl.input.Keyboard;
 
 public class GuiBackpackRename extends Window {
+
     private String TITLE = I18n.format(Localizations.INVENTORY_RENAME);
     private String NEW_NAME = I18n.format(Localizations.LABEL_NEW_NAME);
 
@@ -62,8 +65,7 @@ public class GuiBackpackRename extends Window {
     }
 
     /**
-     * Fired when a control is clicked. This is the equivalent of
-     * ActionListener.actionPerformed(ActionEvent e).
+     * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
      */
     @Override
     protected void actionPerformed(GuiButton guibutton) {
@@ -87,16 +89,14 @@ public class GuiBackpackRename extends Window {
     }
 
     /**
-     * Fired when a key is typed. This is the equivalent of
-     * KeyListener.keyTyped(KeyEvent e).
+     * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
      */
     @Override
     protected void keyTyped(char c, int i) {
         // add char to GuiTextField
         txt_backpackName.textboxKeyTyped(c, i);
         // enable ok button when GuiTextField content is greater than 0 chars
-        ((GuiButton) buttonList.get(0)).enabled =
-                txt_backpackName.getText().trim().length() > 0;
+        ((GuiButton) buttonList.get(0)).enabled = txt_backpackName.getText().trim().length() > 0;
         // perform click event on ok button when Enter is pressed
         if (c == '\n' || c == '\r') {
             actionPerformed((GuiButton) buttonList.get(0));

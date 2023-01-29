@@ -1,8 +1,9 @@
 package de.eydamos.backpack.inventory;
 
+import net.minecraft.item.ItemStack;
+
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.PlayerSave;
-import net.minecraft.item.ItemStack;
 
 public class InventoryBackpackSlot extends AbstractInventoryBackpack<PlayerSave> {
 

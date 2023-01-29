@@ -1,13 +1,16 @@
 package de.eydamos.guiadvanced;
 
-import de.eydamos.guiadvanced.misc.AbstractGui;
-import de.eydamos.guiadvanced.misc.AbstractGuiPart;
-import de.eydamos.guiadvanced.util.RenderHelper;
 import java.util.ArrayList;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
+import de.eydamos.guiadvanced.misc.AbstractGui;
+import de.eydamos.guiadvanced.misc.AbstractGuiPart;
+import de.eydamos.guiadvanced.util.RenderHelper;
+
 public class Window extends GuiScreen implements AbstractGui {
+
     protected ArrayList<AbstractGuiPart> subParts = new ArrayList<AbstractGuiPart>();
     protected int xSize = 0;
     protected int ySize = 0;

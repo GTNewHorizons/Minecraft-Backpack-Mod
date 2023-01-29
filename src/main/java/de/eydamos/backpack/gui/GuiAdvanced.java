@@ -5,6 +5,7 @@ import de.eydamos.backpack.inventory.container.ContainerAdvanced;
 import de.eydamos.guiadvanced.ContainerWindow;
 
 public class GuiAdvanced extends ContainerWindow {
+
     public GuiAdvanced(ContainerAdvanced container) {
         super(container);
         setWidth(container.getWidth());

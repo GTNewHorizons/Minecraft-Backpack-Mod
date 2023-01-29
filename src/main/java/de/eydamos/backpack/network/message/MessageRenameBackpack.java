@@ -1,5 +1,9 @@
 package de.eydamos.backpack.network.message;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -9,11 +13,9 @@ import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 
 public class MessageRenameBackpack implements IMessage, IMessageHandler<MessageRenameBackpack, IMessage> {
+
     protected String name;
 
     public MessageRenameBackpack() {}

@@ -1,5 +1,10 @@
 package de.eydamos.backpack.factory;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.gui.GuiBackpack;
@@ -17,10 +22,6 @@ import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.subpart.GuiSlot;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 
 public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
 
@@ -108,10 +109,8 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
             guiBackpack.addSubPart(guiSlot);
         }
 
-        guiBackpack.addSubPart(
-                new Label(X_SPACING, 6, 0x404040, container.getInventoryToSave().getInventoryName()));
-        guiBackpack.addSubPart(new Label(
-                X_SPACING, 38, 0x404040, container.getInventoryPickup().getInventoryName()));
+        guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, container.getInventoryToSave().getInventoryName()));
+        guiBackpack.addSubPart(new Label(X_SPACING, 38, 0x404040, container.getInventoryPickup().getInventoryName()));
 
         return guiBackpack;
     }

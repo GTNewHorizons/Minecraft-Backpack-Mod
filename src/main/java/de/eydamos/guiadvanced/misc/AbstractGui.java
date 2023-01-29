@@ -1,6 +1,7 @@
 package de.eydamos.guiadvanced.misc;
 
 public interface AbstractGui {
+
     public int getWidth();
 
     public void setWidth(int value);

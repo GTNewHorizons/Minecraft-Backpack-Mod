@@ -1,14 +1,17 @@
 package de.eydamos.guiadvanced.util;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
+
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
+
 public class Rectangle {
+
     protected int width;
     protected int height;
     protected int u = 0;

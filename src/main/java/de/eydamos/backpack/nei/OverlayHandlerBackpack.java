@@ -1,5 +1,12 @@
 package de.eydamos.backpack.nei;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.IOverlayHandler;
 import codechicken.nei.recipe.IRecipeHandler;
@@ -7,15 +14,11 @@ import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.inventory.container.Boundaries;
 import de.eydamos.backpack.inventory.container.ContainerWorkbenchBackpack;
 import de.eydamos.backpack.network.message.MessageRecipe;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 public class OverlayHandlerBackpack implements IOverlayHandler {
 
     public static class SlotStack {
+
         protected ItemStack itemStack;
         protected int slotIndex;
 

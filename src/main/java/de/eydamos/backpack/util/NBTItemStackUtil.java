@@ -5,12 +5,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 public class NBTItemStackUtil {
+
     /**
-     * Initializes the {@link NBTTagCompound} for the given {@link ItemStack} if
-     * it is null.
+     * Initializes the {@link NBTTagCompound} for the given {@link ItemStack} if it is null.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
      */
     private static void initNBTTagCompound(ItemStack itemStack) {
         if (itemStack.stackTagCompound == null) {
@@ -19,13 +18,10 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Checks if the {@link NBTTagCompound} of the given {@link ItemStack} has a
-     * given tag.
+     * Checks if the {@link NBTTagCompound} of the given {@link ItemStack} has a given tag.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be checked.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be checked.
      * @return True if the {@link NBTTagCompound} has the tag otherwise false.
      */
     public static boolean hasTag(ItemStack itemStack, String tagName) {
@@ -36,13 +32,10 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Removes the given tag from the {@link NBTTagCompound} of the given
-     * {@link ItemStack}.
+     * Removes the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be removed.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be removed.
      */
     public static void removeTag(ItemStack itemStack, String tagName) {
         if (itemStack.stackTagCompound != null) {
@@ -51,15 +44,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a String value of the given tag from the {@link NBTTagCompound} of
-     * the given {@link ItemStack}.
+     * Gets a String value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a String or an empty String if the
-     *         NBT Tag Compound has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a String or an empty String if the NBT Tag Compound has no such key.
      */
     public static String getString(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -70,16 +59,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given String value for the given tag on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
-     * {@link NBTTagCompound} is null it will be initialized.
+     * Sets the given String value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If
+     * the {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a String.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a String.
      */
     public static void setString(ItemStack itemStack, String tagName, String tagValue) {
         initNBTTagCompound(itemStack);
@@ -87,15 +72,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a Boolean value of the given tag from the {@link NBTTagCompound} of
-     * the given {@link ItemStack}.
+     * Gets a Boolean value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a Boolean or false if the NBT Tag
-     *         Compound has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a Boolean or false if the NBT Tag Compound has no such key.
      */
     public static Boolean getBoolean(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -106,16 +87,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given boolean value for the given tag on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
-     * {@link NBTTagCompound} is null it will be initialized.
+     * Sets the given boolean value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If
+     * the {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a boolean.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a boolean.
      */
     public static void setBoolean(ItemStack itemStack, String tagName, boolean tagValue) {
         initNBTTagCompound(itemStack);
@@ -123,15 +100,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a Byte value of the given tag from the {@link NBTTagCompound} of the
-     * given {@link ItemStack}.
+     * Gets a Byte value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a Byte or 0 if the NBT Tag Compound
-     *         has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a Byte or 0 if the NBT Tag Compound has no such key.
      */
     public static Byte getByte(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -142,16 +115,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given byte value for the given tag on the {@link NBTTagCompound}
-     * of the given {@link ItemStack}. If the {@link NBTTagCompound} is null it
-     * will be initialized.
+     * Sets the given byte value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If the
+     * {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a byte.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a byte.
      */
     public static void setByte(ItemStack itemStack, String tagName, byte tagValue) {
         initNBTTagCompound(itemStack);
@@ -159,15 +128,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a Short value of the given tag from the {@link NBTTagCompound} of
-     * the given {@link ItemStack}.
+     * Gets a Short value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a Short or 0 if the NBT Tag
-     *         Compound has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a Short or 0 if the NBT Tag Compound has no such key.
      */
     public static Short getShort(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -178,16 +143,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given short value for the given tag on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
+     * Sets the given short value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If the
      * {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a short.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a short.
      */
     public static void setShort(ItemStack itemStack, String tagName, short tagValue) {
         initNBTTagCompound(itemStack);
@@ -195,15 +156,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets an Integer value of the given tag from the {@link NBTTagCompound} of
-     * the given {@link ItemStack}.
+     * Gets an Integer value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as an Integer or 0 if the NBT Tag
-     *         Compound has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as an Integer or 0 if the NBT Tag Compound has no such key.
      */
     public static Integer getInteger(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -214,16 +171,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given integer value for the given tag on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
-     * {@link NBTTagCompound} is null it will be initialized.
+     * Sets the given integer value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If
+     * the {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as an integer.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as an integer.
      */
     public static void setInteger(ItemStack itemStack, String tagName, int tagValue) {
         initNBTTagCompound(itemStack);
@@ -231,15 +184,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a Long value of the given tag from the {@link NBTTagCompound} of the
-     * given {@link ItemStack}.
+     * Gets a Long value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a Long or 0 if the NBT Tag Compound
-     *         has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a Long or 0 if the NBT Tag Compound has no such key.
      */
     public static Long getLong(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -250,16 +199,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given long value for the given tag on the {@link NBTTagCompound}
-     * of the given {@link ItemStack}. If the {@link NBTTagCompound} is null it
-     * will be initialized.
+     * Sets the given long value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If the
+     * {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a long.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a long.
      */
     public static void setLong(ItemStack itemStack, String tagName, long tagValue) {
         initNBTTagCompound(itemStack);
@@ -267,15 +212,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a Float value of the given tag from the {@link NBTTagCompound} of
-     * the given {@link ItemStack}.
+     * Gets a Float value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a Float or 0 if the NBT Tag
-     *         Compound has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a Float or 0 if the NBT Tag Compound has no such key.
      */
     public static Float getFloat(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -286,16 +227,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given float value for the given tag on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
+     * Sets the given float value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If the
      * {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a float.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a float.
      */
     public static void setFloat(ItemStack itemStack, String tagName, float tagValue) {
         initNBTTagCompound(itemStack);
@@ -303,15 +240,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a Double value of the given tag from the {@link NBTTagCompound} of
-     * the given {@link ItemStack}.
+     * Gets a Double value of the given tag from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a Double or 0 if the NBT Tag
-     *         Compound has no such key.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
+     * @return The value of the given tag as a Double or 0 if the NBT Tag Compound has no such key.
      */
     public static Double getDouble(ItemStack itemStack, String tagName) {
         if (hasTag(itemStack, tagName)) {
@@ -322,16 +255,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given double value for the given tag on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
-     * {@link NBTTagCompound} is null it will be initialized.
+     * Sets the given double value for the given tag on the {@link NBTTagCompound} of the given {@link ItemStack}. If
+     * the {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a double.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a double.
      */
     public static void setDouble(ItemStack itemStack, String tagName, double tagValue) {
         initNBTTagCompound(itemStack);
@@ -339,13 +268,11 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a {@link NBTTagCompound} with the given tag name from the
-     * {@link NBTTagCompound} of the given {@link ItemStack}.
+     * Gets a {@link NBTTagCompound} with the given tag name from the {@link NBTTagCompound} of the given
+     * {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
      * @return The value of the given tag as a {@link NBTTagCompound}.
      */
     public static NBTTagCompound getCompoundTag(ItemStack itemStack, String tagName) {
@@ -357,17 +284,12 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Sets the given {@link NBTTagCompound} with the given tag name on the
-     * {@link NBTTagCompound} of the given {@link ItemStack}. If the
-     * {@link NBTTagCompound} is null it will be initialized.
+     * Sets the given {@link NBTTagCompound} with the given tag name on the {@link NBTTagCompound} of the given
+     * {@link ItemStack}. If the {@link NBTTagCompound} is null it will be initialized.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag which should be set.
-     * @param tagValue
-     *            The value which should be set to the given tag as a
-     *            {@link NBTTagCompound}.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag which should be set.
+     * @param tagValue  The value which should be set to the given tag as a {@link NBTTagCompound}.
      */
     public static void setCompoundTag(ItemStack itemStack, String tagName, NBTTagCompound tagValue) {
         initNBTTagCompound(itemStack);
@@ -375,13 +297,10 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a {@link NBTTagList} with the given tag name from the
-     * {@link NBTTagCompound} of the given {@link ItemStack}.
+     * Gets a {@link NBTTagList} with the given tag name from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
      * @return The value of the given tag as a {@link NBTTagCompound}.
      */
     public static NBTTagList getTagList(ItemStack itemStack, String tagName, int tagType) {
@@ -392,13 +311,10 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a {@link NBTTagList} with the given tag name from the
-     * {@link NBTTagCompound} of the given {@link ItemStack}.
+     * Gets a {@link NBTTagList} with the given tag name from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
-     * @param itemStack
-     *            The {@link ItemStack} which holds the {@link NBTTagCompound}.
-     * @param tagName
-     *            The name of the tag for which the value should be determined.
+     * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
+     * @param tagName   The name of the tag for which the value should be determined.
      * @return The value of the given tag as a {@link NBTTagCompound}.
      */
     public static void setTagList(ItemStack itemStack, String tagName, NBTTagList tagValue) {

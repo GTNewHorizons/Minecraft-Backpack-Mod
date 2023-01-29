@@ -1,14 +1,16 @@
 package de.eydamos.backpack.saves;
 
-import de.eydamos.backpack.Backpack;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.util.BackpackUtil;
-import de.eydamos.backpack.util.NBTUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import de.eydamos.backpack.Backpack;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.util.BackpackUtil;
+import de.eydamos.backpack.util.NBTUtil;
+
 public class PlayerSave extends AbstractSave {
+
     protected byte type;
 
     public PlayerSave(String uuid) {

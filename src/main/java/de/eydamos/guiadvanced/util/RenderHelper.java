@@ -1,6 +1,7 @@
 package de.eydamos.guiadvanced.util;
 
 public class RenderHelper {
+
     public enum BackgroundRepeat {
         NONE,
         REPEAT,

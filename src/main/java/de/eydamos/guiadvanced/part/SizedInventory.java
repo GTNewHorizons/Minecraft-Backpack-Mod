@@ -1,3 +1,4 @@
 package de.eydamos.guiadvanced.part;
 
-public class SizedInventory {}
+public class SizedInventory {
+}

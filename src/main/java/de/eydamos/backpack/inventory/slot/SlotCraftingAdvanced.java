@@ -1,11 +1,8 @@
 package de.eydamos.backpack.inventory.slot;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import de.eydamos.backpack.inventory.InventoryCraftingGrid;
-import de.eydamos.backpack.inventory.container.ContainerWorkbenchBackpack;
-import de.eydamos.backpack.util.BackpackUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.SlotCrafting;
@@ -15,20 +12,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import de.eydamos.backpack.inventory.InventoryCraftingGrid;
+import de.eydamos.backpack.inventory.container.ContainerWorkbenchBackpack;
+import de.eydamos.backpack.util.BackpackUtil;
+
 public class SlotCraftingAdvanced extends SlotCrafting {
+
     protected InventoryCraftingGrid craftingGrid;
     protected IInventory backpackInventory;
     protected ContainerWorkbenchBackpack eventHandler;
     protected World worldObj;
     protected boolean realResult = false;
 
-    public SlotCraftingAdvanced(
-            EntityPlayer player,
-            ContainerWorkbenchBackpack container,
-            int slotIndex,
-            int xPosition,
-            int yPosition,
-            IInventory[] inventories) {
+    public SlotCraftingAdvanced(EntityPlayer player, ContainerWorkbenchBackpack container, int slotIndex, int xPosition,
+            int yPosition, IInventory[] inventories) {
         super(player, inventories[2], container.craftResult, slotIndex, xPosition, yPosition);
         craftingGrid = (InventoryCraftingGrid) inventories[2];
         backpackInventory = inventories[1];
@@ -105,10 +103,8 @@ public class SlotCraftingAdvanced extends SlotCrafting {
     /**
      * Uses the oreDictionary to search for an alternative.
      *
-     * @param original
-     *            The original ItemStack.
-     * @return The index of the slot which has the same item as in the original
-     *         ItemStack based on the OreDictionary.
+     * @param original The original ItemStack.
+     * @return The index of the slot which has the same item as in the original ItemStack based on the OreDictionary.
      */
     protected int findAlternative(ItemStack original) {
         return findAlternative(original, 0);
@@ -117,12 +113,9 @@ public class SlotCraftingAdvanced extends SlotCrafting {
     /**
      * Uses the oreDictionary to search for an alternative.
      *
-     * @param original
-     *            The original ItemStack.
-     * @param startingSlot
-     *            The slot to start with the search.
-     * @return The index of the slot which has the same item as in the original
-     *         ItemStack based on the OreDictionary.
+     * @param original     The original ItemStack.
+     * @param startingSlot The slot to start with the search.
+     * @return The index of the slot which has the same item as in the original ItemStack based on the OreDictionary.
      */
     protected int findAlternative(ItemStack original, int startingSlot) {
         for (int i = startingSlot; i < backpackInventory.getSizeInventory(); i++) {
@@ -159,11 +152,10 @@ public class SlotCraftingAdvanced extends SlotCrafting {
     }
 
     /**
-     * Returns an ArrayList with the ingredients of the recipe. Each ItemStack
-     * holds the amount of this item needed in the recipe.
+     * Returns an ArrayList with the ingredients of the recipe. Each ItemStack holds the amount of this item needed in
+     * the recipe.
      *
-     * @return An ArrayList with all the ingredients of the current recipe and
-     *         the needed amount.
+     * @return An ArrayList with all the ingredients of the current recipe and the needed amount.
      */
     protected ArrayList<ItemStack> getRecipeIngredients() {
         ArrayList<ItemStack> currentRecipe = new ArrayList<ItemStack>();
@@ -193,12 +185,9 @@ public class SlotCraftingAdvanced extends SlotCrafting {
     /**
      * Slightly modified version of Container.mergeItemStack(...)
      *
-     * @param sourceStack
-     *            The stack that should be merged into the inventory.
-     * @param inventory
-     *            The inventory where the stack should go.
-     * @return True if the stack was put into the inventory completely, false
-     *         otherwise.
+     * @param sourceStack The stack that should be merged into the inventory.
+     * @param inventory   The inventory where the stack should go.
+     * @return True if the stack was put into the inventory completely, false otherwise.
      */
     protected boolean mergeItemStack(ItemStack sourceStack, IInventory inventory) {
         boolean result = false;
@@ -210,8 +199,7 @@ public class SlotCraftingAdvanced extends SlotCrafting {
             while (sourceStack.stackSize > 0 && currentSlotIndex < inventory.getSizeInventory()) {
                 slotStack = inventory.getStackInSlot(currentSlotIndex);
 
-                if (slotStack != null
-                        && slotStack.getItem() == sourceStack.getItem()
+                if (slotStack != null && slotStack.getItem() == sourceStack.getItem()
                         && (!sourceStack.getHasSubtypes() || sourceStack.getItemDamage() == slotStack.getItemDamage())
                         && ItemStack.areItemStackTagsEqual(sourceStack, slotStack)) {
                     int l = slotStack.stackSize + sourceStack.stackSize;

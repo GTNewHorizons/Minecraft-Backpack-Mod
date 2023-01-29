@@ -1,5 +1,16 @@
 package de.eydamos.backpack.inventory.container;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryEnderChest;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.slot.SlotCraftingAdvanced;
 import de.eydamos.backpack.inventory.slot.SlotPhantom;
@@ -9,18 +20,10 @@ import de.eydamos.backpack.util.BackpackUtil;
 import invtweaks.api.container.ChestContainer;
 import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryEnderChest;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 @ChestContainer
 public class ContainerAdvanced extends Container {
+
     protected int width;
     protected int height;
     protected IInventory inventory;
@@ -98,8 +101,7 @@ public class ContainerAdvanced extends Container {
             }
             returnStack = itemStack.copy();
 
-            if (boundaries.containsKey(Boundaries.EXTRA)
-                    && slotPos >= boundaries.get(Boundaries.EXTRA)
+            if (boundaries.containsKey(Boundaries.EXTRA) && slotPos >= boundaries.get(Boundaries.EXTRA)
                     && slotPos < boundaries.get(Boundaries.EXTRA_END)) {
                 if (!mergeItemStack(
                         itemStack,
@@ -124,52 +126,54 @@ public class ContainerAdvanced extends Container {
                 slot.onSlotChange(itemStack, returnStack);
             } else if (slotPos >= boundaries.get(Boundaries.BACKPACK)
                     && slotPos < boundaries.get(Boundaries.BACKPACK_END)) { // from backpack
-                if (!mergeItemStack(
-                        itemStack,
-                        boundaries.get(Boundaries.HOTBAR),
-                        boundaries.get(Boundaries.HOTBAR_END),
-                        true)) { // to hotbar
-                    if (!mergeItemStack(
-                            itemStack,
-                            boundaries.get(Boundaries.INVENTORY),
-                            boundaries.get(Boundaries.INVENTORY_END),
-                            false)) { // to inventory
-                        return null;
-                    }
-                }
-            } else if (slotPos >= boundaries.get(Boundaries.INVENTORY)
-                    && slotPos < boundaries.get(Boundaries.INVENTORY_END)) { // from inventory
-                if (!mergeItemStack(
-                        itemStack,
-                        boundaries.get(Boundaries.BACKPACK),
-                        boundaries.get(Boundaries.BACKPACK_END),
-                        false)) { // to backpack
-                    if (!mergeItemStack(
-                            itemStack,
-                            boundaries.get(Boundaries.HOTBAR),
-                            boundaries.get(Boundaries.HOTBAR_END),
-                            true)) { // to hotbar
-                        return null;
-                    }
-                }
-            } else if (slotPos >= boundaries.get(Boundaries.HOTBAR)
-                    && slotPos < boundaries.get(Boundaries.HOTBAR_END)) { // from hotbar
-                if (!mergeItemStack(
-                        itemStack,
-                        boundaries.get(Boundaries.BACKPACK),
-                        boundaries.get(Boundaries.BACKPACK_END),
-                        false)) { // to backpack
-                    if (!mergeItemStack(
-                            itemStack,
-                            boundaries.get(Boundaries.INVENTORY),
-                            boundaries.get(Boundaries.INVENTORY_END),
-                            false)) { // to inventory
-                        return null;
-                    }
-                }
-            } else {
-                return null;
-            }
+                        if (!mergeItemStack(
+                                itemStack,
+                                boundaries.get(Boundaries.HOTBAR),
+                                boundaries.get(Boundaries.HOTBAR_END),
+                                true)) { // to hotbar
+                            if (!mergeItemStack(
+                                    itemStack,
+                                    boundaries.get(Boundaries.INVENTORY),
+                                    boundaries.get(Boundaries.INVENTORY_END),
+                                    false)) { // to inventory
+                                return null;
+                            }
+                        }
+                    } else
+                if (slotPos >= boundaries.get(Boundaries.INVENTORY)
+                        && slotPos < boundaries.get(Boundaries.INVENTORY_END)) { // from inventory
+                            if (!mergeItemStack(
+                                    itemStack,
+                                    boundaries.get(Boundaries.BACKPACK),
+                                    boundaries.get(Boundaries.BACKPACK_END),
+                                    false)) { // to backpack
+                                if (!mergeItemStack(
+                                        itemStack,
+                                        boundaries.get(Boundaries.HOTBAR),
+                                        boundaries.get(Boundaries.HOTBAR_END),
+                                        true)) { // to hotbar
+                                    return null;
+                                }
+                            }
+                        } else
+                    if (slotPos >= boundaries.get(Boundaries.HOTBAR)
+                            && slotPos < boundaries.get(Boundaries.HOTBAR_END)) { // from hotbar
+                                if (!mergeItemStack(
+                                        itemStack,
+                                        boundaries.get(Boundaries.BACKPACK),
+                                        boundaries.get(Boundaries.BACKPACK_END),
+                                        false)) { // to backpack
+                                    if (!mergeItemStack(
+                                            itemStack,
+                                            boundaries.get(Boundaries.INVENTORY),
+                                            boundaries.get(Boundaries.INVENTORY_END),
+                                            false)) { // to inventory
+                                        return null;
+                                    }
+                                }
+                            } else {
+                                return null;
+                            }
 
             if (itemStack.stackSize == 0) {
                 slot.putStack((ItemStack) null);
@@ -188,8 +192,7 @@ public class ContainerAdvanced extends Container {
     }
 
     /**
-     * Copy of mergeItemStack from class Container, which will ignore disabled
-     * slots.
+     * Copy of mergeItemStack from class Container, which will ignore disabled slots.
      */
     @Override
     protected boolean mergeItemStack(ItemStack sourceStack, int firstSlot, int lastSlot, boolean backwards) {
@@ -208,12 +211,11 @@ public class ContainerAdvanced extends Container {
                     && (!backwards && currentSlotIndex < lastSlot || backwards && currentSlotIndex >= firstSlot)) {
                 slot = (Slot) inventorySlots.get(currentSlotIndex);
                 if (
-                /*!(slot instanceof SlotScrolling && ((SlotScrolling) slot).isDisabled()) && */ slot.isItemValid(
-                        sourceStack)) {
+                /* !(slot instanceof SlotScrolling && ((SlotScrolling) slot).isDisabled()) && */ slot
+                        .isItemValid(sourceStack)) {
                     slotStack = slot.getStack();
 
-                    if (slotStack != null
-                            && slotStack.getItem() == sourceStack.getItem()
+                    if (slotStack != null && slotStack.getItem() == sourceStack.getItem()
                             && (!sourceStack.getHasSubtypes()
                                     || sourceStack.getItemDamage() == slotStack.getItemDamage())
                             && ItemStack.areItemStackTagsEqual(sourceStack, slotStack)) {
@@ -251,8 +253,8 @@ public class ContainerAdvanced extends Container {
             while (!backwards && currentSlotIndex < lastSlot || backwards && currentSlotIndex >= firstSlot) {
                 slot = (Slot) inventorySlots.get(currentSlotIndex);
                 if (
-                /*!(slot instanceof SlotScrolling && ((SlotScrolling) slot).isDisabled()) && */ slot.isItemValid(
-                        sourceStack)) {
+                /* !(slot instanceof SlotScrolling && ((SlotScrolling) slot).isDisabled()) && */ slot
+                        .isItemValid(sourceStack)) {
                     slotStack = slot.getStack();
 
                     if (slotStack == null) {
@@ -288,16 +290,12 @@ public class ContainerAdvanced extends Container {
     /**
      * Handles clicking on a phantom slot.
      *
-     * @param slot
-     *            The slot that has been clicked.
-     * @param mouseButton
-     *            The mouse button identifier: 0: left click 1: right click &
-     *            left click during drag and drop 2: middle click (scrollwheel)
-     * @param modifier
-     *            The mouse modifier: 0: normal click 3: drag and drop middle
-     *            click 5: drag and drop left or right click
-     * @param stackHeld
-     *            The stack that the player holds on his mouse.
+     * @param slot        The slot that has been clicked.
+     * @param mouseButton The mouse button identifier: 0: left click 1: right click & left click during drag and drop 2:
+     *                    middle click (scrollwheel)
+     * @param modifier    The mouse modifier: 0: normal click 3: drag and drop middle click 5: drag and drop left or
+     *                    right click
+     * @param stackHeld   The stack that the player holds on his mouse.
      */
     protected void slotPhantomClick(Slot slot, int mouseButton, int modifier, ItemStack stackHeld) {
         if (((SlotPhantom) slot).canChangeStack()) {

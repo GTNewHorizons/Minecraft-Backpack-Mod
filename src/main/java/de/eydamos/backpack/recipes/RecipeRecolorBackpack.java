@@ -1,9 +1,7 @@
 package de.eydamos.backpack.recipes;
 
-import de.eydamos.backpack.item.ItemBackpack;
-import de.eydamos.backpack.item.ItemsBackpack;
-import de.eydamos.backpack.util.BackpackUtil;
 import java.util.ArrayList;
+
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -12,7 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
+import de.eydamos.backpack.item.ItemBackpack;
+import de.eydamos.backpack.item.ItemsBackpack;
+import de.eydamos.backpack.util.BackpackUtil;
+
 public class RecipeRecolorBackpack implements IRecipe {
+
     private ArrayList<Item> allowedDyes = new ArrayList<Item>();
     private ItemStack result;
 

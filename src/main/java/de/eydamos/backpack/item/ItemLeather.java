@@ -1,14 +1,16 @@
 package de.eydamos.backpack.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemLeather extends Item {
+
     protected IIcon[] icons;
 
     public ItemLeather() {
@@ -18,9 +20,8 @@ public class ItemLeather extends Item {
     }
 
     /**
-     * Returns the unlocalized name of this item. This version accepts an
-     * ItemStack so different stacks can have different names based on their
-     * damage or NBT.
+     * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
+     * different names based on their damage or NBT.
      */
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
@@ -47,8 +48,7 @@ public class ItemLeather extends Item {
     /**
      * Returns the icon index based on the item damage.
      *
-     * @param damage
-     *            The damage to check for.
+     * @param damage The damage to check for.
      * @return The icon index.
      */
     @Override

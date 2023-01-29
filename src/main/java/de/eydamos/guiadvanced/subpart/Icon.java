@@ -1,11 +1,13 @@
 package de.eydamos.guiadvanced.subpart;
 
-import de.eydamos.guiadvanced.misc.AbstractGuiPart;
-import de.eydamos.guiadvanced.util.Rectangle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
+import de.eydamos.guiadvanced.misc.AbstractGuiPart;
+import de.eydamos.guiadvanced.util.Rectangle;
+
 public class Icon implements AbstractGuiPart {
+
     protected int xPosition;
     protected int yPosition;
     protected int uPosition;

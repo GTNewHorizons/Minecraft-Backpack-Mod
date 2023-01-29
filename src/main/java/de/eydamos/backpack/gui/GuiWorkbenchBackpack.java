@@ -1,12 +1,14 @@
 package de.eydamos.backpack.gui;
 
+import java.util.ArrayList;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
+
 import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.inventory.container.ContainerAdvanced;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
-import java.util.ArrayList;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.resources.I18n;
 
 public class GuiWorkbenchBackpack extends GuiAdvanced {
 

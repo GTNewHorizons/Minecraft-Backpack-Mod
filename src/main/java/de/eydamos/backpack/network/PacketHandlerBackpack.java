@@ -13,6 +13,7 @@ import de.eydamos.backpack.network.message.MessageRecipe;
 import de.eydamos.backpack.network.message.MessageRenameBackpack;
 
 public class PacketHandlerBackpack {
+
     public final SimpleNetworkWrapper networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MOD_ID);
 
     public void initialise() {

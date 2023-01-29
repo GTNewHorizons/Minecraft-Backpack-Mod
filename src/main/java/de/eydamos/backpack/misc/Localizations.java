@@ -1,6 +1,7 @@
 package de.eydamos.backpack.misc;
 
 public class Localizations {
+
     // localization
     public static final String TAB_BACKPACKS = "tab.backpacks";
 

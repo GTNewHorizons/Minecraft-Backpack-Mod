@@ -1,12 +1,14 @@
 package de.eydamos.backpack.inventory;
 
+import net.minecraft.item.ItemStack;
+
 import de.eydamos.backpack.helper.InventoryHelper;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
-import net.minecraft.item.ItemStack;
 
 public class InventoryPickup extends AbstractInventoryBackpack<BackpackSave> {
+
     protected boolean changeable;
 
     public InventoryPickup() {

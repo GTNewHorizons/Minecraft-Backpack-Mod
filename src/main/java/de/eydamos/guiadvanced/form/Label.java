@@ -1,11 +1,13 @@
 package de.eydamos.guiadvanced.form;
 
-import de.eydamos.guiadvanced.misc.AbstractGuiPart;
-import de.eydamos.guiadvanced.util.Alignment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 
+import de.eydamos.guiadvanced.misc.AbstractGuiPart;
+import de.eydamos.guiadvanced.util.Alignment;
+
 public class Label implements AbstractGuiPart {
+
     protected int xPosition;
     protected int yPosition;
     protected int color;

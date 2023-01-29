@@ -1,5 +1,9 @@
 package de.eydamos.backpack.network.message;
 
+import java.util.UUID;
+
+import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -8,10 +12,9 @@ import de.eydamos.backpack.handler.EventHandlerClientOnly;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import io.netty.buffer.ByteBuf;
-import java.util.UUID;
-import net.minecraft.item.ItemStack;
 
 public class MessagePersonalBackpack implements IMessage, IMessageHandler<MessagePersonalBackpack, IMessage> {
+
     protected String playerUUID = "";
     protected int backpackDamage = -1;
 

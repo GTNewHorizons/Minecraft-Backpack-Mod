@@ -3,6 +3,7 @@ package de.eydamos.guiadvanced.misc;
 import net.minecraft.client.Minecraft;
 
 public interface AbstractGuiPart {
+
     public int getWidth();
 
     public void setWidth(int value);

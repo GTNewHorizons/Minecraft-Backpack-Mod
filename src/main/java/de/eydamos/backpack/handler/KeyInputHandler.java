@@ -1,5 +1,11 @@
 package de.eydamos.backpack.handler;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+
+import org.lwjgl.input.Keyboard;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -8,15 +14,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.EntityPlayer;
-import org.lwjgl.input.Keyboard;
 
 @SideOnly(Side.CLIENT)
 public class KeyInputHandler {
-    public static KeyBinding personalBackpack =
-            new KeyBinding(Localizations.KEY_PERSONAL, Keyboard.KEY_B, Localizations.KEY_CATEGORY);
+
+    public static KeyBinding personalBackpack = new KeyBinding(
+            Localizations.KEY_PERSONAL,
+            Keyboard.KEY_B,
+            Localizations.KEY_CATEGORY);
 
     @SubscribeEvent
     public void handleKeyInput(KeyInputEvent event) {

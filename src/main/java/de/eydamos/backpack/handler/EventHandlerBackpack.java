@@ -1,5 +1,16 @@
 package de.eydamos.backpack.handler;
 
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerDropsEvent;
+import net.minecraftforge.event.world.WorldEvent;
+
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -17,16 +28,6 @@ import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.NBTItemStackUtil;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerDropsEvent;
-import net.minecraftforge.event.world.WorldEvent;
 
 public class EventHandlerBackpack {
 
@@ -68,12 +69,13 @@ public class EventHandlerBackpack {
                 counter -= ConfigurationBackpack.MAX_BACKPACK_AMOUNT;
                 if (counter > 0) {
                     IChatComponent message = new ChatComponentText("[Backpacks] ");
-                    message.appendSibling(new ChatComponentTranslation(
-                            Localizations.MESSAGE_ALLOWED_BACKPACKS, ConfigurationBackpack.MAX_BACKPACK_AMOUNT));
+                    message.appendSibling(
+                            new ChatComponentTranslation(
+                                    Localizations.MESSAGE_ALLOWED_BACKPACKS,
+                                    ConfigurationBackpack.MAX_BACKPACK_AMOUNT));
                     player.addChatMessage(message);
-                    message = new ChatComponentText("[Backpacks] ")
-                            .appendSibling(
-                                    new ChatComponentTranslation(Localizations.MESSAGE_DROPPED_BACKPACKS, counter));
+                    message = new ChatComponentText("[Backpacks] ").appendSibling(
+                            new ChatComponentTranslation(Localizations.MESSAGE_DROPPED_BACKPACKS, counter));
                     player.addChatMessage(message);
                 }
             }
@@ -104,8 +106,13 @@ public class EventHandlerBackpack {
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         ItemStack backpack = playerSave.getPersonalBackpack();
         if (backpack != null) {
-            event.drops.add(new EntityItem(
-                    entityPlayer.worldObj, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ, backpack));
+            event.drops.add(
+                    new EntityItem(
+                            entityPlayer.worldObj,
+                            entityPlayer.posX,
+                            entityPlayer.posY,
+                            entityPlayer.posZ,
+                            backpack));
             playerSave.setPersonalBackpack(null);
         }
     }

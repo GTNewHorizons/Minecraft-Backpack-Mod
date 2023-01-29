@@ -1,5 +1,10 @@
 package de.eydamos.backpack.network.message;
 
+import java.util.ArrayList;
+
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -7,11 +12,9 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.eydamos.backpack.inventory.container.ContainerWorkbenchBackpack;
 import de.eydamos.backpack.nei.OverlayHandlerBackpack.SlotStack;
 import io.netty.buffer.ByteBuf;
-import java.util.ArrayList;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
 
 public class MessageRecipe implements IMessage, IMessageHandler<MessageRecipe, IMessage> {
+
     protected ArrayList<SlotStack> recipeList;
 
     public MessageRecipe() {

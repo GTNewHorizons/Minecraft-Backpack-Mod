@@ -1,7 +1,8 @@
 package de.eydamos.backpack.inventory;
 
-import de.eydamos.backpack.saves.BackpackSave;
 import net.minecraft.item.ItemStack;
+
+import de.eydamos.backpack.saves.BackpackSave;
 
 public class InventoryBasic extends AbstractInventoryBackpack<BackpackSave> {
 

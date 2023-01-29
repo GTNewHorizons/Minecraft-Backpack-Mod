@@ -1,3 +1,4 @@
 package de.eydamos.guiadvanced.subpart;
 
-public class ProgressBar {}
+public class ProgressBar {
+}

@@ -3,6 +3,7 @@ package de.eydamos.backpack.saves;
 import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class AbstractSave {
+
     protected String UID;
     protected NBTTagCompound nbtTagCompound;
     protected boolean manualSaving = false;

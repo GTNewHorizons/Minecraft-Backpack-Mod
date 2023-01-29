@@ -3,6 +3,7 @@ package de.eydamos.backpack.misc;
 import net.minecraft.util.ResourceLocation;
 
 public class Constants {
+
     public static final String MOD_ID = "Backpack";
     public static final String MOD_NAME = "Backpack Editted for ModdedNetwork";
     public static final String MOD_VERSION = "GRADLETOKEN_VERSION";
@@ -20,11 +21,13 @@ public class Constants {
     public static final ResourceLocation modelTexture = new ResourceLocation(DOMAIN, "textures/model/backpack.png");
 
     public class Guis {
+
         public static final byte OPEN_PERSONAL_BACKPACK = 0;
         public static final byte OPEN_PERSONAL_SLOT = 1;
     }
 
     public class GuiCommands {
+
         public static final byte CLEAR = 1;
         public static final byte SAVE = 2;
         public static final byte PREV = 3;
@@ -32,6 +35,7 @@ public class Constants {
     }
 
     public class NBT {
+
         public static final String INVENTORIES = "backpackInventories";
         public static final String INVENTORY_BACKPACK = "backpack";
         public static final String INVENTORY_PERSONAL_BACKPACK = "personalBackpack";
@@ -51,5 +55,6 @@ public class Constants {
         public static final String PERSONAL_BACKPACK_META = "pBackpackMeta";
     }
 
-    public class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {}
+    public class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {
+    }
 }

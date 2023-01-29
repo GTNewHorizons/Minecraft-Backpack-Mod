@@ -1,17 +1,20 @@
 package de.eydamos.backpack.inventory;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import de.eydamos.backpack.helper.InventoryHelper;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.saves.BackpackSave;
-import de.eydamos.backpack.util.BackpackUtil;
 import java.util.Arrays;
+
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
+import de.eydamos.backpack.helper.InventoryHelper;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.saves.BackpackSave;
+import de.eydamos.backpack.util.BackpackUtil;
+
 public class InventoryCraftingGrid extends InventoryCrafting implements ISaveableInventory<BackpackSave> {
+
     protected AbstractInventoryBackpack backpackInventory = null;
     protected boolean useInventoryMode = false;
     protected boolean isDirty = false;
@@ -89,11 +92,9 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
     }
 
     /**
-     * Sets if the craftMatrix should use the backpacks inventory to provide
-     * it's content.
+     * Sets if the craftMatrix should use the backpacks inventory to provide it's content.
      *
-     * @param value
-     *            The new value for the mode.
+     * @param value The new value for the mode.
      */
     public void setUseInventoryMode(boolean value) {
         useInventoryMode = value;
@@ -103,11 +104,9 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
     }
 
     /**
-     * Will try to find a slot with the same ItemStack as the given slot from
-     * the craft matrix.
+     * Will try to find a slot with the same ItemStack as the given slot from the craft matrix.
      *
-     * @param recipeSlotPosition
-     *            The index of the slot in the craft matrix.
+     * @param recipeSlotPosition The index of the slot in the craft matrix.
      * @return The slot number with the same content or -1 if nothing was found.
      */
     protected int findCorrespondingSlot(int recipeSlotPosition) {

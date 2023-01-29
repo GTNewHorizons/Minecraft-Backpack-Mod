@@ -1,14 +1,16 @@
 package de.eydamos.backpack.recipes;
 
-import de.eydamos.backpack.item.ItemBackpackBase;
-import de.eydamos.backpack.item.ItemLeather;
-import de.eydamos.backpack.item.ItemsBackpack;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
+import de.eydamos.backpack.item.ItemBackpackBase;
+import de.eydamos.backpack.item.ItemLeather;
+import de.eydamos.backpack.item.ItemsBackpack;
+
 public class RecipeEnhanceBackpack implements IRecipe {
+
     private ItemStack result;
 
     @Override

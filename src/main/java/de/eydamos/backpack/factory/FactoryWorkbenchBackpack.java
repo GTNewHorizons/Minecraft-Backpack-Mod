@@ -1,5 +1,10 @@
 package de.eydamos.backpack.factory;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.gui.GuiWorkbenchBackpack;
@@ -18,12 +23,9 @@ import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.subpart.GuiSlot;
 import de.eydamos.guiadvanced.subpart.Icon;
 import de.eydamos.guiadvanced.util.Alignment;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 
 public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
+
     protected final int BIG_X_SPACING = 30;
 
     @Override

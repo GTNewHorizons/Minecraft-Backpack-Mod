@@ -1,14 +1,16 @@
 package de.eydamos.backpack.handler;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.model.BackpackModelWorker;
 import java.util.UUID;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent.Specials.Pre;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.model.BackpackModelWorker;
 
 public class EventHandlerClientOnly {
 

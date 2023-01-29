@@ -1,12 +1,14 @@
 package de.eydamos.backpack.inventory;
 
-import de.eydamos.backpack.inventory.container.ContainerAdvanced;
-import de.eydamos.backpack.saves.AbstractSave;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
+import de.eydamos.backpack.inventory.container.ContainerAdvanced;
+import de.eydamos.backpack.saves.AbstractSave;
+
 public abstract class AbstractInventoryBackpack<S extends AbstractSave> implements IInventory, ISaveableInventory<S> {
+
     protected ItemStack[] inventoryContent;
     protected String defaultName;
     protected String customName;

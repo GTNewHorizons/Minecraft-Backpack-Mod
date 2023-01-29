@@ -1,15 +1,17 @@
 package de.eydamos.backpack.recipes;
 
-import de.eydamos.backpack.item.ItemWorkbenchBackpack;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.util.NBTItemStackUtil;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
+import de.eydamos.backpack.item.ItemWorkbenchBackpack;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.util.NBTItemStackUtil;
+
 public class RecipeIntelligentWorkbenchBackpack implements IRecipe {
+
     private ItemStack result;
 
     @Override

@@ -1,15 +1,18 @@
 package de.eydamos.guiadvanced.form;
 
-import de.eydamos.guiadvanced.misc.AbstractGuiPart;
-import de.eydamos.guiadvanced.util.Rectangle;
-import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.OpenGlHelper;
+
 import org.lwjgl.opengl.GL11;
 
+import de.eydamos.guiadvanced.misc.AbstractGuiPart;
+import de.eydamos.guiadvanced.util.Rectangle;
+import de.eydamos.guiadvanced.util.RenderHelper.BackgroundRepeat;
+
 public class Button extends GuiButton implements AbstractGuiPart {
+
     protected int relativePositionX;
     protected int relativePositionY;
 
@@ -55,8 +58,7 @@ public class Button extends GuiButton implements AbstractGuiPart {
         if (visible) {
             FontRenderer fontrenderer = mc.fontRenderer;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            field_146123_n = mouseX >= xPosition
-                    && mouseY >= yPosition
+            field_146123_n = mouseX >= xPosition && mouseY >= yPosition
                     && mouseX < xPosition + width
                     && mouseY < yPosition + height;
             int offset = getHoverState(field_146123_n);

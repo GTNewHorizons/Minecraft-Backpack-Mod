@@ -1,13 +1,15 @@
 package de.eydamos.backpack.inventory;
 
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+
 import de.eydamos.backpack.helper.InventoryHelper;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 
 public class InventoryRecipes extends InventoryBasic {
+
     protected IInventory craftingGrid = null;
     protected ItemStack[][] recipesIngredients = new ItemStack[9][9];
 

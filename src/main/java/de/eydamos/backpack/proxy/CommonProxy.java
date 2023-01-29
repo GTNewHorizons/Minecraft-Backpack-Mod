@@ -1,11 +1,13 @@
 package de.eydamos.backpack.proxy;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.handler.EventHandlerBackpack;
-import net.minecraftforge.common.MinecraftForge;
 
 public abstract class CommonProxy implements IProxy {
+
     @Override
     public void registerHandlers() {
         Backpack.packetHandler.initialise();

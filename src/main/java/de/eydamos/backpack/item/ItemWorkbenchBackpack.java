@@ -1,17 +1,20 @@
 package de.eydamos.backpack.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.eydamos.backpack.misc.Localizations;
-import de.eydamos.backpack.saves.BackpackSave;
 import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.eydamos.backpack.misc.Localizations;
+import de.eydamos.backpack.saves.BackpackSave;
+
 public class ItemWorkbenchBackpack extends ItemBackpackBase {
+
     protected IIcon[] icons;
 
     public ItemWorkbenchBackpack() {
@@ -33,8 +36,7 @@ public class ItemWorkbenchBackpack extends ItemBackpackBase {
     /**
      * Returns the icon index based on the item damage.
      *
-     * @param damage
-     *            The damage to check for.
+     * @param damage The damage to check for.
      * @return The icon index.
      */
     @Override
@@ -51,8 +53,8 @@ public class ItemWorkbenchBackpack extends ItemBackpackBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(
-            ItemStack itemStack, EntityPlayer entityPlayer, List information, boolean advancedTooltip) {
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List information,
+            boolean advancedTooltip) {
         super.addInformation(itemStack, entityPlayer, information, advancedTooltip);
         BackpackSave backpackSave = new BackpackSave(itemStack);
         if (backpackSave.isIntelligent()) {

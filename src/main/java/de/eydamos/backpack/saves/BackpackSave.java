@@ -1,5 +1,12 @@
 package de.eydamos.backpack.saves;
 
+import java.util.UUID;
+
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants.NBT;
+
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.misc.ConfigurationBackpack;
@@ -7,13 +14,9 @@ import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 import de.eydamos.backpack.util.NBTUtil;
-import java.util.UUID;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.util.Constants.NBT;
 
 public class BackpackSave extends AbstractSave {
+
     public BackpackSave(String uuid) {
         super(uuid);
     }
@@ -49,8 +52,8 @@ public class BackpackSave extends AbstractSave {
 
     public void initialize(ItemStack backpack) {
         if (backpack.getItem() instanceof ItemBackpackBase && BackpackUtil.isServerSide()) {
-            NBTItemStackUtil.setString(
-                    backpack, Constants.NBT.NAME, backpack.getItem().getUnlocalizedName(backpack) + ".name");
+            NBTItemStackUtil
+                    .setString(backpack, Constants.NBT.NAME, backpack.getItem().getUnlocalizedName(backpack) + ".name");
             if (!NBTItemStackUtil.hasTag(backpack, Constants.NBT.UID)) {
                 UID = UUID.randomUUID().toString();
                 NBTItemStackUtil.setString(backpack, Constants.NBT.UID, UID);

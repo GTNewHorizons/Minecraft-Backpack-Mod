@@ -1,5 +1,10 @@
 package de.eydamos.backpack.network.message;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.NBTTagCompound;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -13,12 +18,9 @@ import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.util.NBTUtil;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpenBackpack, IMessage> {
+
     protected String uuid;
     protected byte type;
     protected int slotsPerRow = 9;
@@ -83,9 +85,11 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
 
         BackpackSave backpackSave = new BackpackSave(nbtTagCompound);
 
-        Minecraft.getMinecraft()
-                .displayGuiScreen(FactoryBackpack.getGuiContainer(
-                        backpackSave, new IInventory[] {entityPlayer.inventory, backpackInventory}, entityPlayer));
+        Minecraft.getMinecraft().displayGuiScreen(
+                FactoryBackpack.getGuiContainer(
+                        backpackSave,
+                        new IInventory[] { entityPlayer.inventory, backpackInventory },
+                        entityPlayer));
         entityPlayer.openContainer.windowId = message.windowId;
 
         return null;

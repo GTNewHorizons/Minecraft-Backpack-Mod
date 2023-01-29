@@ -1,5 +1,10 @@
 package de.eydamos.backpack.helper;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.Backpack;
@@ -14,12 +19,9 @@ import de.eydamos.backpack.network.message.MessageRenameBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 
 public class GuiHelper {
+
     @SideOnly(Side.CLIENT)
     public static void displayRenameGui() {
         Minecraft.getMinecraft().displayGuiScreen(new GuiBackpackRename());
@@ -34,8 +36,8 @@ public class GuiHelper {
         MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
         Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
 
-        Container container = FactoryBackpack.getContainer(
-                backpackSave, new IInventory[] {entityPlayer.inventory, inventory}, entityPlayer);
+        Container container = FactoryBackpack
+                .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
         openContainer(container, entityPlayer);
 
         BackpackUtil.playOpenSound(entityPlayer);
@@ -53,8 +55,8 @@ public class GuiHelper {
         MessageOpenPersonalSlot message = new MessageOpenPersonalSlot(entityPlayer.currentWindowId);
         Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
 
-        Container container =
-                FactoryBackpack.getContainer(playerSave, new IInventory[] {entityPlayer.inventory}, entityPlayer);
+        Container container = FactoryBackpack
+                .getContainer(playerSave, new IInventory[] { entityPlayer.inventory }, entityPlayer);
         openContainer(container, entityPlayer);
     }
 

@@ -1,16 +1,7 @@
 package de.eydamos.backpack.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.eydamos.backpack.helper.GuiHelper;
-import de.eydamos.backpack.inventory.InventoryBackpack;
-import de.eydamos.backpack.misc.ConfigurationBackpack;
-import de.eydamos.backpack.misc.Constants;
-import de.eydamos.backpack.misc.Localizations;
-import de.eydamos.backpack.saves.BackpackSave;
-import de.eydamos.backpack.util.BackpackUtil;
-import de.eydamos.backpack.util.NBTItemStackUtil;
 import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,9 +12,22 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.eydamos.backpack.helper.GuiHelper;
+import de.eydamos.backpack.inventory.InventoryBackpack;
+import de.eydamos.backpack.misc.ConfigurationBackpack;
+import de.eydamos.backpack.misc.Constants;
+import de.eydamos.backpack.misc.Localizations;
+import de.eydamos.backpack.saves.BackpackSave;
+import de.eydamos.backpack.util.BackpackUtil;
+import de.eydamos.backpack.util.NBTItemStackUtil;
+
 public class ItemBackpackBase extends Item {
+
     public ItemBackpackBase() {
         setMaxStackSize(1);
         setHasSubtypes(true);
@@ -33,12 +37,9 @@ public class ItemBackpackBase extends Item {
     /**
      * Returns the sub items.
      *
-     * @param itemId
-     *            the id of the item
-     * @param tab
-     *            A creative tab.
-     * @param A
-     *            List which stores the sub items.
+     * @param itemId the id of the item
+     * @param tab    A creative tab.
+     * @param A      List which stores the sub items.
      */
     @Override
     @SideOnly(Side.CLIENT)
@@ -57,114 +58,50 @@ public class ItemBackpackBase extends Item {
     }
 
     /**
-     * Callback for item usage. If the item does something special on right
-     * clicking, he will have one of those. Return True if something happen and
-     * false if it don't. This is for ITEMS, not BLOCKS
+     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
+     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      *
-     * @param stack
-     *            The ItemStack which is used
-     * @param player
-     *            The player who used the item
-     * @param worldObj
-     *            The world in which the click has occurred
-     * @param x
-     *            The x coord of the clicked block
-     * @param y
-     *            The y coord of the clicked block
-     * @param z
-     *            The z coord of the clicked block
-     * @param side
-     *            The side of the block that was clicked
-     * @param hitX
-     *            The x position on the block which got clicked
-     * @param hitY
-     *            The y position on the block which got clicked
-     * @param hitz
-     *            The z position on the block which got clicked
+     * @param stack    The ItemStack which is used
+     * @param player   The player who used the item
+     * @param worldObj The world in which the click has occurred
+     * @param x        The x coord of the clicked block
+     * @param y        The y coord of the clicked block
+     * @param z        The z coord of the clicked block
+     * @param side     The side of the block that was clicked
+     * @param hitX     The x position on the block which got clicked
+     * @param hitY     The y position on the block which got clicked
+     * @param hitz     The z position on the block which got clicked
      */
     @Override
-    public boolean onItemUse(
-            ItemStack stack,
-            EntityPlayer player,
-            World worldObj,
-            int x,
-            int y,
-            int z,
-            int side,
-            float hitX,
-            float hitY,
-            float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World worldObj, int x, int y, int z, int side,
+            float hitX, float hitY, float hitZ) {
         /*
-        TileEntity te = worldObj.getTileEntity(x, y, z);
-        if(te != null && (te instanceof IInventory || te instanceof TileEntityEnderChest)) {
-            boolean openGui = false;
-            if(te instanceof TileEntityChest) {
-                openGui = true;
-            }
-            if(te instanceof TileEntityEnderChest && !BackpackUtil.isEnderBackpack(stack)) {
-                openGui = true;
-            }
-            if(te instanceof TileEntityFurnace) {
-                openGui = true;
-            }
-            if(te instanceof TileEntityHopper) {
-                openGui = true;
-            }
-            if(te instanceof TileEntityBrewingStand) {
-                openGui = true;
-            }
-            if(te instanceof TileEntityDispenser) {
-                openGui = true;
-            }
-            if(te instanceof TileEntityDropper) {
-                openGui = true;
-            }
-
-            if(te.getClass().getSimpleName().equals("TileEntityDirtChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntityCopperChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntityIronChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntitySilverChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntityGoldChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntityDiamondChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntityCrystalChest")) {
-                openGui = true;
-            }
-            if(te.getClass().getSimpleName().equals("TileEntityObsidianChest")) {
-                openGui = true;
-            }
-
-            if(openGui) {
-                //player.openGui(Backpack.instance, Constants.GUI_ID_COMBINED, worldObj, x, y, z);
-                return true;
-            }
-        }
-        */
+         * TileEntity te = worldObj.getTileEntity(x, y, z); if(te != null && (te instanceof IInventory || te instanceof
+         * TileEntityEnderChest)) { boolean openGui = false; if(te instanceof TileEntityChest) { openGui = true; } if(te
+         * instanceof TileEntityEnderChest && !BackpackUtil.isEnderBackpack(stack)) { openGui = true; } if(te instanceof
+         * TileEntityFurnace) { openGui = true; } if(te instanceof TileEntityHopper) { openGui = true; } if(te
+         * instanceof TileEntityBrewingStand) { openGui = true; } if(te instanceof TileEntityDispenser) { openGui =
+         * true; } if(te instanceof TileEntityDropper) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityDirtChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityCopperChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityIronChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntitySilverChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityGoldChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityDiamondChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityCrystalChest")) { openGui = true; }
+         * if(te.getClass().getSimpleName().equals("TileEntityObsidianChest")) { openGui = true; } if(openGui) {
+         * //player.openGui(Backpack.instance, Constants.GUI_ID_COMBINED, worldObj, x, y, z); return true; } }
+         */
         return false;
     }
 
     /**
      * Handles what should be done on right clicking the item.
      *
-     * @param itemStack
-     *            The ItemStack which is right clicked.
-     * @param world
-     *            The world in which the player is.
-     * @param player
-     *            The player who right clicked the item.
-     * @param Returns
-     *            the ItemStack after the process.
+     * @param itemStack The ItemStack which is right clicked.
+     * @param world     The world in which the player is.
+     * @param player    The player who right clicked the item.
+     * @param Returns   the ItemStack after the process.
      */
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
@@ -182,15 +119,16 @@ public class ItemBackpackBase extends Item {
         // when the player is not sneaking
         if (!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
             GuiHelper.displayBackpack(
-                    new BackpackSave(itemStack), getInventory(itemStack, entityPlayer), (EntityPlayerMP) entityPlayer);
+                    new BackpackSave(itemStack),
+                    getInventory(itemStack, entityPlayer),
+                    (EntityPlayerMP) entityPlayer);
         }
         return itemStack;
     }
 
     /**
-     * Returns the unlocalized name of this item. This version accepts an
-     * ItemStack so different stacks can have different names based on their
-     * damage or NBT.
+     * Returns the unlocalized name of this item. This version accepts an ItemStack so different stacks can have
+     * different names based on their damage or NBT.
      */
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
@@ -212,8 +150,7 @@ public class ItemBackpackBase extends Item {
     /**
      * Returns the item name to display in the tooltip.
      *
-     * @param itemstack
-     *            The ItemStack to use for check.
+     * @param itemstack The ItemStack to use for check.
      * @return The name of the backpack for the tooltip.
      */
     @Override
@@ -237,14 +174,15 @@ public class ItemBackpackBase extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(
-            ItemStack itemStack, EntityPlayer entityPlayer, List information, boolean advancedTooltip) {
+    public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List information,
+            boolean advancedTooltip) {
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
             if (itemStack.getItemDamage() != ItemsBackpack.ENDERBACKPACK) {
                 // TODO BackpackUtil.getTier()
-                information.add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal(Localizations.TIER)
-                        + " "
-                        + (itemStack.getItemDamage() / 100 + 1));
+                information.add(
+                        EnumChatFormatting.YELLOW + StatCollector.translateToLocal(Localizations.TIER)
+                                + " "
+                                + (itemStack.getItemDamage() / 100 + 1));
                 BackpackSave backpackSave = new BackpackSave(itemStack);
                 NBTTagList itemList = backpackSave.getInventory(Constants.NBT.INVENTORY_BACKPACK);
                 int used = itemList.tagCount();
