@@ -20,7 +20,7 @@ public class KeyInputHandler {
 
     public static KeyBinding personalBackpack = new KeyBinding(
             Localizations.KEY_PERSONAL,
-            Keyboard.KEY_B,
+            Keyboard.KEY_NONE,
             Localizations.KEY_CATEGORY);
 
     @SubscribeEvent
