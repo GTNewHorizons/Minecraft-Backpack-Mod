@@ -11,7 +11,7 @@ import de.eydamos.backpack.misc.Constants;
 
 public class BackpackModelWorker {
 
-     final ModelBiped[] backModels = { new ModelBackpackS(), new ModelBackpackM(), new ModelBackpackL() };
+    final ModelBiped[] backModels = { new ModelBackpackS(), new ModelBackpackM(), new ModelBackpackL() };
 
     final float[][] backpackColors = new float[][] { { 0.6F, 0.3F, 0.1F }, // Leather
             { 0.1F, 0.1F, 0.1F }, // Black
