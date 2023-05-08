@@ -1,6 +1,5 @@
 package de.eydamos.backpack.util;
 
-import java.awt.*;
 import java.util.UUID;
 
 import net.minecraft.entity.Entity;
