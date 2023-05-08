@@ -201,8 +201,7 @@ public class ItemBackpackBase extends Item {
 
         String defaultName = NBTItemStackUtil.getString(itemStack, Constants.NBT.NAME);
         String customName = NBTItemStackUtil.getString(itemStack, Constants.NBT.CUSTOM_NAME);
-        InventoryBackpack inventory = new InventoryBackpack(defaultName, customName);
 
-        return inventory;
+        return new InventoryBackpack(defaultName, customName);
     }
 }
