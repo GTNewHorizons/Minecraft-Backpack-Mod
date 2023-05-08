@@ -131,10 +131,7 @@ public class BackpackUtil {
                 return true;
             }
         }
-        if (useOreDictionary && areStacksEqualByOD(firstStack, secondStack)) {
-            return true;
-        }
-        return false;
+        return useOreDictionary && areStacksEqualByOD(firstStack, secondStack);
     }
 
     /**

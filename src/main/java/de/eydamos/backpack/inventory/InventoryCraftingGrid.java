@@ -98,7 +98,7 @@ public class InventoryCraftingGrid extends InventoryCrafting implements ISaveabl
      */
     public void setUseInventoryMode(boolean value) {
         useInventoryMode = value;
-        if (value == false) {
+        if (!value) {
             Arrays.fill(mapping, -1);
         }
     }

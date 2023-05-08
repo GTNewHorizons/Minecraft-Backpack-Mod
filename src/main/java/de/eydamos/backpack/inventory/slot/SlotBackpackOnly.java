@@ -17,6 +17,6 @@ public class SlotBackpackOnly extends Slot {
      */
     @Override
     public boolean isItemValid(ItemStack is) {
-        return is != null && is.getItem() instanceof ItemBackpackBase ? true : false;
+        return is != null && is.getItem() instanceof ItemBackpackBase;
     }
 }
