@@ -17,27 +17,23 @@ public class FactoryBackpack {
     public static <S extends AbstractSave> ContainerAdvanced getContainer(S save, IInventory[] inventories,
             EntityPlayer entityPlayer) {
         byte type = save.getType();
-        if (type == 1) {
-            return new FactoryBackpackNormal().getContainer((BackpackSave) save, inventories, entityPlayer);
-        } else if (type == 2) {
-            return new FactoryWorkbenchBackpack().getContainer((BackpackSave) save, inventories, entityPlayer);
-        } else if (type == -1) {
-            return new FactoryPersonalSlot().getContainer((PlayerSave) save, inventories, entityPlayer);
-        }
-        return new ContainerAdvanced();
+        return switch (type) {
+            case 1 -> new FactoryBackpackNormal().getContainer((BackpackSave) save, inventories, entityPlayer);
+            case 2 -> new FactoryWorkbenchBackpack().getContainer((BackpackSave) save, inventories, entityPlayer);
+            case -1 -> new FactoryPersonalSlot().getContainer((PlayerSave) save, inventories, entityPlayer);
+            default -> new ContainerAdvanced();
+        };
     }
 
     @SideOnly(Side.CLIENT)
     public static <S extends AbstractSave> GuiContainer getGuiContainer(AbstractSave save, IInventory[] inventories,
             EntityPlayer entityPlayer) {
         byte type = save.getType();
-        if (type == 1) {
-            return new FactoryBackpackNormal().getGuiContainer((BackpackSave) save, inventories, entityPlayer);
-        } else if (type == 2) {
-            return new FactoryWorkbenchBackpack().getGuiContainer((BackpackSave) save, inventories, entityPlayer);
-        } else if (type == -1) {
-            return new FactoryPersonalSlot().getGuiContainer((PlayerSave) save, inventories, entityPlayer);
-        }
-        return new GuiAdvanced(getContainer(save, inventories, entityPlayer));
+        return switch (type) {
+            case 1 -> new FactoryBackpackNormal().getGuiContainer((BackpackSave) save, inventories, entityPlayer);
+            case 2 -> new FactoryWorkbenchBackpack().getGuiContainer((BackpackSave) save, inventories, entityPlayer);
+            case -1 -> new FactoryPersonalSlot().getGuiContainer((PlayerSave) save, inventories, entityPlayer);
+            default -> new GuiAdvanced(getContainer(save, inventories, entityPlayer));
+        };
     }
 }
