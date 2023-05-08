@@ -2,17 +2,17 @@ package de.eydamos.guiadvanced.misc;
 
 public interface AbstractGui {
 
-    public int getWidth();
+    int getWidth();
 
-    public void setWidth(int value);
+    void setWidth(int value);
 
-    public int getHeight();
+    int getHeight();
 
-    public void setHeight(int value);
+    void setHeight(int value);
 
-    public void addSubPart(AbstractGuiPart newSubPart);
+    void addSubPart(AbstractGuiPart newSubPart);
 
-    public void removeSubPart(AbstractGuiPart removeSubPart);
+    void removeSubPart(AbstractGuiPart removeSubPart);
 
-    public void clearSubParts();
+    void clearSubParts();
 }
