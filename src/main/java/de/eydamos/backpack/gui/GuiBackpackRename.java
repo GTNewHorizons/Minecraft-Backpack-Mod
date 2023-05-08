@@ -15,9 +15,6 @@ import de.eydamos.guiadvanced.form.Textbox;
 
 public class GuiBackpackRename extends Window {
 
-    private String TITLE = I18n.format(Localizations.INVENTORY_RENAME);
-    private String NEW_NAME = I18n.format(Localizations.LABEL_NEW_NAME);
-
     protected Textbox txt_backpackName;
     protected Button btn_ok, btn_cancel;
 
@@ -39,11 +36,13 @@ public class GuiBackpackRename extends Window {
         addSubPart(btn_cancel);
 
         // create "Rename your Backpack" label at the top in the middle
-        int posX = xSize / 2 - fontRendererObj.getStringWidth(TITLE) / 2;
-        addSubPart(new Label(posX, 10, 0x000000, TITLE));
+        String title = I18n.format(Localizations.INVENTORY_RENAME);
+        int posX = xSize / 2 - fontRendererObj.getStringWidth(title) / 2;
+        addSubPart(new Label(posX, 10, 0x000000, title));
 
         // create "New name:" label at the left site above the GuiTextField
-        addSubPart(new Label(20, 30, 0x404040, NEW_NAME));
+        String newName = I18n.format(Localizations.LABEL_NEW_NAME);
+        addSubPart(new Label(20, 30, 0x404040, newName));
 
         // create text field
         txt_backpackName = new Textbox(fontRendererObj, 20, 40, 200, 20);
