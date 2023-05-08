@@ -15,8 +15,8 @@ import de.eydamos.guiadvanced.form.Textbox;
 
 public class GuiBackpackRename extends Window {
 
-    protected Textbox txt_backpackName;
-    protected Button btn_ok, btn_cancel;
+    protected final Textbox txt_backpackName;
+    protected final Button btn_ok, btn_cancel;
 
     public GuiBackpackRename() {
         setWidth(240);

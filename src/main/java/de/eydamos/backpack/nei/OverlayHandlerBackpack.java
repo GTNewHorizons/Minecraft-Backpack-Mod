@@ -19,8 +19,8 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
 
     public static class SlotStack {
 
-        protected ItemStack itemStack;
-        protected int slotIndex;
+        protected final ItemStack itemStack;
+        protected final int slotIndex;
 
         public SlotStack(ItemStack itemstack, int slot) {
             itemStack = itemstack;

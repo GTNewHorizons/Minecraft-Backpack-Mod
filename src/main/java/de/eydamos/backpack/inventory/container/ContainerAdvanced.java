@@ -28,7 +28,7 @@ public class ContainerAdvanced extends Container {
     protected int height;
     protected IInventory inventory;
     protected BackpackSave backpackSave;
-    protected Map<Boundaries, Integer> boundaries = new HashMap<Boundaries, Integer>();
+    protected final Map<Boundaries, Integer> boundaries = new HashMap<Boundaries, Integer>();
 
     public ContainerAdvanced() {}
 

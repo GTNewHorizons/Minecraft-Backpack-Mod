@@ -12,7 +12,7 @@ import de.eydamos.guiadvanced.util.RenderHelper;
 
 public class ContainerWindow extends GuiContainer implements AbstractGui {
 
-    protected ArrayList<AbstractGuiPart> subParts = new ArrayList<AbstractGuiPart>();
+    protected final ArrayList<AbstractGuiPart> subParts = new ArrayList<AbstractGuiPart>();
 
     public ContainerWindow(Container container) {
         super(container);

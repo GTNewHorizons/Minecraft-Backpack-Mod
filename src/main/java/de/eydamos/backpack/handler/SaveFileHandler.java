@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 public class SaveFileHandler {
 
-    protected Logger logger = LogManager.getLogger();
+    protected final Logger logger = LogManager.getLogger();
 
     protected File worldDir = null;
     protected File backpackDir = null;

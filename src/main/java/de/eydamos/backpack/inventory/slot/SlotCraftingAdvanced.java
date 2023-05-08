@@ -19,10 +19,10 @@ import de.eydamos.backpack.util.BackpackUtil;
 
 public class SlotCraftingAdvanced extends SlotCrafting {
 
-    protected InventoryCraftingGrid craftingGrid;
-    protected IInventory backpackInventory;
-    protected ContainerWorkbenchBackpack eventHandler;
-    protected World worldObj;
+    protected final InventoryCraftingGrid craftingGrid;
+    protected final IInventory backpackInventory;
+    protected final ContainerWorkbenchBackpack eventHandler;
+    protected final World worldObj;
     protected boolean realResult = false;
 
     public SlotCraftingAdvanced(EntityPlayer player, ContainerWorkbenchBackpack container, int slotIndex, int xPosition,
