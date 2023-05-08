@@ -30,7 +30,7 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
         int slotsPerRow = backpack.getSlotsPerRow();
         int inventoryRows = (int) Math.ceil(inventories[1].getSizeInventory() / (float) slotsPerRow);
-        int maxWidth = (slotsPerRow < 9 ? 9 : slotsPerRow) * SLOT;
+        int maxWidth = (Math.max(slotsPerRow, 9)) * SLOT;
 
         // set container width (needed for gui)
         container.setWidth(maxWidth + 2 * X_SPACING);
