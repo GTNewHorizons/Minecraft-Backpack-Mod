@@ -110,10 +110,10 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
             if (inventory instanceof ISaveableInventory) {
                 ((ISaveableInventory) inventory).writeToNBT(backpackSave);
             }
-            if (craftingGrid instanceof ISaveableInventory) {
+            if (craftingGrid != null) {
                 ((ISaveableInventory) craftingGrid).writeToNBT(backpackSave);
             }
-            if (recipes instanceof ISaveableInventory) {
+            if (recipes != null) {
                 ((ISaveableInventory) recipes).writeToNBT(backpackSave);
             }
             backpackSave.save();
