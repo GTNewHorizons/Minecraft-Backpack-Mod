@@ -52,16 +52,6 @@ public class SlotBackpack extends Slot {
             if (Item.itemRegistry.getNameForObject(itemCurrent).equals(itemDisallowed)) return false;
         }
 
-        /*
-         * String[] disallowedItems = ConfigurationBackpack.DISALLOW_ITEMS.split(","); for(String disallowedItem :
-         * disallowedItems) { Object[] disallowedData = getDisallowedData(disallowedItem); // if Integer check id
-         * if(disallowedData[0] instanceof Item) { if((Item) disallowedData[0] == is.getItem()) { // if disallwedData
-         * has 2 values check item damage if(disallowedData.length == 2) { if((Integer) disallowedData[1] ==
-         * is.getItemDamage()) { return false; } } else { return false; } } } else { int[] ids =
-         * OreDictionary.getOreIDs(is); for(int id : ids) { // if not an integer it is a string so check for ore
-         * dictionary name if(id == OreDictionary.getOreID((String)disallowedData[0])) { return false; } } } }
-         */
-
         return super.isItemValid(is);
     }
 
