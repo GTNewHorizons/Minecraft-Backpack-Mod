@@ -37,9 +37,9 @@ public class ItemBackpackBase extends Item {
     /**
      * Returns the sub items.
      *
-     * @param itemId the id of the item
-     * @param tab    A creative tab.
-     * @param A      List which stores the sub items.
+     * @param item     the id of the item
+     * @param tab      a creative tab.
+     * @param subItems a list that stores the sub items.
      */
     @Override
     @SideOnly(Side.CLIENT)
