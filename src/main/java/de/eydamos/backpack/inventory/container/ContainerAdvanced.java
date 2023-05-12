@@ -3,6 +3,7 @@ package de.eydamos.backpack.inventory.container;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -55,7 +56,7 @@ public class ContainerAdvanced extends Container {
 
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         String UUID = null;
-        if (playerSave.getPersonalBackpackOpen() != "") {
+        if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
             UUID = playerSave.getPersonalBackpackOpen();
         } else if (entityPlayer.getCurrentEquippedItem() != null) {
             UUID = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
