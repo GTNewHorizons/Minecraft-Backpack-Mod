@@ -43,7 +43,7 @@ public class InventoryHelper {
             NBTTagCompound slotEntry = inventoryList.getCompoundTagAt(i);
             int slot = slotEntry.getByte(Constants.NBT.SLOT) & 0xff;
 
-            if (slot >= 0 && slot < inventory.length) {
+            if (slot < inventory.length) {
                 inventory[slot] = ItemStack.loadItemStackFromNBT(slotEntry);
             }
         }
