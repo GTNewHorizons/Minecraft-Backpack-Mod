@@ -1,5 +1,7 @@
 package de.eydamos.backpack.helper;
 
+import java.util.Arrays;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -33,9 +35,7 @@ public class InventoryHelper {
     public static void readInventory(BackpackSave backpackSave, String inventoryName, ItemStack[] inventory,
             boolean clearInventory) {
         if (clearInventory) {
-            for (int i = 0; i < inventory.length; i++) {
-                inventory[i] = null;
-            }
+            Arrays.fill(inventory, null);
         }
 
         NBTTagList inventoryList = backpackSave.getInventory(inventoryName);
