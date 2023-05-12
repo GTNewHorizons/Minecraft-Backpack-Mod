@@ -101,7 +101,7 @@ public class GuiBackpackRename extends Window {
             actionPerformed((GuiButton) buttonList.get(0));
         }
         // perform click event on cancel button when Esc is pressed
-        if (Integer.valueOf(c) == 27) {
+        if ((int) c == 27) {
             actionPerformed((GuiButton) buttonList.get(1));
         }
     }
