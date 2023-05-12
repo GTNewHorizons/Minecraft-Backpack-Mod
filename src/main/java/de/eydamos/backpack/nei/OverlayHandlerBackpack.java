@@ -58,7 +58,6 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
                 if (slot.xDisplayPosition == positionedStack.relx + offsetX
                         && slot.yDisplayPosition == positionedStack.rely + offsetY) {
                     newRecipe.add(new SlotStack(positionedStack.item, slotIndex));
-                    continue;
                 }
             }
         }
