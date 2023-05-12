@@ -100,7 +100,7 @@ public class BackpackUtil {
      * @param firstStack  The first ItemStack to check.
      * @param secondStack The second ItemStack to compare to.
      * @return True if both have the same item id and damage or true if both have no subtypes and have the same item id.
-     *         Otherwise false.
+     *         False otherwise.
      */
     public static boolean areStacksEqual(ItemStack firstStack, ItemStack secondStack) {
         return areStacksEqual(firstStack, secondStack, false);
@@ -114,7 +114,7 @@ public class BackpackUtil {
      * @param secondStack      The second ItemStack to compare to.
      * @param useOreDictionary If true the method also checks if the ItemStacks have the same OreDictionary ID.
      * @return True if both have the same item id and damage or true if both have no subtypes and have the same item id.
-     *         Otherwise false.
+     *         False otherwise.
      */
     public static boolean areStacksEqual(ItemStack firstStack, ItemStack secondStack, boolean useOreDictionary) {
         if (firstStack == null || secondStack == null) {

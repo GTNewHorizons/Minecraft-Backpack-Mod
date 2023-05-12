@@ -27,7 +27,7 @@ public class BackpackModelWorker {
             { 0.5F, 0.8F, 0.1F }, // Green lime
             { 0.9F, 0.9F, 0.2F }, // Yellow
             { 0.4F, 0.6F, 0.85F }, // Blue
-            { 0.7F, 0.3F, 0.85F }, // Magneta
+            { 0.7F, 0.3F, 0.85F }, // Magenta
             { 0.85F, 0.5F, 0.2F }, // Orange
             { 1.0F, 1.0F, 1.0F }, // White
             { 0.1f, 0.2f, 0.2f } // Ender

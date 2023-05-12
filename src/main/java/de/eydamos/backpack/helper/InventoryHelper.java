@@ -12,7 +12,7 @@ import de.eydamos.backpack.saves.BackpackSave;
 public class InventoryHelper {
 
     /**
-     * This method will read the ItemStacks from the given ItemStack's NBTCompount with the given key and load them into
+     * This method will read the ItemStacks from the given ItemStack's NBTCompound with the given key and load them into
      * the given inventory.
      *
      * @param backpackSave The BackpackSave with the NBTCompound to read from.
@@ -24,7 +24,7 @@ public class InventoryHelper {
     }
 
     /**
-     * This method will read the ItemStacks from the given ItemStack's NBTCompount with the given key and load them into
+     * This method will read the ItemStacks from the given ItemStack's NBTCompound with the given key and load them into
      * the given inventory.
      *
      * @param backpackSave   The BackpackSave with the NBTCompound to read from.

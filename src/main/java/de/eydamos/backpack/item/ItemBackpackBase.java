@@ -58,8 +58,8 @@ public class ItemBackpackBase extends Item {
     }
 
     /**
-     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     * Callback for item usage. If the item does something special on right-clicking, he will have one of those. Return
+     * True if something happen and false if it doesn't. This is for ITEMS, not BLOCKS
      *
      * @param stack    The ItemStack which is used
      * @param player   The player who used the item
@@ -96,11 +96,11 @@ public class ItemBackpackBase extends Item {
     }
 
     /**
-     * Handles what should be done on right clicking the item.
+     * Handles what should be done on right-clicking the item.
      *
-     * @param itemStack    The ItemStack which is right clicked.
+     * @param itemStack    The ItemStack which is right-clicked.
      * @param world        The world in which the player is.
-     * @param entityPlayer The player who right clicked the item.
+     * @param entityPlayer The player who right-clicked the item.
      * @return the ItemStack after the process.
      */
     @Override
