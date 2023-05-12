@@ -37,21 +37,19 @@ public class MessageOpenGui implements IMessage, IMessageHandler<MessageOpenGui,
     public IMessage onMessage(MessageOpenGui message, MessageContext ctx) {
         EntityPlayerMP entityPlayer = ctx.getServerHandler().playerEntity;
         switch (message.guiToOpen) {
-            case Constants.Guis.OPEN_PERSONAL_BACKPACK:
+            case Constants.Guis.OPEN_PERSONAL_BACKPACK -> {
                 PlayerSave playerSave = new PlayerSave(entityPlayer);
                 ItemStack backpack = playerSave.getPersonalBackpack();
                 if (backpack != null) {
                     BackpackSave backpackSave = new BackpackSave(backpack);
                     playerSave.setPersonalBackpackOpen(backpackSave.getUUID());
                     GuiHelper.displayBackpack(
-                            backpackSave,
-                            ItemBackpackBase.getInventory(backpack, entityPlayer),
-                            entityPlayer);
+                        backpackSave,
+                        ItemBackpackBase.getInventory(backpack, entityPlayer),
+                        entityPlayer);
                 }
-                break;
-            case Constants.Guis.OPEN_PERSONAL_SLOT:
-                GuiHelper.displayPersonalSlot(entityPlayer);
-                break;
+            }
+            case Constants.Guis.OPEN_PERSONAL_SLOT -> GuiHelper.displayPersonalSlot(entityPlayer);
         }
         return null;
     }

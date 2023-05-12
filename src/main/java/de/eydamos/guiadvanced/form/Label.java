@@ -65,14 +65,10 @@ public class Label implements AbstractGuiPart {
         String label = I18n.format(text);
         int offset = 0;
         switch (textAlignment) {
-            case RIGHT:
-                offset -= mc.fontRenderer.getStringWidth(label);
-                break;
-            case CENTER:
-                offset -= mc.fontRenderer.getStringWidth(label) / 2;
-                break;
-            case LEFT:
-            default:
+            case RIGHT -> offset -= mc.fontRenderer.getStringWidth(label);
+            case CENTER -> offset -= mc.fontRenderer.getStringWidth(label) / 2;
+            case LEFT, default -> {
+            }
         }
         mc.fontRenderer.drawString(label, xPosition + offset, yPosition, color);
     }

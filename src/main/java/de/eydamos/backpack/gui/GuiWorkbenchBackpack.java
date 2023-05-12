@@ -39,12 +39,8 @@ public class GuiWorkbenchBackpack extends GuiAdvanced {
     @Override
     public void actionPerformed(GuiButton guiButton) {
         switch (guiButton.id) {
-            case 0:
-                GuiHelper.sendGuiCommand(Constants.GuiCommands.CLEAR);
-                break;
-            case 1:
-                GuiHelper.sendGuiCommand(Constants.GuiCommands.SAVE);
-                break;
+            case 0 -> GuiHelper.sendGuiCommand(Constants.GuiCommands.CLEAR);
+            case 1 -> GuiHelper.sendGuiCommand(Constants.GuiCommands.SAVE);
         }
     }
 
@@ -53,12 +49,8 @@ public class GuiWorkbenchBackpack extends GuiAdvanced {
         super.keyTyped(charTyped, keyCode);
 
         switch (charTyped) {
-            case 'c':
-                GuiHelper.sendGuiCommand(Constants.GuiCommands.CLEAR);
-                break;
-            case 's':
-                GuiHelper.sendGuiCommand(Constants.GuiCommands.SAVE);
-                break;
+            case 'c' -> GuiHelper.sendGuiCommand(Constants.GuiCommands.CLEAR);
+            case 's' -> GuiHelper.sendGuiCommand(Constants.GuiCommands.SAVE);
         }
     }
 }
