@@ -2,7 +2,6 @@ package de.eydamos.backpack.handler;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -122,11 +121,8 @@ public class SaveFileHandler {
             if (fileNew.exists()) {
                 fileNew.delete();
             }
-        } catch (FileNotFoundException fileNotFoundException) {
+        } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
-            logger.warn("[Backpack] Couldn't save data.");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
             logger.warn("[Backpack] Couldn't save data.");
         }
     }
