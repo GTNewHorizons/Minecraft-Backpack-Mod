@@ -41,9 +41,7 @@ public class SlotCraftingAdvanced extends SlotCrafting {
         FMLCommonHandler.instance().firePlayerCraftingEvent(entityPlayer, itemStack, craftingGrid);
         onCrafting(itemStack);
 
-        for (int i = 0; i < currentRecipe.size(); i++) {
-            ItemStack ingredient = currentRecipe.get(i);
-
+        for (ItemStack ingredient : currentRecipe) {
             // search for same item in backpack inventory and reduce ingredient amount
             for (int j = 0; j < backpackInventory.getSizeInventory(); j++) {
                 ItemStack itemstack = backpackInventory.getStackInSlot(j);
