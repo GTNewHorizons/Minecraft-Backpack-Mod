@@ -20,7 +20,7 @@ public class GuiWorkbenchBackpack extends GuiAdvanced {
     public void drawScreen(int mouseX, int mouseY, float par3) {
         super.drawScreen(mouseX, mouseY, par3);
 
-        ArrayList<String> tooltip = new ArrayList<String>();
+        ArrayList<String> tooltip = new ArrayList<>();
         for (Object buttonObj : buttonList) {
             GuiButton button = (GuiButton) buttonObj;
             if (button.func_146115_a()) {

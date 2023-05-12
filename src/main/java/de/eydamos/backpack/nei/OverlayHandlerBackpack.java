@@ -51,7 +51,7 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
         int offsetY = 11;
 
         List<PositionedStack> ingredients = recipe.getIngredientStacks(recipeIndex);
-        ArrayList<SlotStack> newRecipe = new ArrayList<SlotStack>();
+        ArrayList<SlotStack> newRecipe = new ArrayList<>();
 
         for (PositionedStack positionedStack : ingredients) {
             for (int slotIndex = from; slotIndex < to; slotIndex++) {

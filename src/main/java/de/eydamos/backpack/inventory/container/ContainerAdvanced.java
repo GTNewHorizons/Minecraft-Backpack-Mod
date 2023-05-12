@@ -28,7 +28,7 @@ public class ContainerAdvanced extends Container {
     protected int height;
     protected IInventory inventory;
     protected BackpackSave backpackSave;
-    protected final Map<Boundaries, Integer> boundaries = new HashMap<Boundaries, Integer>();
+    protected final Map<Boundaries, Integer> boundaries = new HashMap<>();
 
     public ContainerAdvanced() {}
 
@@ -352,7 +352,7 @@ public class ContainerAdvanced extends Container {
 
     @ContainerSectionCallback
     public Map<ContainerSection, List<Slot>> getContainerSections() {
-        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<ContainerSection, List<Slot>>();
+        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<>();
 
         if (boundaries.containsKey(Boundaries.CRAFTING)) {
             slotRefs.put(ContainerSection.CRAFTING_OUT, inventorySlots.subList(0, 1));

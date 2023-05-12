@@ -158,7 +158,7 @@ public class SlotCraftingAdvanced extends SlotCrafting {
      * @return An ArrayList with all the ingredients of the current recipe and the needed amount.
      */
     protected ArrayList<ItemStack> getRecipeIngredients() {
-        ArrayList<ItemStack> currentRecipe = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> currentRecipe = new ArrayList<>();
         boolean add;
 
         for (int i = 0; i < craftingGrid.getSizeInventory(); i++) {

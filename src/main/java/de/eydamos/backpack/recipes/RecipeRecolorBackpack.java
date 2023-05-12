@@ -16,7 +16,7 @@ import de.eydamos.backpack.util.BackpackUtil;
 
 public class RecipeRecolorBackpack implements IRecipe {
 
-    private final ArrayList<Item> allowedDyes = new ArrayList<Item>();
+    private final ArrayList<Item> allowedDyes = new ArrayList<>();
     private ItemStack result;
 
     public RecipeRecolorBackpack() {
