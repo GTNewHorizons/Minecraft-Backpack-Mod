@@ -10,5 +10,5 @@ public enum Boundaries {
     HOTBAR,
     HOTBAR_END,
     CRAFTING,
-    CRAFTING_END;
+    CRAFTING_END
 }
