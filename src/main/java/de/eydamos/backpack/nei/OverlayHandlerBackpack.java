@@ -38,11 +38,10 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
 
     @Override
     public void overlayRecipe(GuiContainer gui, IRecipeHandler recipe, int recipeIndex, boolean shift) {
-        if (!(gui.inventorySlots instanceof ContainerWorkbenchBackpack)) {
+        if (!(gui.inventorySlots instanceof ContainerWorkbenchBackpack container)) {
             return;
         }
 
-        ContainerWorkbenchBackpack container = (ContainerWorkbenchBackpack) gui.inventorySlots;
         container.clearCraftMatrix();
 
         int from = container.getBoundary(Boundaries.CRAFTING);
