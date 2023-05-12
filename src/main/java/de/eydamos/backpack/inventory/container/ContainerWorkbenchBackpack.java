@@ -42,7 +42,7 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
      *
      * @param inventories Array of inventories. Expected are: 0 PlayerInventory, 1 BackpackInventory, 2
      *                    InventoryCraftingGrid, 3 InventoryRecipes
-     * @param backpackIS
+     * @param save        the backpack save
      */
     public ContainerWorkbenchBackpack(IInventory[] inventories, BackpackSave save) {
         super(inventories, save);

@@ -70,7 +70,7 @@ public class ItemBackpackBase extends Item {
      * @param side     The side of the block that was clicked
      * @param hitX     The x position on the block which got clicked
      * @param hitY     The y position on the block which got clicked
-     * @param hitz     The z position on the block which got clicked
+     * @param hitZ     The z position on the block which got clicked
      */
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World worldObj, int x, int y, int z, int side,
@@ -98,10 +98,10 @@ public class ItemBackpackBase extends Item {
     /**
      * Handles what should be done on right clicking the item.
      *
-     * @param itemStack The ItemStack which is right clicked.
-     * @param world     The world in which the player is.
-     * @param player    The player who right clicked the item.
-     * @param Returns   the ItemStack after the process.
+     * @param itemStack    The ItemStack which is right clicked.
+     * @param world        The world in which the player is.
+     * @param entityPlayer The player who right clicked the item.
+     * @return the ItemStack after the process.
      */
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
@@ -150,7 +150,7 @@ public class ItemBackpackBase extends Item {
     /**
      * Returns the item name to display in the tooltip.
      *
-     * @param itemstack The ItemStack to use for check.
+     * @param itemStack The ItemStack to use for check.
      * @return The name of the backpack for the tooltip.
      */
     @Override

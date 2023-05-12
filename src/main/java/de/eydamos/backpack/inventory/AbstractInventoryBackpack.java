@@ -116,7 +116,7 @@ public abstract class AbstractInventoryBackpack<S extends AbstractSave> implemen
     /**
      * Set the custom name of the backpack.
      *
-     * @param name
+     * @param name a custom name
      */
     public void setCustomName(String name) {
         customName = name;
