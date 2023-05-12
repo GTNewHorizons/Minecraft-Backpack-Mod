@@ -72,8 +72,9 @@ public class Rectangle {
             tessellator.addVertexWithUV(x, y, z, u * f, v * f1);
             tessellator.draw();
         } else if (repeat == BackgroundRepeat.REPEAT) {
-            int drawHeight = vMax = Math.min(height, vMax);
-            int drawWidth = uMax = Math.min(width, uMax);
+            uMax = Math.min(width, uMax);
+            vMax = Math.min(height, vMax);
+            int drawWidth, drawHeight;
             for (int i = 0; i <= width; i += uMax) {
                 for (int j = 0; j <= height; j += vMax) {
                     drawWidth = i + uMax > width ? width : i + uMax;
