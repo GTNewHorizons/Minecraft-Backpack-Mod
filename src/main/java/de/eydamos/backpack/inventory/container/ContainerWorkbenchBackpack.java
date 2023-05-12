@@ -26,8 +26,8 @@ import invtweaks.api.container.ContainerSectionCallback;
 @ChestContainer
 public class ContainerWorkbenchBackpack extends ContainerAdvanced {
 
-    protected InventoryRecipes recipes = null;
-    protected InventoryCraftingGrid craftingGrid = null;
+    protected InventoryRecipes recipes;
+    protected InventoryCraftingGrid craftingGrid;
     public IInventory craftResult = new InventoryCraftResult();
     protected World worldObj;
     protected boolean intelligent = false;

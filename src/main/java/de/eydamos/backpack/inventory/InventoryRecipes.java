@@ -10,7 +10,7 @@ import de.eydamos.backpack.saves.BackpackSave;
 
 public class InventoryRecipes extends InventoryBasic {
 
-    protected IInventory craftingGrid = null;
+    protected IInventory craftingGrid;
     protected ItemStack[][] recipesIngredients = new ItemStack[9][9];
 
     public InventoryRecipes(IInventory craftingMatrix) {
