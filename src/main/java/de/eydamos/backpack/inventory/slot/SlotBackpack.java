@@ -44,7 +44,7 @@ public class SlotBackpack extends Slot {
 
         // check for forbiddenItemClasses
         for (String itemClass : FORBIDDEN_CLASSES) {
-            if (itemCurrent.getClass().getName().equals(itemClass)) return false;
+            if (itemCurrent != null && itemCurrent.getClass().getName().equals(itemClass)) return false;
         }
 
         // check for disallowedItems
