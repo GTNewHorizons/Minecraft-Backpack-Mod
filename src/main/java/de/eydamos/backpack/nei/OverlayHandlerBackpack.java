@@ -19,8 +19,8 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
 
     public static class SlotStack {
 
-        protected ItemStack itemStack;
-        protected int slotIndex;
+        protected final ItemStack itemStack;
+        protected final int slotIndex;
 
         public SlotStack(ItemStack itemstack, int slot) {
             itemStack = itemstack;
@@ -38,11 +38,10 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
 
     @Override
     public void overlayRecipe(GuiContainer gui, IRecipeHandler recipe, int recipeIndex, boolean shift) {
-        if (!(gui.inventorySlots instanceof ContainerWorkbenchBackpack)) {
+        if (!(gui.inventorySlots instanceof ContainerWorkbenchBackpack container)) {
             return;
         }
 
-        ContainerWorkbenchBackpack container = (ContainerWorkbenchBackpack) gui.inventorySlots;
         container.clearCraftMatrix();
 
         int from = container.getBoundary(Boundaries.CRAFTING);
@@ -51,7 +50,7 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
         int offsetY = 11;
 
         List<PositionedStack> ingredients = recipe.getIngredientStacks(recipeIndex);
-        ArrayList<SlotStack> newRecipe = new ArrayList<SlotStack>();
+        ArrayList<SlotStack> newRecipe = new ArrayList<>();
 
         for (PositionedStack positionedStack : ingredients) {
             for (int slotIndex = from; slotIndex < to; slotIndex++) {
@@ -59,7 +58,6 @@ public class OverlayHandlerBackpack implements IOverlayHandler {
                 if (slot.xDisplayPosition == positionedStack.relx + offsetX
                         && slot.yDisplayPosition == positionedStack.rely + offsetY) {
                     newRecipe.add(new SlotStack(positionedStack.item, slotIndex));
-                    continue;
                 }
             }
         }

@@ -72,12 +72,13 @@ public class Rectangle {
             tessellator.addVertexWithUV(x, y, z, u * f, v * f1);
             tessellator.draw();
         } else if (repeat == BackgroundRepeat.REPEAT) {
-            int drawHeight = vMax = Math.min(height, vMax);
-            int drawWidth = uMax = Math.min(width, uMax);
+            uMax = Math.min(width, uMax);
+            vMax = Math.min(height, vMax);
+            int drawWidth, drawHeight;
             for (int i = 0; i <= width; i += uMax) {
                 for (int j = 0; j <= height; j += vMax) {
-                    drawWidth = i + uMax > width ? width : i + uMax;
-                    drawHeight = j + vMax > height ? height : j + vMax;
+                    drawWidth = Math.min(i + uMax, width);
+                    drawHeight = Math.min(j + vMax, height);
                     tessellator.startDrawingQuads();
                     tessellator.addVertexWithUV(x + i, y + drawHeight, z, u * f, (v + vMax) * f1);
                     tessellator.addVertexWithUV(x + drawWidth, y + drawHeight, z, (u + uMax) * f, (v + vMax) * f1);
@@ -90,7 +91,7 @@ public class Rectangle {
             int drawHeight = vMax = Math.min(height, vMax);
             int drawWidth;
             for (int i = 0; i <= width; i += uMax) {
-                drawWidth = i + uMax > width ? width : i + uMax;
+                drawWidth = Math.min(i + uMax, width);
                 tessellator.startDrawingQuads();
                 tessellator.addVertexWithUV(x + i, y + drawHeight, z, u * f, (v + drawHeight) * f1);
                 tessellator.addVertexWithUV(x + drawWidth, y + drawHeight, z, (u + uMax) * f, (v + drawHeight) * f1);
@@ -102,7 +103,7 @@ public class Rectangle {
             int drawWidth = uMax = Math.min(width, uMax);
             int drawHeight;
             for (int i = 0; i <= height; i += vMax) {
-                drawHeight = i + vMax > height ? height : i + vMax;
+                drawHeight = Math.min(i + vMax, height);
                 tessellator.startDrawingQuads();
                 tessellator.addVertexWithUV(x, y + drawHeight, z, u * f, (v + vMax) * f1);
                 tessellator.addVertexWithUV(x + drawWidth, y + drawHeight, z, (u + drawWidth) * f, (v + vMax) * f1);

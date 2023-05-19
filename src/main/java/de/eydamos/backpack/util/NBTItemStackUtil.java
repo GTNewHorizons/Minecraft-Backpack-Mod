@@ -311,11 +311,10 @@ public class NBTItemStackUtil {
     }
 
     /**
-     * Gets a {@link NBTTagList} with the given tag name from the {@link NBTTagCompound} of the given {@link ItemStack}.
+     * Sets a {@link NBTTagList} with the given tag name from the {@link NBTTagCompound} of the given {@link ItemStack}.
      *
      * @param itemStack The {@link ItemStack} which holds the {@link NBTTagCompound}.
      * @param tagName   The name of the tag for which the value should be determined.
-     * @return The value of the given tag as a {@link NBTTagCompound}.
      */
     public static void setTagList(ItemStack itemStack, String tagName, NBTTagList tagValue) {
         initNBTTagCompound(itemStack);

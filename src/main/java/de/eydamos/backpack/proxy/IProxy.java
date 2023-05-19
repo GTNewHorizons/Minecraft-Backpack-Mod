@@ -2,9 +2,9 @@ package de.eydamos.backpack.proxy;
 
 public interface IProxy {
 
-    public void registerHandlers();
+    void registerHandlers();
 
-    public void registerKeybindings();
+    void registerKeybindings();
 
-    public void addNeiSupport();
+    void addNeiSupport();
 }

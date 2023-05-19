@@ -61,9 +61,9 @@ public class GuiHelper {
     }
 
     private static boolean isDimensionAllowed(EntityPlayerMP entityPlayer) {
-        Integer currentDimID = (entityPlayer.worldObj.provider.dimensionId);
+        int currentDimID = (entityPlayer.worldObj.provider.dimensionId);
         for (String id : ConfigurationBackpack.FORBIDDEN_DIMENSIONS) {
-            if (id.equals(currentDimID.toString())) return false;
+            if (id.equals(Integer.toString(currentDimID))) return false;
         }
         return true;
     }

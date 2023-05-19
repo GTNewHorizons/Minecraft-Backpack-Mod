@@ -20,13 +20,13 @@ public class Constants {
     public static final ResourceLocation guiCombined = new ResourceLocation(DOMAIN, "textures/gui/guiCombined.png");
     public static final ResourceLocation modelTexture = new ResourceLocation(DOMAIN, "textures/model/backpack.png");
 
-    public class Guis {
+    public static class Guis {
 
         public static final byte OPEN_PERSONAL_BACKPACK = 0;
         public static final byte OPEN_PERSONAL_SLOT = 1;
     }
 
-    public class GuiCommands {
+    public static class GuiCommands {
 
         public static final byte CLEAR = 1;
         public static final byte SAVE = 2;
@@ -34,7 +34,7 @@ public class Constants {
         public static final byte NEXT = 4;
     }
 
-    public class NBT {
+    public static class NBT {
 
         public static final String INVENTORIES = "backpackInventories";
         public static final String INVENTORY_BACKPACK = "backpack";
@@ -55,6 +55,6 @@ public class Constants {
         public static final String PERSONAL_BACKPACK_META = "pBackpackMeta";
     }
 
-    public class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {
+    public static class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {
     }
 }

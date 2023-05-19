@@ -26,8 +26,8 @@ import invtweaks.api.container.ContainerSectionCallback;
 @ChestContainer
 public class ContainerWorkbenchBackpack extends ContainerAdvanced {
 
-    protected InventoryRecipes recipes = null;
-    protected InventoryCraftingGrid craftingGrid = null;
+    protected InventoryRecipes recipes;
+    protected InventoryCraftingGrid craftingGrid;
     public IInventory craftResult = new InventoryCraftResult();
     protected World worldObj;
     protected boolean intelligent = false;
@@ -42,7 +42,7 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
      *
      * @param inventories Array of inventories. Expected are: 0 PlayerInventory, 1 BackpackInventory, 2
      *                    InventoryCraftingGrid, 3 InventoryRecipes
-     * @param backpackIS
+     * @param save        the backpack save
      */
     public ContainerWorkbenchBackpack(IInventory[] inventories, BackpackSave save) {
         super(inventories, save);
@@ -110,10 +110,10 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
             if (inventory instanceof ISaveableInventory) {
                 ((ISaveableInventory) inventory).writeToNBT(backpackSave);
             }
-            if (craftingGrid instanceof ISaveableInventory) {
+            if (craftingGrid != null) {
                 ((ISaveableInventory) craftingGrid).writeToNBT(backpackSave);
             }
-            if (recipes instanceof ISaveableInventory) {
+            if (recipes != null) {
                 ((ISaveableInventory) recipes).writeToNBT(backpackSave);
             }
             backpackSave.save();

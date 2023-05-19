@@ -9,8 +9,8 @@ import de.eydamos.guiadvanced.misc.AbstractGuiPart;
 
 public class Textbox extends GuiTextField implements AbstractGuiPart {
 
-    protected int relativePositionX;
-    protected int relativePositionY;
+    protected final int relativePositionX;
+    protected final int relativePositionY;
 
     public Textbox(FontRenderer fontRenderer, int posX, int posY, int width, int height) {
         super(fontRenderer, posX, posY, width, height);

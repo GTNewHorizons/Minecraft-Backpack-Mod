@@ -156,7 +156,7 @@ public class NBTUtil {
     }
 
     /**
-     * Gets an Integer value with the given tag from the {@link NBTTagCompound} of the given {@link nbtTagCompound}.
+     * Gets an Integer value with the given tag from the {@link NBTTagCompound} of the given nbtTagCompound.
      *
      * @param nbtTagCompound The {@link NBTTagCompound} to check.
      * @param tagName        The name of the tag for which the value should be determined.
@@ -184,7 +184,7 @@ public class NBTUtil {
     }
 
     /**
-     * Gets a Long value with the given tag from the {@link NBTTagCompound} of the given {@link nbtTagCompound}.
+     * Gets a Long value with the given tag from the {@link NBTTagCompound} of the given nbtTagCompound.
      *
      * @param nbtTagCompound The {@link NBTTagCompound} to check.
      * @param tagName        The name of the tag for which the value should be determined.
@@ -212,7 +212,7 @@ public class NBTUtil {
     }
 
     /**
-     * Gets a Float value with the given tag from the {@link NBTTagCompound} of the given {@link nbtTagCompound}.
+     * Gets a Float value with the given tag from the {@link NBTTagCompound} of the given nbtTagCompound.
      *
      * @param nbtTagCompound The {@link NBTTagCompound} to check.
      * @param tagName        The name of the tag for which the value should be determined.
@@ -240,7 +240,7 @@ public class NBTUtil {
     }
 
     /**
-     * Gets a Double value with the given tag from the {@link NBTTagCompound} of the given {@link nbtTagCompound}.
+     * Gets a Double value with the given tag from the {@link NBTTagCompound} of the given nbtTagCompound.
      *
      * @param nbtTagCompound The {@link NBTTagCompound} to check.
      * @param tagName        The name of the tag for which the value should be determined.

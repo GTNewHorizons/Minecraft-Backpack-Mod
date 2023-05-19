@@ -3,6 +3,7 @@ package de.eydamos.backpack.inventory.container;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -28,7 +29,7 @@ public class ContainerAdvanced extends Container {
     protected int height;
     protected IInventory inventory;
     protected BackpackSave backpackSave;
-    protected Map<Boundaries, Integer> boundaries = new HashMap<Boundaries, Integer>();
+    protected final Map<Boundaries, Integer> boundaries = new HashMap<>();
 
     public ContainerAdvanced() {}
 
@@ -55,7 +56,7 @@ public class ContainerAdvanced extends Container {
 
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         String UUID = null;
-        if (playerSave.getPersonalBackpackOpen() != "") {
+        if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
             UUID = playerSave.getPersonalBackpackOpen();
         } else if (entityPlayer.getCurrentEquippedItem() != null) {
             UUID = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
@@ -176,7 +177,7 @@ public class ContainerAdvanced extends Container {
                             }
 
             if (itemStack.stackSize == 0) {
-                slot.putStack((ItemStack) null);
+                slot.putStack(null);
             } else {
                 slot.onSlotChanged();
             }
@@ -352,7 +353,7 @@ public class ContainerAdvanced extends Container {
 
     @ContainerSectionCallback
     public Map<ContainerSection, List<Slot>> getContainerSections() {
-        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<ContainerSection, List<Slot>>();
+        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<>();
 
         if (boundaries.containsKey(Boundaries.CRAFTING)) {
             slotRefs.put(ContainerSection.CRAFTING_OUT, inventorySlots.subList(0, 1));

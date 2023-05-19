@@ -20,7 +20,7 @@ import invtweaks.api.container.ContainerSectionCallback;
 @ChestContainer
 public class ContainerPersonalSlot extends ContainerAdvanced {
 
-    protected InventoryPickup inventoryPickup;
+    protected final InventoryPickup inventoryPickup;
 
     public ContainerPersonalSlot(AbstractInventoryBackpack slotInventory, InventoryPickup pickupInventory) {
         super(slotInventory);

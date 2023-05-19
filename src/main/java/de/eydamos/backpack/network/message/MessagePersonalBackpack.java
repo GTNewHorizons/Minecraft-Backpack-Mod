@@ -1,7 +1,5 @@
 package de.eydamos.backpack.network.message;
 
-import java.util.UUID;
-
 import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.common.network.ByteBufUtils;

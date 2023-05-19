@@ -11,7 +11,7 @@ import de.eydamos.guiadvanced.util.RenderHelper;
 
 public class Window extends GuiScreen implements AbstractGui {
 
-    protected ArrayList<AbstractGuiPart> subParts = new ArrayList<AbstractGuiPart>();
+    protected final ArrayList<AbstractGuiPart> subParts = new ArrayList<>();
     protected int xSize = 0;
     protected int ySize = 0;
     protected int guiLeft = 0;

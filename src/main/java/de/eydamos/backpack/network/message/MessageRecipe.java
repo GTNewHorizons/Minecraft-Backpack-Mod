@@ -18,7 +18,7 @@ public class MessageRecipe implements IMessage, IMessageHandler<MessageRecipe, I
     protected ArrayList<SlotStack> recipeList;
 
     public MessageRecipe() {
-        recipeList = new ArrayList<SlotStack>();
+        recipeList = new ArrayList<>();
     }
 
     public MessageRecipe(ArrayList<SlotStack> recipe) {

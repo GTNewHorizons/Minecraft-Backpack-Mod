@@ -19,10 +19,10 @@ import de.eydamos.backpack.util.BackpackUtil;
 
 public class SlotCraftingAdvanced extends SlotCrafting {
 
-    protected InventoryCraftingGrid craftingGrid;
-    protected IInventory backpackInventory;
-    protected ContainerWorkbenchBackpack eventHandler;
-    protected World worldObj;
+    protected final InventoryCraftingGrid craftingGrid;
+    protected final IInventory backpackInventory;
+    protected final ContainerWorkbenchBackpack eventHandler;
+    protected final World worldObj;
     protected boolean realResult = false;
 
     public SlotCraftingAdvanced(EntityPlayer player, ContainerWorkbenchBackpack container, int slotIndex, int xPosition,
@@ -41,9 +41,7 @@ public class SlotCraftingAdvanced extends SlotCrafting {
         FMLCommonHandler.instance().firePlayerCraftingEvent(entityPlayer, itemStack, craftingGrid);
         onCrafting(itemStack);
 
-        for (int i = 0; i < currentRecipe.size(); i++) {
-            ItemStack ingredient = currentRecipe.get(i);
-
+        for (ItemStack ingredient : currentRecipe) {
             // search for same item in backpack inventory and reduce ingredient amount
             for (int j = 0; j < backpackInventory.getSizeInventory(); j++) {
                 ItemStack itemstack = backpackInventory.getStackInSlot(j);
@@ -158,7 +156,7 @@ public class SlotCraftingAdvanced extends SlotCrafting {
      * @return An ArrayList with all the ingredients of the current recipe and the needed amount.
      */
     protected ArrayList<ItemStack> getRecipeIngredients() {
-        ArrayList<ItemStack> currentRecipe = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> currentRecipe = new ArrayList<>();
         boolean add;
 
         for (int i = 0; i < craftingGrid.getSizeInventory(); i++) {
