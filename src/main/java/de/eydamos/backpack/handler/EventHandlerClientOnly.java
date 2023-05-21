@@ -14,7 +14,7 @@ import de.eydamos.backpack.model.BackpackModelWorker;
 
 public class EventHandlerClientOnly {
 
-    BackpackModelWorker backRenderer = new BackpackModelWorker();
+    final BackpackModelWorker backRenderer = new BackpackModelWorker();
 
     @SubscribeEvent
     public void render(Pre event) {
@@ -42,7 +42,7 @@ public class EventHandlerClientOnly {
             if (player == null) {
                 return;
             }
-            // Uptade tag
+            // Update tag
             player.getEntityData().setInteger(Constants.NBT.PERSONAL_BACKPACK_META, meta);
         }
     }

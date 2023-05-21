@@ -5,5 +5,5 @@ public enum Alignment {
     CENTER,
     RIGHT,
     TOP,
-    BOTTOM;
+    BOTTOM
 }

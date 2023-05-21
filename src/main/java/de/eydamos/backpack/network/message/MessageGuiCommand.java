@@ -37,16 +37,16 @@ public class MessageGuiCommand implements IMessage, IMessageHandler<MessageGuiCo
         Container container = entityPlayer.openContainer;
 
         switch (message.command) {
-            case Constants.GuiCommands.CLEAR:
+            case Constants.GuiCommands.CLEAR -> {
                 if (container instanceof ContainerWorkbenchBackpack) {
                     ((ContainerWorkbenchBackpack) container).clearCraftMatrix();
                 }
-                break;
-            case Constants.GuiCommands.SAVE:
+            }
+            case Constants.GuiCommands.SAVE -> {
                 if (container instanceof ContainerWorkbenchBackpack) {
                     ((ContainerWorkbenchBackpack) container).setSaveMode();
                 }
-                break;
+            }
         }
 
         return null;

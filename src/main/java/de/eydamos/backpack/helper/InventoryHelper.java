@@ -1,5 +1,7 @@
 package de.eydamos.backpack.helper;
 
+import java.util.Arrays;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -10,7 +12,7 @@ import de.eydamos.backpack.saves.BackpackSave;
 public class InventoryHelper {
 
     /**
-     * This method will read the ItemStacks from the given ItemStack's NBTCompount with the given key and load them into
+     * This method will read the ItemStacks from the given ItemStack's NBTCompound with the given key and load them into
      * the given inventory.
      *
      * @param backpackSave The BackpackSave with the NBTCompound to read from.
@@ -22,7 +24,7 @@ public class InventoryHelper {
     }
 
     /**
-     * This method will read the ItemStacks from the given ItemStack's NBTCompount with the given key and load them into
+     * This method will read the ItemStacks from the given ItemStack's NBTCompound with the given key and load them into
      * the given inventory.
      *
      * @param backpackSave   The BackpackSave with the NBTCompound to read from.
@@ -33,9 +35,7 @@ public class InventoryHelper {
     public static void readInventory(BackpackSave backpackSave, String inventoryName, ItemStack[] inventory,
             boolean clearInventory) {
         if (clearInventory) {
-            for (int i = 0; i < inventory.length; i++) {
-                inventory[i] = null;
-            }
+            Arrays.fill(inventory, null);
         }
 
         NBTTagList inventoryList = backpackSave.getInventory(inventoryName);
@@ -43,7 +43,7 @@ public class InventoryHelper {
             NBTTagCompound slotEntry = inventoryList.getCompoundTagAt(i);
             int slot = slotEntry.getByte(Constants.NBT.SLOT) & 0xff;
 
-            if (slot >= 0 && slot < inventory.length) {
+            if (slot < inventory.length) {
                 inventory[slot] = ItemStack.loadItemStackFromNBT(slotEntry);
             }
         }

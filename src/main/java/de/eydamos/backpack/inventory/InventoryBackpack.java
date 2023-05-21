@@ -16,7 +16,7 @@ public class InventoryBackpack extends AbstractInventoryBackpack<BackpackSave> {
     /**
      * Read name, size and content of inventory from NBTTagCompound.
      *
-     * @param nbtTagCompound
+     * @param backpackSave the backpack save
      */
     @Override
     public void readFromNBT(BackpackSave backpackSave) {
@@ -29,7 +29,7 @@ public class InventoryBackpack extends AbstractInventoryBackpack<BackpackSave> {
     /**
      * If inventory isDirty (something has changed) write name, site and content of inventory to NBTTagCompound.
      *
-     * @param nbtTagCompound
+     * @param backpackSave the backpack save
      */
     @Override
     public void writeToNBT(BackpackSave backpackSave) {

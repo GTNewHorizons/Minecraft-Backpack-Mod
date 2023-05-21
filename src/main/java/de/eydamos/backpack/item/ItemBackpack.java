@@ -12,8 +12,6 @@ public class ItemBackpack extends ItemBackpackBase {
 
     /**
      * Creates an instance of the backpack item and sets some default values.
-     *
-     * @param id The item id.
      */
     public ItemBackpack() {
         super();

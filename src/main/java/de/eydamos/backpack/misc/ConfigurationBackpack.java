@@ -110,72 +110,111 @@ public class ConfigurationBackpack {
     }
 
     private static String getEnderRecipeComment() {
-        return "##############\n" + "Recipe to craft ender backpack\n"
-                + "0 ender chest\n"
-                + "1 eye of the ender\n"
-                + "##############";
+        return """
+                ##############
+                Recipe to craft ender backpack
+                0 ender chest
+                1 eye of the ender
+                ##############""";
     }
 
     private static String getBackpackSlotComment() {
-        return "##############\n" + "Number of slots a backpack has\n" + "valid: integers 1-128\n" + "##############";
+        return """
+                ##############
+                Number of slots a backpack has
+                valid: integers 1-128
+                ##############""";
     }
 
     private static String getMaxBackpackAmountComment() {
-        return "##############\n" + "Number of backpacks a player can have in his inventory\n"
-                + "valid: integers 0-36\n"
-                + "0 = unlimited\n"
-                + "##############";
+        return """
+                ##############
+                Number of backpacks a player can have in his inventory
+                valid: integers 0-36
+                0 = unlimited
+                ##############""";
     }
 
     private static String getRenderBackpackModelComment() {
-        return "##############\n" + "If true the backpack 3D model will be rendered.\n" + "##############";
+        return """
+                ##############
+                If true the backpack 3D model will be rendered.
+                ##############""";
     }
 
     private static String getOpenOnlyPersonalBackpacksComment() {
-        return "##############\n" + "If true you can only open a backpack that you wear in the extra slot\n"
-                + "##############";
+        return """
+                ##############
+                If true you can only open a backpack that you wear in the extra slot
+                ##############""";
     }
 
     private static String getAirshipModCompatibilityComment() {
-        return "##############\n" + "If true normal backpack requires a chest in the middle\n" + "##############";
+        return """
+                ##############
+                If true normal backpack requires a chest in the middle
+                ##############""";
     }
 
     private static String getDisableBackpacksComment() {
-        return "##############\n" + "If true small backpacks are not craftable\n" + "##############";
+        return """
+                ##############
+                If true small backpacks are not craftable
+                ##############""";
     }
 
     private static String getDisableBigBackpacksComment() {
-        return "##############\n" + "If true big backpacks are not craftable\n" + "##############";
+        return """
+                ##############
+                If true big backpacks are not craftable
+                ##############""";
     }
 
     private static String getDisableEnderBackpacksComment() {
-        return "##############\n" + "If true ender backpacks are not craftable\n" + "##############";
+        return """
+                ##############
+                If true ender backpacks are not craftable
+                ##############""";
     }
 
     private static String getDisableWorkbenchBackpacksComment() {
-        return "##############\n" + "If true workbench backpacks are not craftable\n" + "##############";
+        return """
+                ##############
+                If true workbench backpacks are not craftable
+                ##############""";
     }
 
     private static String getBigByUpgradeOnlyComment() {
-        return "##############\n" + "If true big backpacks can only crafted by upgrading a small one\n"
-                + "##############";
+        return """
+                ##############
+                If true big backpacks can only crafted by upgrading a small one
+                ##############""";
     }
 
     private static String getDisallowItemsComment() {
-        return "##############\n" + "Example:\n"
-                + "disallowItems: minecraft:dirt\n\n"
-                + "This will disallow dirt in backpacks.\n"
-                + "##############";
+        return """
+                ##############
+                Example:
+                disallowItems: minecraft:dirt
+
+                This will disallow dirt in backpacks.
+                ##############""";
     }
 
     private static String getForbiddenDimensionsComment() {
-        return "##############\n" + "Example:\n"
-                + "forbiddenDimensions: 0\n\n"
-                + "This will disallow backpacks inventory for Overworld (id = 0).\n"
-                + "##############";
+        return """
+                ##############
+                Example:
+                forbiddenDimensions: 0
+
+                This will disallow backpacks inventory for Overworld (id = 0).
+                ##############""";
     }
 
     private static String getPlaySoundComment() {
-        return "##############\n" + "If true backpack will play opening sound effect\n" + "##############";
+        return """
+                ##############
+                If true backpack will play opening sound effect
+                ##############""";
     }
 }

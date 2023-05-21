@@ -36,14 +36,12 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void addNeiSupport() {
         try {
-            Class API = Class.forName("codechicken.nei.api.API");
-            Class IOverlayHandler = Class.forName("codechicken.nei.api.IOverlayHandler");
-            Method registerGuiOverlayHandler = API.getDeclaredMethod(
-                    "registerGuiOverlayHandler",
-                    new Class[] { Class.class, IOverlayHandler, String.class });
+            Class<?> API = Class.forName("codechicken.nei.api.API");
+            Class<?> IOverlayHandler = Class.forName("codechicken.nei.api.IOverlayHandler");
+            Method registerGuiOverlayHandler = API
+                    .getDeclaredMethod("registerGuiOverlayHandler", Class.class, IOverlayHandler, String.class);
 
-            registerGuiOverlayHandler
-                    .invoke(API, new Object[] { GuiWorkbenchBackpack.class, new OverlayHandlerBackpack(), "crafting" });
+            registerGuiOverlayHandler.invoke(API, GuiWorkbenchBackpack.class, new OverlayHandlerBackpack(), "crafting");
 
             ConfigurationBackpack.NEISupport = true;
 

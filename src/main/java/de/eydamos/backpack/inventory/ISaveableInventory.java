@@ -4,7 +4,7 @@ import de.eydamos.backpack.saves.AbstractSave;
 
 public interface ISaveableInventory<S extends AbstractSave> {
 
-    public void readFromNBT(S save);
+    void readFromNBT(S save);
 
-    public void writeToNBT(S save);
+    void writeToNBT(S save);
 }

@@ -37,9 +37,9 @@ public class ItemBackpackBase extends Item {
     /**
      * Returns the sub items.
      *
-     * @param itemId the id of the item
-     * @param tab    A creative tab.
-     * @param A      List which stores the sub items.
+     * @param item     the id of the item
+     * @param tab      a creative tab.
+     * @param subItems a list that stores the sub items.
      */
     @Override
     @SideOnly(Side.CLIENT)
@@ -58,8 +58,8 @@ public class ItemBackpackBase extends Item {
     }
 
     /**
-     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
+     * Callback for item usage. If the item does something special on right-clicking, he will have one of those. Return
+     * True if something happen and false if it doesn't. This is for ITEMS, not BLOCKS
      *
      * @param stack    The ItemStack which is used
      * @param player   The player who used the item
@@ -70,7 +70,7 @@ public class ItemBackpackBase extends Item {
      * @param side     The side of the block that was clicked
      * @param hitX     The x position on the block which got clicked
      * @param hitY     The y position on the block which got clicked
-     * @param hitz     The z position on the block which got clicked
+     * @param hitZ     The z position on the block which got clicked
      */
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World worldObj, int x, int y, int z, int side,
@@ -96,12 +96,12 @@ public class ItemBackpackBase extends Item {
     }
 
     /**
-     * Handles what should be done on right clicking the item.
+     * Handles what should be done on right-clicking the item.
      *
-     * @param itemStack The ItemStack which is right clicked.
-     * @param world     The world in which the player is.
-     * @param player    The player who right clicked the item.
-     * @param Returns   the ItemStack after the process.
+     * @param itemStack    The ItemStack which is right-clicked.
+     * @param world        The world in which the player is.
+     * @param entityPlayer The player who right-clicked the item.
+     * @return the ItemStack after the process.
      */
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer entityPlayer) {
@@ -150,7 +150,7 @@ public class ItemBackpackBase extends Item {
     /**
      * Returns the item name to display in the tooltip.
      *
-     * @param itemstack The ItemStack to use for check.
+     * @param itemStack The ItemStack to use for check.
      * @return The name of the backpack for the tooltip.
      */
     @Override
@@ -201,8 +201,7 @@ public class ItemBackpackBase extends Item {
 
         String defaultName = NBTItemStackUtil.getString(itemStack, Constants.NBT.NAME);
         String customName = NBTItemStackUtil.getString(itemStack, Constants.NBT.CUSTOM_NAME);
-        InventoryBackpack inventory = new InventoryBackpack(defaultName, customName);
 
-        return inventory;
+        return new InventoryBackpack(defaultName, customName);
     }
 }

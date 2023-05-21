@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelBackpackL extends ModelBiped {
 
-    ModelRenderer bagMain;
+    final ModelRenderer bagMain;
 
     public ModelBackpackL() {
         this(0.0F);

@@ -11,13 +11,13 @@ import de.eydamos.backpack.misc.Constants;
 
 public class BackpackModelWorker {
 
-    ModelBiped[] backModels = { new ModelBackpackS(), new ModelBackpackM(), new ModelBackpackL() };
+    final ModelBiped[] backModels = { new ModelBackpackS(), new ModelBackpackM(), new ModelBackpackL() };
 
-    float[][] backpackColors = new float[][] { { 0.6F, 0.3F, 0.1F }, // Leather
+    final float[][] backpackColors = new float[][] { { 0.6F, 0.3F, 0.1F }, // Leather
             { 0.1F, 0.1F, 0.1F }, // Black
             { 0.6F, 0.2F, 0.2F }, // Orange
             { 0.4F, 0.5F, 0.2F }, // Green
-            { 0.4F, 0.3F, 0.2F }, // BROWn
+            { 0.4F, 0.3F, 0.2F }, // Brown
             { 0.2F, 0.3F, 0.7F }, // Blue dark
             { 0.5F, 0.25F, 0.7F }, // Purple
             { 0.3F, 0.5F, 0.6F }, // Cyan
@@ -27,7 +27,7 @@ public class BackpackModelWorker {
             { 0.5F, 0.8F, 0.1F }, // Green lime
             { 0.9F, 0.9F, 0.2F }, // Yellow
             { 0.4F, 0.6F, 0.85F }, // Blue
-            { 0.7F, 0.3F, 0.85F }, // Magneta
+            { 0.7F, 0.3F, 0.85F }, // Magenta
             { 0.85F, 0.5F, 0.2F }, // Orange
             { 1.0F, 1.0F, 1.0F }, // White
             { 0.1f, 0.2f, 0.2f } // Ender
