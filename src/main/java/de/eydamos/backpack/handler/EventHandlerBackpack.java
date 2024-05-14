@@ -27,6 +27,7 @@ import de.eydamos.backpack.network.message.MessagePersonalBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
+import de.eydamos.backpack.util.EnchUtils;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 
 public class EventHandlerBackpack {
@@ -106,14 +107,19 @@ public class EventHandlerBackpack {
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         ItemStack backpack = playerSave.getPersonalBackpack();
         if (backpack != null) {
-            event.drops.add(
-                    new EntityItem(
-                            entityPlayer.worldObj,
-                            entityPlayer.posX,
-                            entityPlayer.posY,
-                            entityPlayer.posZ,
-                            backpack));
-            playerSave.setPersonalBackpack(null);
+            if (EnchUtils.isSoulBounded(backpack)
+                    || entityPlayer.getEntityWorld().getGameRules().getGameRuleBooleanValue("keepInventory")) {
+                // Do nothing, let the playerSave object continue to contain the player's backpack.
+            } else {
+                event.drops.add(
+                        new EntityItem(
+                                entityPlayer.worldObj,
+                                entityPlayer.posX,
+                                entityPlayer.posY,
+                                entityPlayer.posZ,
+                                backpack));
+                playerSave.setPersonalBackpack(null);
+            }
         }
     }
 
