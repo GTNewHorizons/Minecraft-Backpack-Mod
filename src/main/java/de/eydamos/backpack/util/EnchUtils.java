@@ -1,6 +1,7 @@
 package de.eydamos.backpack.util;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -25,15 +26,8 @@ public class EnchUtils {
         return -1;
     }
 
-    public static boolean isSoulBounded(ItemStack stack) {
-        NBTTagList stackEnch = stack.getEnchantmentTagList();
-        if (SOUL_BOUND_ID >= 0 && stackEnch != null) {
-            for (int i = 0; i < stackEnch.tagCount(); i++) {
-                int id = stackEnch.getCompoundTagAt(i).getInteger("id");
-                if (id == SOUL_BOUND_ID) return true;
-            }
-        }
-        return false;
+    public static boolean isSoulBound(ItemStack stack) {
+        return SOUL_BOUND_ID >= 0 && EnchantmentHelper.getEnchantmentLevel(SOUL_BOUND_ID, stack) > 0;
     }
 
     public static boolean isSoulBook(ItemStack book) {
@@ -41,7 +35,7 @@ public class EnchUtils {
             NBTTagCompound bookData = book.stackTagCompound;
             if (bookData.hasKey("StoredEnchantments")) {
                 NBTTagList bookEnch = bookData.getTagList("StoredEnchantments", NBT.TAG_COMPOUND);
-                if (!bookEnch.getCompoundTagAt(1).getBoolean("id")) // only pure soulbook allowed
+                if (bookEnch.tagCount() == 1) // only pure soulbook allowed
                 {
                     int id = bookEnch.getCompoundTagAt(0).getInteger("id");
                     return id == SOUL_BOUND_ID;

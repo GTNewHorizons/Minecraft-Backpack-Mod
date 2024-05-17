@@ -107,7 +107,7 @@ public class EventHandlerBackpack {
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         ItemStack backpack = playerSave.getPersonalBackpack();
         if (backpack != null) {
-            if (EnchUtils.isSoulBounded(backpack)
+            if (EnchUtils.isSoulBound(backpack)
                     || entityPlayer.getEntityWorld().getGameRules().getGameRuleBooleanValue("keepInventory")) {
                 // Do nothing, let the playerSave object continue to contain the player's backpack.
             } else {
