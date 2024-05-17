@@ -24,6 +24,7 @@ public class ConfigurationBackpack {
     public static String[] DISALLOW_ITEM_IDS;
     public static String[] FORBIDDEN_DIMENSIONS;
     public static String[] DEFAULT_IDS = {};
+    public static boolean ALLOW_SOULBOUND;
 
     public static boolean NEISupport = false;
     public static boolean PLAY_OPEN_SOUND = false;
@@ -103,6 +104,9 @@ public class ConfigurationBackpack {
         ///
         PLAY_OPEN_SOUND = config.get(Configuration.CATEGORY_GENERAL, "playSound", true, getPlaySoundComment())
                 .getBoolean(true);
+
+        ALLOW_SOULBOUND = config.get(Configuration.CATEGORY_GENERAL, "allowSoulbound", true, getAllowSoulboundComment())
+                .getBoolean(false);
 
         if (config.hasChanged()) {
             config.save();
@@ -215,6 +219,13 @@ public class ConfigurationBackpack {
         return """
                 ##############
                 If true backpack will play opening sound effect
+                ##############""";
+    }
+
+    private static String getAllowSoulboundComment() {
+        return """
+                ##############
+                If true backpack will stay in your backpack slot on death when enchanted with EnderIO soulbound.
                 ##############""";
     }
 }

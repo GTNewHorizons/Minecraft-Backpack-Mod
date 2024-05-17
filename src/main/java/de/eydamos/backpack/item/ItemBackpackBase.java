@@ -24,6 +24,7 @@ import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.util.BackpackUtil;
+import de.eydamos.backpack.util.EnchUtils;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 
 public class ItemBackpackBase extends Item {
@@ -164,7 +165,7 @@ public class ItemBackpackBase extends Item {
 
     @Override
     public boolean isBookEnchantable(ItemStack itemstack1, ItemStack itemstack2) {
-        return false;
+        return EnchUtils.isSoulBook(itemstack2);
     }
 
     @Override
