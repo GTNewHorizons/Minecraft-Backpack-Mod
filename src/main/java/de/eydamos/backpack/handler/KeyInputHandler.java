@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.MouseInputEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.helper.GuiHelper;
@@ -24,7 +25,16 @@ public class KeyInputHandler {
             Localizations.KEY_CATEGORY);
 
     @SubscribeEvent
-    public void handleKeyInput(KeyInputEvent event) {
+    public void handleKeyInputEvent(KeyInputEvent event) {
+        onInput();
+    }
+
+    @SubscribeEvent
+    public void handleMouseInputEvent(MouseInputEvent event) {
+        onInput();
+    }
+
+    public void onInput() {
         if (personalBackpack.isPressed()) {
             Minecraft mc = FMLClientHandler.instance().getClient();
             // If we are not in a GUI of any kind
