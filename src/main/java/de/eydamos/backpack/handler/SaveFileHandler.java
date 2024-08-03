@@ -99,6 +99,7 @@ public class SaveFileHandler {
         if (file.exists()) {
             try {
                 nbtTagCompound = CompressedStreamTools.readCompressed(new FileInputStream(file));
+                cachedFiles.put(file, (NBTTagCompound) nbtTagCompound.copy());
             } catch (IOException ioException) {
                 ioException.printStackTrace();
                 logger.warn("[Backpack] Couldn't load data at all.");
