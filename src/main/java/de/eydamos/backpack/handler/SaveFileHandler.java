@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,6 +20,8 @@ public class SaveFileHandler {
     protected File worldDir = null;
     protected File backpackDir = null;
     protected File playerDir = null;
+
+    private final HashMap<File, NBTTagCompound> cachedFiles = new HashMap<>();
 
     public void init() {
         worldDir = DimensionManager.getCurrentSaveRootDirectory();
@@ -61,11 +64,15 @@ public class SaveFileHandler {
     }
 
     public boolean backpackSaveExists(String UUID) {
-        return new File(backpackDir, UUID + ".dat").exists();
+        File f = new File(backpackDir, UUID + ".dat");
+        if (cachedFiles.containsKey(f)) return true;
+        return f.exists();
     }
 
     public boolean playerSaveExists(String UUID) {
-        return new File(playerDir, UUID + ".dat").exists();
+        File f = new File(playerDir, UUID + ".dat");
+        if (cachedFiles.containsKey(f)) return true;
+        return f.exists();
     }
 
     public NBTTagCompound load(File directory, String fileName) {
@@ -73,9 +80,12 @@ public class SaveFileHandler {
 
         File file = new File(directory, fileName + ".dat");
 
+        if (cachedFiles.containsKey(file)) return (NBTTagCompound) cachedFiles.get(file).copy();
+
         if (file.exists()) {
             try {
                 nbtTagCompound = CompressedStreamTools.readCompressed(new FileInputStream(file));
+                cachedFiles.put(file, (NBTTagCompound) nbtTagCompound.copy());
                 return nbtTagCompound;
             } catch (IOException ioException) {
                 ioException.printStackTrace();
@@ -89,6 +99,7 @@ public class SaveFileHandler {
         if (file.exists()) {
             try {
                 nbtTagCompound = CompressedStreamTools.readCompressed(new FileInputStream(file));
+                cachedFiles.put(file, (NBTTagCompound) nbtTagCompound.copy());
             } catch (IOException ioException) {
                 ioException.printStackTrace();
                 logger.warn("[Backpack] Couldn't load data at all.");
@@ -121,6 +132,8 @@ public class SaveFileHandler {
             if (fileNew.exists()) {
                 fileNew.delete();
             }
+
+            cachedFiles.put(file, (NBTTagCompound) data.copy());
         } catch (IOException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
             logger.warn("[Backpack] Couldn't save data.");
@@ -143,5 +156,7 @@ public class SaveFileHandler {
         if (fileNew.exists()) {
             fileNew.delete();
         }
+
+        cachedFiles.remove(file);
     }
 }
