@@ -56,7 +56,7 @@ public class RecipeRecolorBackpack implements IRecipe {
             int tier = backpack.getItemDamage() / 100;
             if (tier != 0 && dye.getItem() == Items.leather) {
                 return false;
-            } else if (tier != 2 && dye.getItem() == ItemsBackpack.tannedLeather) {
+            } else if (tier != 1 && tier != 2 && dye.getItem() == ItemsBackpack.tannedLeather) {
                 return false;
             }
 

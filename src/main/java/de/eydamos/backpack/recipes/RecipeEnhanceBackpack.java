@@ -31,7 +31,7 @@ public class RecipeEnhanceBackpack implements IRecipe {
                     if (!(slotStack.getItem() instanceof ItemBackpackBase)) {
                         return false;
                     }
-                    if (slotStack.getItemDamage() / 100 > 0) {
+                    if (slotStack.getItemDamage() / 100 > 1) {
                         return false;
                     }
                     backpack = slotStack;
@@ -50,7 +50,7 @@ public class RecipeEnhanceBackpack implements IRecipe {
 
         if (backpack != null) {
             result = backpack.copy();
-            result.setItemDamage(result.getItemDamage() + 200);
+            result.setItemDamage(result.getItemDamage() + 100);
         }
 
         return result != null;
