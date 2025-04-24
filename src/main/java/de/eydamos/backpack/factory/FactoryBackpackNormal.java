@@ -30,7 +30,7 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
         int slotsPerRow = backpack.getSlotsPerRow();
         int inventoryRows = (int) Math.ceil(inventories[1].getSizeInventory() / (float) slotsPerRow);
-        int maxWidth = (Math.max(slotsPerRow, 9)) * SLOT;
+        int maxWidth = slotsPerRow * SLOT;
 
         // set container width (needed for gui)
         container.setWidth(maxWidth + 2 * X_SPACING);
@@ -43,13 +43,13 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         int remainingSlots = inventories[1].getSizeInventory();
         // backpack inventory
         for (int row = 0; row < inventoryRows; row++) {
-            int cols = remainingSlots - slotsPerRow >= slotsPerRow ? slotsPerRow : remainingSlots;
+            int cols = remainingSlots - slotsPerRow >= 0 ? slotsPerRow : remainingSlots;
             remainingSlots -= cols;
             if (cols * SLOT < maxWidth /* && !hasScrollbar */) {
                 x += (int) Math.round(maxWidth / 2. - cols * SLOT / 2.) + 1;
             }
             for (int col = 0; col < cols; ++col) {
-                container.addSlot(new SlotBackpack(inventories[1], col + row * 9, x, y));
+                container.addSlot(new SlotBackpack(inventories[1], col + row * slotsPerRow, x, y));
                 x += SLOT;
             }
             y += SLOT;
@@ -61,6 +61,9 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
         y += 14; // space for label
 
+        int inventorySpaceBefore = (int) Math.round(container.getWidth() / 2. - (SLOT * 9) / 2.);
+        x = inventorySpaceBefore;
+
         // player inventory
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -68,7 +71,7 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
                 x += SLOT;
             }
             y += SLOT;
-            x = X_SPACING;
+            x = inventorySpaceBefore;
         }
 
         container.addBoundary(Boundaries.INVENTORY_END);
@@ -110,8 +113,10 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
             guiBackpack.addSubPart(guiSlot);
         }
 
+        int inventorySpaceBefore = (int) Math.round(container.getWidth() / 2. - (SLOT * 9) / 2.);
+
         guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, inventories[1].getInventoryName()));
-        guiBackpack.addSubPart(new Label(X_SPACING, textPositionY, 0x404040, "container.inventory"));
+        guiBackpack.addSubPart(new Label(inventorySpaceBefore, textPositionY, 0x404040, "container.inventory"));
 
         return guiBackpack;
     }
