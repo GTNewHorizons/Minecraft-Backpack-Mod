@@ -76,6 +76,7 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         NBTUtil.setString(nbtTagCompound, Constants.NBT.UID, message.uuid);
         NBTUtil.setByte(nbtTagCompound, Constants.NBT.TYPE, message.type);
+        NBTUtil.setInteger(nbtTagCompound, Constants.NBT.SIZE, message.size);
         NBTUtil.setBoolean(nbtTagCompound, Constants.NBT.INTELLIGENT, message.intelligent);
 
         BackpackSave backpackSave = new BackpackSave(nbtTagCompound);
