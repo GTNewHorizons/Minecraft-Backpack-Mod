@@ -80,47 +80,6 @@ public class BackpackSave extends AbstractSave {
 
             setManualSaving();
 
-            setSlotsPerRow(9);
-
-            // 63 is a max number of slots that can fit max mc gui scale
-            // which means 7 rows of 9 slots
-            // so we need to expand max slots per row
-            int slotsPerRow = -1;
-            int leastSlotPerRowToFit = -1;
-
-            if (size > 63) {
-                int minRowsFormaxGuiScale = 1;
-                int maxRowsForMaxGuiScale = 7;
-                int minColumns = 9;
-                int maxColumnsForMaxGuiScale = 19;
-
-                // let's try to find the perfect fit
-                for (int rows = minRowsFormaxGuiScale; rows <= maxRowsForMaxGuiScale; rows++) {
-                    for (int columns = minColumns; columns <= maxColumnsForMaxGuiScale; columns++) {
-                        if (columns * rows == size) {
-                            // this fits the best
-                            slotsPerRow = columns;
-                            break;
-                        } else if (columns * rows > size) {
-                            if (leastSlotPerRowToFit == -1) {
-                                leastSlotPerRowToFit = columns;
-                            }
-                        }
-                    }
-                }
-
-                if (slotsPerRow == -1) {
-                    slotsPerRow = leastSlotPerRowToFit;
-                }
-
-                if (slotsPerRow == -1) {
-                    throw new IllegalArgumentException(
-                            "Impossible state, since max slot count is 128, which fits the 7 * 19 grid");
-                }
-
-                setSlotsPerRow(slotsPerRow);
-            }
-
             setSize(size);
             setType(BackpackUtil.getType(backpack));
             if (!NBTUtil.hasTag(nbtTagCompound, Constants.NBT.INVENTORIES)) {
@@ -168,15 +127,45 @@ public class BackpackSave extends AbstractSave {
     }
 
     public int getSlotsPerRow() {
-        return NBTUtil.getInteger(nbtTagCompound, Constants.NBT.SLOTS_PER_ROW);
-    }
+        // 63 is a max number of slots that can fit max mc gui scale
+        // which means 7 rows of 9 slots
+        // so we need to expand max slots per row
+        int slotsPerRow = -1;
+        int leastSlotPerRowToFit = -1;
+        int size = getSize();
 
-    public void setSlotsPerRow(int slotsPerRow) {
-        NBTUtil.setInteger(nbtTagCompound, Constants.NBT.SLOTS_PER_ROW, slotsPerRow);
+        if (size > 63) {
+            int minRowsForMaxGuiScale = 1;
+            int maxRowsForMaxGuiScale = 7;
+            int minColumns = 9;
+            int maxColumnsForMaxGuiScale = 19;
 
-        if (!manualSaving) {
-            save();
+            // let's try to find the perfect fit
+            for (int rows = minRowsForMaxGuiScale; rows <= maxRowsForMaxGuiScale; rows++) {
+                for (int columns = minColumns; columns <= maxColumnsForMaxGuiScale; columns++) {
+                    if (columns * rows == size) {
+                        // this fits the best
+                        slotsPerRow = columns;
+                        break;
+                    } else if (columns * rows > size) {
+                        if (leastSlotPerRowToFit == -1) {
+                            leastSlotPerRowToFit = columns;
+                        }
+                    }
+                }
+            }
+
+            if (slotsPerRow == -1) {
+                slotsPerRow = leastSlotPerRowToFit;
+            }
+
+            if (slotsPerRow == -1) {
+                throw new IllegalArgumentException(
+                        "Impossible state, since max slot count is 128, which fits the 7 * 19 grid");
+            }
         }
+
+        return slotsPerRow;
     }
 
     @Override
