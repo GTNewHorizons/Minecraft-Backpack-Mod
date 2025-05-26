@@ -23,7 +23,6 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
 
     protected String uuid;
     protected byte type;
-    protected int slotsPerRow = 9;
     protected String name;
     protected boolean customName;
     protected int size;
@@ -38,7 +37,6 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
         }
         uuid = backpack.getUUID();
         type = backpack.getType();
-        slotsPerRow = backpack.getSlotsPerRow();
         name = inventory.getInventoryName();
         customName = inventory.hasCustomInventoryName();
         size = inventory.getSizeInventory();
@@ -51,7 +49,6 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
         windowId = buffer.readInt();
         uuid = ByteBufUtils.readUTF8String(buffer);
         type = buffer.readByte();
-        slotsPerRow = buffer.readInt();
         name = ByteBufUtils.readUTF8String(buffer);
         customName = buffer.readBoolean();
         size = buffer.readInt();
@@ -63,7 +60,6 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
         buffer.writeInt(windowId);
         ByteBufUtils.writeUTF8String(buffer, uuid);
         buffer.writeByte(type);
-        buffer.writeInt(slotsPerRow);
         ByteBufUtils.writeUTF8String(buffer, name);
         buffer.writeBoolean(customName);
         buffer.writeInt(size);
@@ -80,7 +76,6 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
         NBTUtil.setString(nbtTagCompound, Constants.NBT.UID, message.uuid);
         NBTUtil.setByte(nbtTagCompound, Constants.NBT.TYPE, message.type);
-        NBTUtil.setInteger(nbtTagCompound, Constants.NBT.SLOTS_PER_ROW, message.slotsPerRow);
         NBTUtil.setBoolean(nbtTagCompound, Constants.NBT.INTELLIGENT, message.intelligent);
 
         BackpackSave backpackSave = new BackpackSave(nbtTagCompound);
