@@ -59,24 +59,7 @@ public class BackpackSave extends AbstractSave {
                 NBTItemStackUtil.setString(backpack, Constants.NBT.UID, UID);
             }
 
-            int size = 0;
-            int damage = backpack.getItemDamage();
-            int tier = damage / 100 < 3 ? damage / 100 : 0;
-            int meta = damage % 100;
-            // TODO change BackpackUtil.getSize(tier, color) [multidimensional array build from config]
-            if (meta == 99) { // ender
-                size = 27;
-            } else if (meta < 17 && tier == 2) { // big
-                size = ConfigurationBackpack.BACKPACK_SLOTS_L;
-            } else if (meta < 17 && tier == 1) { // Medium
-                size = ConfigurationBackpack.BACKPACK_SLOTS_M;
-            } else if (meta < 17 && tier == 0) { // normal
-                size = ConfigurationBackpack.BACKPACK_SLOTS_S;
-            } else if (meta == 17 && tier == 0) { // workbench
-                size = 9;
-            } else if (meta == 17 && tier == 2) { // big workbench
-                size = 18;
-            }
+            int size = getSize(backpack);
 
             setManualSaving();
 
@@ -88,6 +71,37 @@ public class BackpackSave extends AbstractSave {
 
             save();
         }
+    }
+
+    private static int getSize(ItemStack backpack) {
+        int damage = backpack.getItemDamage();
+        int tier = damage / 100;
+        int meta = damage % 100;
+
+        // Only accept valid tiers (0, 1, 2); fallback to 0 if invalid
+        if (tier >= 3) tier = 0;
+
+        // Ender backpack
+        if (meta == 99) {
+            return 27;
+        }
+
+        // Workbench variants
+        if (meta == 17) {
+            if (tier == 2) return 18;
+            if (tier == 0) return 9;
+        }
+
+        // Standard backpacks
+        if (meta < 17) {
+            switch (tier) {
+                case 2: return ConfigurationBackpack.BACKPACK_SLOTS_L;
+                case 1: return ConfigurationBackpack.BACKPACK_SLOTS_M;
+                case 0: return ConfigurationBackpack.BACKPACK_SLOTS_S;
+            }
+        }
+
+        return 0;
     }
 
     public String getUUID() {
