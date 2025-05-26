@@ -59,24 +59,7 @@ public class BackpackSave extends AbstractSave {
                 NBTItemStackUtil.setString(backpack, Constants.NBT.UID, UID);
             }
 
-            int size = 0;
-            int damage = backpack.getItemDamage();
-            int tier = damage / 100 < 3 ? damage / 100 : 0;
-            int meta = damage % 100;
-            // TODO change BackpackUtil.getSize(tier, color) [multidimensional array build from config]
-            if (meta == 99) { // ender
-                size = 27;
-            } else if (meta < 17 && tier == 2) { // big
-                size = ConfigurationBackpack.BACKPACK_SLOTS_L;
-            } else if (meta < 17 && tier == 1) { // Medium
-                size = ConfigurationBackpack.BACKPACK_SLOTS_M;
-            } else if (meta < 17 && tier == 0) { // normal
-                size = ConfigurationBackpack.BACKPACK_SLOTS_S;
-            } else if (meta == 17 && tier == 0) { // workbench
-                size = 9;
-            } else if (meta == 17 && tier == 2) { // big workbench
-                size = 18;
-            }
+            int size = getSize(backpack);
 
             setManualSaving();
 
@@ -88,6 +71,40 @@ public class BackpackSave extends AbstractSave {
 
             save();
         }
+    }
+
+    private static int getSize(ItemStack backpack) {
+        int damage = backpack.getItemDamage();
+        int tier = damage / 100;
+        int meta = damage % 100;
+
+        // Only accept valid tiers (0, 1, 2); fallback to 0 if invalid
+        if (tier >= 3) tier = 0;
+
+        // Ender backpack
+        if (meta == 99) {
+            return 27;
+        }
+
+        // Workbench variants
+        if (meta == 17) {
+            if (tier == 2) return 18;
+            if (tier == 0) return 9;
+        }
+
+        // Standard backpacks
+        if (meta < 17) {
+            switch (tier) {
+                case 2:
+                    return ConfigurationBackpack.BACKPACK_SLOTS_L;
+                case 1:
+                    return ConfigurationBackpack.BACKPACK_SLOTS_M;
+                case 0:
+                    return ConfigurationBackpack.BACKPACK_SLOTS_S;
+            }
+        }
+
+        return 0;
     }
 
     public String getUUID() {
@@ -127,45 +144,21 @@ public class BackpackSave extends AbstractSave {
     }
 
     public int getSlotsPerRow() {
-        // 63 is a max number of slots that can fit max mc gui scale
-        // which means 7 rows of 9 slots
-        // so we need to expand max slots per row
-        int slotsPerRow = -1;
-        int leastSlotPerRowToFit = -1;
         int size = getSize();
 
-        if (size > 63) {
-            int minRowsForMaxGuiScale = 1;
-            int maxRowsForMaxGuiScale = 7;
-            int minColumns = 9;
-            int maxColumnsForMaxGuiScale = 19;
+        if (size < 64) {
+            return 9;
+        }
 
-            // let's try to find the perfect fit
-            for (int rows = minRowsForMaxGuiScale; rows <= maxRowsForMaxGuiScale; rows++) {
-                for (int columns = minColumns; columns <= maxColumnsForMaxGuiScale; columns++) {
-                    if (columns * rows == size) {
-                        // this fits the best
-                        slotsPerRow = columns;
-                        break;
-                    } else if (columns * rows > size) {
-                        if (leastSlotPerRowToFit == -1) {
-                            leastSlotPerRowToFit = columns;
-                        }
-                    }
-                }
-            }
-
-            if (slotsPerRow == -1) {
-                slotsPerRow = leastSlotPerRowToFit;
-            }
-
-            if (slotsPerRow == -1) {
-                throw new IllegalArgumentException(
-                        "Impossible state, since max slot count is 128, which fits the 7 * 19 grid");
+        // Search for the best fit
+        for (int columns = 9; columns <= 19; columns++) {
+            int rows = (size + columns - 1) / columns;
+            if (rows <= 7) {
+                return columns;
             }
         }
 
-        return slotsPerRow;
+        throw new IllegalArgumentException("Inventory too large to fit in a 7x19 grid (" + size + " slots)");
     }
 
     @Override
