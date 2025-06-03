@@ -48,7 +48,6 @@ public class Constants {
         public static final String CUSTOM_NAME = "customName";
         public static final String SIZE = "size";
         public static final String SLOT = "slot";
-        public static final String SLOTS_PER_ROW = "slotsPerRow";
         public static final String INTELLIGENT = "intelligent";
         public static final String TYPE = "type";
         public static final String PERSONAL_BACKPACK_OPEN = "personalBackpackOpen";
