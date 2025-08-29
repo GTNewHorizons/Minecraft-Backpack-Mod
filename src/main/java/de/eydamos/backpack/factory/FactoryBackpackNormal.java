@@ -37,10 +37,9 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         // Backpack inventory
         for (int row = 0; row < rows; row++) {
             int cols = Math.min(slotsPerRow, totalSlots - row * slotsPerRow);
-            int rowX = x + ((cols * SLOT < maxWidth) ? (maxWidth - cols * SLOT) / 2 : 0);
             for (int col = 0; col < cols; col++) {
                 int index = row * slotsPerRow + col;
-                container.addSlot(new SlotBackpack(inventories[1], index, rowX + col * SLOT, y));
+                container.addSlot(new SlotBackpack(inventories[1], index, x + col * SLOT, y));
             }
             y += SLOT;
         }
