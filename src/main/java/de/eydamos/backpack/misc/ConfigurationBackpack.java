@@ -41,18 +41,18 @@ public class ConfigurationBackpack {
         if (ENDER_RECIPE < 0 || ENDER_RECIPE > 1) {
             ENDER_RECIPE = 0;
         }
-        BACKPACK_SLOTS_S = config.get(Configuration.CATEGORY_GENERAL, "backpackSlotsS", 27, getBackpackSlotComment())
-                .getInt();
+        BACKPACK_SLOTS_S = config
+                .get(Configuration.CATEGORY_GENERAL, "backpackSlotsS", 27, getBackpackSlotComment("small")).getInt();
         if (BACKPACK_SLOTS_S < 1 || BACKPACK_SLOTS_S > 128) {
             BACKPACK_SLOTS_S = 27;
         }
-        BACKPACK_SLOTS_M = config.get(Configuration.CATEGORY_GENERAL, "backpackSlotsM", 36, getBackpackSlotComment())
-                .getInt();
+        BACKPACK_SLOTS_M = config
+                .get(Configuration.CATEGORY_GENERAL, "backpackSlotsM", 36, getBackpackSlotComment("medium")).getInt();
         if (BACKPACK_SLOTS_M < 1 || BACKPACK_SLOTS_M > 128) {
             BACKPACK_SLOTS_M = 36;
         }
-        BACKPACK_SLOTS_L = config.get(Configuration.CATEGORY_GENERAL, "backpackSlotsL", 54, getBackpackSlotComment())
-                .getInt();
+        BACKPACK_SLOTS_L = config
+                .get(Configuration.CATEGORY_GENERAL, "backpackSlotsL", 54, getBackpackSlotComment("large")).getInt();
         if (BACKPACK_SLOTS_L < 1 || BACKPACK_SLOTS_L > 128) {
             BACKPACK_SLOTS_L = 54;
         }
@@ -122,12 +122,12 @@ public class ConfigurationBackpack {
                 ##############""";
     }
 
-    private static String getBackpackSlotComment() {
-        return """
-                ##############
-                Number of slots a backpack has
-                valid: integers 1-128
-                ##############""";
+    private static String getBackpackSlotComment(String type) {
+        return "##############\n" + "Number of slots a "
+                + type
+                + " backpack has\n"
+                + "valid: integers 1-128\n"
+                + "##############";
     }
 
     private static String getMaxBackpackAmountComment() {
