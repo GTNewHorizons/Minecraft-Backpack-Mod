@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 public class Constants {
 
     public static final String MOD_ID = "Backpack";
-    public static final String MOD_NAME = "Backpack Editted for ModdedNetwork";
+    public static final String MOD_NAME = "Backpack Edited for ModdedNetwork";
     public static final String MOD_VERSION = "GRADLETOKEN_VERSION";
 
     public static final String DOMAIN = "backpack";
