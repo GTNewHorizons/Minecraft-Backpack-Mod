@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -19,6 +18,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.inventory.InventoryBackpack;
+import de.eydamos.backpack.misc.BackpackUsageCache;
 import de.eydamos.backpack.misc.ConfigurationBackpack;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
@@ -184,11 +184,20 @@ public class ItemBackpackBase extends Item {
                         EnumChatFormatting.YELLOW + StatCollector.translateToLocal(Localizations.TIER)
                                 + " "
                                 + (itemStack.getItemDamage() / 100 + 1));
-                BackpackSave backpackSave = new BackpackSave(itemStack);
-                NBTTagList itemList = backpackSave.getInventory(Constants.NBT.INVENTORY_BACKPACK);
-                int used = itemList.tagCount();
-                int size = backpackSave.getSize();
-                information.add(used + "/" + size + ' ' + StatCollector.translateToLocal(Localizations.SLOTS_USED));
+
+                if (itemStack.stackTagCompound == null) return;
+
+                String uuid = itemStack.stackTagCompound.getString(Constants.NBT.UID);
+                if (uuid == null) return;
+
+                BackpackUsageCache.BackpackSlotUsageInfo info = BackpackUsageCache.getBackpackInfo(uuid);
+
+                if (info != null) {
+                    String slotsText = StatCollector.translateToLocal(Localizations.SLOTS_USED);
+                    information.add(info.usedSlots + "/" + info.totalSlots + ' ' + slotsText);
+                } else {
+                    BackpackUsageCache.requestBackpackInfo(uuid);
+                }
             }
         } else {
             information.add(StatCollector.translateToLocal(Localizations.MORE_INFORMATION));
