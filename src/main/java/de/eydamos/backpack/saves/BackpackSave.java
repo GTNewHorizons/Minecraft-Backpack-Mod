@@ -146,19 +146,45 @@ public class BackpackSave extends AbstractSave {
     public int getSlotsPerRow() {
         int size = getSize();
 
-        if (size < 64) {
+        // 63 is a max number of slots that can fit max mc gui scale
+        // which means 7 rows of 9 slots
+        // so we need to expand max slots per row
+        int slotsPerRow = -1;
+        int leastSlotPerRowToFit = -1;
+
+        if(size <= 63) {
             return 9;
         }
 
-        // Search for the best fit
-        for (int columns = 9; columns <= 19; columns++) {
-            int rows = (size + columns - 1) / columns;
-            if (rows <= 7) {
-                return columns;
+        int minRowsForMaxGuiScale = 1;
+        int maxRowsForMaxGuiScale = 7;
+        int minColumns = 9;
+        int maxColumnsForMaxGuiScale = 19;
+
+        // let's try to find the perfect fit
+        for (int rows = minRowsForMaxGuiScale; rows <= maxRowsForMaxGuiScale; rows++) {
+            for (int columns = minColumns; columns <= maxColumnsForMaxGuiScale; columns++) {
+                if (columns * rows == size) {
+                    // this fits the best
+                    slotsPerRow = columns;
+                    break;
+                } else if (columns * rows > size) {
+                    if (leastSlotPerRowToFit == -1) {
+                        leastSlotPerRowToFit = columns;
+                    }
+                }
             }
         }
 
-        throw new IllegalArgumentException("Inventory too large to fit in a 7x19 grid (" + size + " slots)");
+        if (slotsPerRow == -1) {
+            slotsPerRow = leastSlotPerRowToFit;
+        }
+
+        if (slotsPerRow == -1) {
+            throw new IllegalArgumentException("Inventory too large to fit in a 7x19 grid (" + size + " slots)");
+        }
+
+        return slotsPerRow;
     }
 
     @Override
