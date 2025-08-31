@@ -152,7 +152,7 @@ public class BackpackSave extends AbstractSave {
         int slotsPerRow = -1;
         int leastSlotPerRowToFit = -1;
 
-        if(size <= 63) {
+        if (size <= 63) {
             return 9;
         }
 
