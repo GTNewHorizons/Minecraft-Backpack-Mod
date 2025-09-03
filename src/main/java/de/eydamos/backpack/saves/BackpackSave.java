@@ -146,14 +146,30 @@ public class BackpackSave extends AbstractSave {
     public int getSlotsPerRow() {
         int size = getSize();
 
-        if (size < 64) {
+        // 7 rows of slots is the most that can fit in max MC gui scale,
+        // which is 63 total slots in 7 rows of 9 slots each.
+        // Anything above 63 needs more than the vanilla 9 slots per row.
+        if (size <= 63) {
             return 9;
         }
 
-        // Search for the best fit
-        for (int columns = 9; columns <= 19; columns++) {
+        final int MIN_ROWS = 3; // 3 * 19 = 57, 57 < 63
+        final int MAX_ROWS = 7;
+        final int MIN_COLS = 9;
+        final int MAX_COLS = 19;
+        // Search for the perfect rectangular fit
+        for (int rows = MAX_ROWS; rows >= MIN_ROWS; rows--) {
+            if (size % rows != 0) continue;
+            int columns = size / rows;
+            if (columns >= MIN_COLS && columns <= MAX_COLS) {
+                return columns;
+            }
+        }
+
+        // Search for the next best fit
+        for (int columns = MIN_COLS; columns <= MAX_COLS; columns++) {
             int rows = (size + columns - 1) / columns;
-            if (rows <= 7) {
+            if (rows <= MAX_ROWS) {
                 return columns;
             }
         }
