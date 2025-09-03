@@ -146,45 +146,35 @@ public class BackpackSave extends AbstractSave {
     public int getSlotsPerRow() {
         int size = getSize();
 
-        // 63 is a max number of slots that can fit max mc gui scale
-        // which means 7 rows of 9 slots
-        // so we need to expand max slots per row
-        int slotsPerRow = -1;
-        int leastSlotPerRowToFit = -1;
-
+        // 7 rows of slots is the most that can fit in max MC gui scale,
+        // which is 63 total slots in 7 rows of 9 slots each.
+        // Anything above 63 needs more than the vanilla 9 slots per row.
         if (size <= 63) {
             return 9;
         }
 
-        int minRowsForMaxGuiScale = 1;
-        int maxRowsForMaxGuiScale = 7;
-        int minColumns = 9;
-        int maxColumnsForMaxGuiScale = 19;
-
-        // let's try to find the perfect fit
-        for (int rows = minRowsForMaxGuiScale; rows <= maxRowsForMaxGuiScale; rows++) {
-            for (int columns = minColumns; columns <= maxColumnsForMaxGuiScale; columns++) {
-                if (columns * rows == size) {
-                    // this fits the best
-                    slotsPerRow = columns;
-                    break;
-                } else if (columns * rows > size) {
-                    if (leastSlotPerRowToFit == -1) {
-                        leastSlotPerRowToFit = columns;
-                    }
-                }
+        final int MIN_ROWS = 3; // 3 * 19 = 57, 57 < 63
+        final int MAX_ROWS = 7;
+        final int MIN_COLS = 9;
+        final int MAX_COLS = 19;
+        // Search for the perfect rectangular fit
+        for (int rows = MAX_ROWS; rows >= MIN_ROWS; rows--) {
+            if (size % rows != 0) continue;
+            int columns = size / rows;
+            if (columns >= MIN_COLS && columns <= MAX_COLS) {
+                return columns;
             }
         }
 
-        if (slotsPerRow == -1) {
-            slotsPerRow = leastSlotPerRowToFit;
+        // Search for the next best fit
+        for (int columns = MIN_COLS; columns <= MAX_COLS; columns++) {
+            int rows = (size + columns - 1) / columns;
+            if (rows <= MAX_ROWS) {
+                return columns;
+            }
         }
 
-        if (slotsPerRow == -1) {
-            throw new IllegalArgumentException("Inventory too large to fit in a 7x19 grid (" + size + " slots)");
-        }
-
-        return slotsPerRow;
+        throw new IllegalArgumentException("Inventory too large to fit in a 7x19 grid (" + size + " slots)");
     }
 
     @Override
