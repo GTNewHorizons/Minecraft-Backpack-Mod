@@ -25,8 +25,12 @@ public class SaveFileHandler {
 
     public void init() {
         cachedFiles.clear();
+        backpackDir = null;
+        playerDir = null;
 
         worldDir = DimensionManager.getCurrentSaveRootDirectory();
+        if (worldDir == null) return;
+
         backpackDir = new File(worldDir, "backpacks/backpacks");
         if (!backpackDir.exists()) {
             backpackDir.mkdirs();
