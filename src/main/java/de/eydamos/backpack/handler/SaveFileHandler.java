@@ -24,6 +24,8 @@ public class SaveFileHandler {
     private final HashMap<File, NBTTagCompound> cachedFiles = new HashMap<>();
 
     public void init() {
+        cachedFiles.clear();
+
         worldDir = DimensionManager.getCurrentSaveRootDirectory();
         backpackDir = new File(worldDir, "backpacks/backpacks");
         if (!backpackDir.exists()) {
