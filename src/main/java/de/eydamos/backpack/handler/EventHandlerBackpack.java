@@ -97,7 +97,9 @@ public class EventHandlerBackpack {
 
     @SubscribeEvent
     public void worldLoad(WorldEvent.Load event) {
-        Backpack.saveFileHandler.init();
+        if (!event.world.isRemote && event.world.provider.dimensionId == 0) {
+            Backpack.saveFileHandler.init();
+        }
     }
 
     @SubscribeEvent
