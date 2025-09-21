@@ -1,5 +1,6 @@
 package de.eydamos.backpack.misc;
 
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -21,6 +22,7 @@ public class BackpackUsageCache {
     private static final long REQUEST_THROTTLE_MS = 1000; // 1 second throttle between requests
     private static final int MAX_CACHE_SIZE = 100; // Prevent memory leaks
 
+    // Lock is only needed for the compound "put-and-evict" operation
     private static final ReadWriteLock cacheLock = new ReentrantReadWriteLock();
 
     private static class CacheEntry {
@@ -84,9 +86,10 @@ public class BackpackUsageCache {
 
         BackpackSlotUsageInfo info = new BackpackSlotUsageInfo(used, total);
         long currentTime = System.currentTimeMillis();
-        CacheEntry entry = new CacheEntry(info, currentTime, true);
+        CacheEntry entry = new CacheEntry(info, currentTime);
 
-        cacheLock.readLock().lock();
+        // A write lock is required here to make the "put-and-evict" operation atomic.
+        cacheLock.writeLock().lock();
         try {
             cache.put(uuid, entry);
 
@@ -94,7 +97,7 @@ public class BackpackUsageCache {
                 evictOldestEntries();
             }
         } finally {
-            cacheLock.readLock().unlock();
+            cacheLock.writeLock().unlock();
         }
     }
 
@@ -130,25 +133,24 @@ public class BackpackUsageCache {
      */
     public static void requestBackpackInfo(String uuid) {
         if (uuid == null || uuid.trim().isEmpty()) {
-            throw new IllegalArgumentException("UUID cannot be null or empty");
+            return;
+        }
+
+        if (getBackpackInfo(uuid) != null) {
+            return;
         }
 
         long currentTime = System.currentTimeMillis();
-        Long lastRequestTime = requestTimestamps.get(uuid);
 
-        // Check throttling
-        if (lastRequestTime != null && (currentTime - lastRequestTime) < REQUEST_THROTTLE_MS) {
-            return;
-        }
+        requestTimestamps.compute(uuid, (key, lastRequestTime) -> {
+            // Throttle check
+            if (lastRequestTime != null && (currentTime - lastRequestTime) < REQUEST_THROTTLE_MS) {
+                return lastRequestTime;
+            }
 
-        BackpackSlotUsageInfo cachedInfo = getBackpackInfo(uuid);
-        if (cachedInfo != null) {
-            return;
-        }
-
-        Backpack.packetHandler.networkWrapper.sendToServer(new MessageBackpackInfoRequest(uuid));
-        requestTimestamps.put(uuid, currentTime);
-
+            Backpack.packetHandler.networkWrapper.sendToServer(new MessageBackpackInfoRequest(key));
+            return currentTime;
+        });
     }
 
     /**
@@ -166,26 +168,22 @@ public class BackpackUsageCache {
     }
 
     /**
-     * Evicts oldest entries when cache size exceeds limit
+     * Evicts the oldest entries when cache size exceeds the limit. WARNING: This method must be called from within a
+     * write-locked context.
      */
     private static void evictOldestEntries() {
-        cacheLock.writeLock().lock();
-        try {
-            if (cache.size() <= MAX_CACHE_SIZE) {
-                return;
-            }
-
-            // Find oldest entries to evict (evict 10% of cache)
-            int entriesToEvict = Math.max(1, cache.size() / 10);
-
-            cache.entrySet().stream().sorted((e1, e2) -> Long.compare(e1.getValue().timestamp, e2.getValue().timestamp))
-                    .limit(entriesToEvict).map(Map.Entry::getKey).forEach(key -> {
-                        cache.remove(key);
-                        requestTimestamps.remove(key);
-                    });
-
-        } finally {
-            cacheLock.writeLock().unlock();
+        // This check is a safeguard, but the caller should ensure the lock is held.
+        if (cache.size() <= MAX_CACHE_SIZE) {
+            return;
         }
+
+        // Find the oldest entries to evict (evict 10% of cache)
+        int entriesToEvict = Math.max(1, cache.size() / 10);
+
+        cache.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.comparingLong(e -> e.timestamp)))
+                .limit(entriesToEvict).map(Map.Entry::getKey).forEach(key -> {
+                    cache.remove(key);
+                    requestTimestamps.remove(key);
+                });
     }
 }
