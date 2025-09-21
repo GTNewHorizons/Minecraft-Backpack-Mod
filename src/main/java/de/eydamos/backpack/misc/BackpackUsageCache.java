@@ -74,7 +74,7 @@ public class BackpackUsageCache {
 
     /**
      * Updates backpack information in the cache
-     * 
+     *
      * @param uuid  The backpack UUID
      * @param used  Number of used slots
      * @param total Total number of slots
@@ -102,10 +102,10 @@ public class BackpackUsageCache {
     }
 
     /**
-     * Retrieves backpack information from cache
-     * 
+     * Retrieves backpack information from cache. If an entry is found to be expired, it is removed
+     *
      * @param uuid The backpack UUID
-     * @return BackpackInfo if valid and not expired, null otherwise
+     * @return BackpackSlotUsageInfo if valid and not expired, null otherwise
      */
     public static BackpackSlotUsageInfo getBackpackInfo(String uuid) {
         if (uuid == null || uuid.trim().isEmpty()) {
@@ -127,7 +127,8 @@ public class BackpackUsageCache {
     }
 
     /**
-     * Requests backpack information with throttling
+     * Requests backpack information from the server if not present in the cache, respecting a throttle to prevent
+     * spamming requests.
      *
      * @param uuid The player UUID
      */
@@ -155,7 +156,7 @@ public class BackpackUsageCache {
 
     /**
      * Invalidates a specific UUID from the cache
-     * 
+     *
      * @param uuid The player UUID to invalidate
      */
     public static void invalidate(String uuid) {
