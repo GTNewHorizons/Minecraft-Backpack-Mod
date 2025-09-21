@@ -265,11 +265,16 @@ public class ContainerAdvanced extends Container {
                     slotStack = slot.getStack();
 
                     if (slotStack == null) {
+                        result = true;
+
                         slot.putStack(sourceStack.copy());
                         slot.onSlotChanged();
-                        sourceStack.stackSize = 0;
-                        result = true;
-                        break;
+
+                        sourceStack.stackSize -= slot.getStack().stackSize;
+
+                        if (sourceStack.stackSize == 0) {
+                            break;
+                        }
                     }
                 }
 

@@ -52,19 +52,22 @@ public class SlotCraftingAdvanced extends SlotCrafting {
                         if (itemstack.getItem().hasContainerItem(itemstack)) {
                             ItemStack containerItem = itemstack.getItem().getContainerItem(itemstack);
 
-                            if (containerItem.isItemStackDamageable()
-                                    && containerItem.getItemDamage() > containerItem.getMaxDamage()) {
-                                MinecraftForge.EVENT_BUS.post(new PlayerDestroyItemEvent(entityPlayer, containerItem));
-                                containerItem = null;
-                            }
-
                             if (containerItem != null) {
-                                if (backpackInventory.getStackInSlot(j) == null) {
-                                    backpackInventory.setInventorySlotContents(j, containerItem);
-                                } else {
-                                    if (!mergeItemStack(containerItem, backpackInventory)) {
-                                        if (!entityPlayer.inventory.addItemStackToInventory(containerItem)) {
-                                            entityPlayer.entityDropItem(containerItem, 0);
+                                if (containerItem.isItemStackDamageable()
+                                        && containerItem.getItemDamage() > containerItem.getMaxDamage()) {
+                                    MinecraftForge.EVENT_BUS
+                                            .post(new PlayerDestroyItemEvent(entityPlayer, containerItem));
+                                    containerItem = null;
+                                }
+
+                                if (containerItem != null) {
+                                    if (backpackInventory.getStackInSlot(j) == null) {
+                                        backpackInventory.setInventorySlotContents(j, containerItem);
+                                    } else {
+                                        if (!mergeItemStack(containerItem, backpackInventory)) {
+                                            if (!entityPlayer.inventory.addItemStackToInventory(containerItem)) {
+                                                entityPlayer.entityDropItem(containerItem, 0);
+                                            }
                                         }
                                     }
                                 }
