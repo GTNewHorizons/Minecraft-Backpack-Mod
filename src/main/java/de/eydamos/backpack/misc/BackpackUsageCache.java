@@ -27,12 +27,10 @@ public class BackpackUsageCache {
 
         public final BackpackSlotUsageInfo info;
         public final long timestamp;
-        public final boolean isValid;
 
-        public CacheEntry(BackpackSlotUsageInfo info, long timestamp, boolean isValid) {
+        public CacheEntry(BackpackSlotUsageInfo info, long timestamp) {
             this.info = info;
             this.timestamp = timestamp;
-            this.isValid = isValid;
         }
 
         public boolean isExpired() {
@@ -112,10 +110,13 @@ public class BackpackUsageCache {
         }
 
         CacheEntry entry = cache.get(uuid);
-        if (entry == null || !entry.isValid || entry.isExpired()) {
-            if (entry != null && entry.isExpired()) {
-                invalidate(uuid);
-            }
+
+        if (entry == null) {
+            return null;
+        }
+
+        if (entry.isExpired()) {
+            invalidate(uuid);
             return null;
         }
 
