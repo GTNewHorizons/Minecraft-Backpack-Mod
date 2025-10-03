@@ -1,6 +1,6 @@
 // Add your dependencies here
 
 dependencies {
-    api('com.github.GTNewHorizons:NotEnoughItems:2.7.87-GTNH:dev')
+    api('com.github.GTNewHorizons:NotEnoughItems:2.8.0-GTNH:dev')
     api('com.github.GTNewHorizons:inventory-tweaks:1.7.1:dev')
 }
