@@ -23,4 +23,9 @@ public abstract class CommonProxy implements IProxy {
 
     @Override
     public void addNeiSupport() {}
+
+    @Override
+    public void invalidateBackpackCache(String uuid) {
+        // Do nothing by default (server side)
+    }
 }
