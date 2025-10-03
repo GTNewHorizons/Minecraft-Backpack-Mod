@@ -7,4 +7,6 @@ public interface IProxy {
     void registerKeybindings();
 
     void addNeiSupport();
+
+    void invalidateBackpackCache(String uuid);
 }
