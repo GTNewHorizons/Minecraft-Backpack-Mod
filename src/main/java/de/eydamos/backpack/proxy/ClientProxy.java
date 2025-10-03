@@ -12,6 +12,7 @@ import cpw.mods.fml.common.FMLLog;
 import de.eydamos.backpack.gui.GuiWorkbenchBackpack;
 import de.eydamos.backpack.handler.EventHandlerClientOnly;
 import de.eydamos.backpack.handler.KeyInputHandler;
+import de.eydamos.backpack.misc.BackpackUsageCache;
 import de.eydamos.backpack.misc.ConfigurationBackpack;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.nei.OverlayHandlerBackpack;
@@ -49,5 +50,10 @@ public class ClientProxy extends CommonProxy {
         } catch (Exception e) {
             FMLLog.log(Constants.MOD_ID, Level.INFO, "[Backpacks] NEI Support couldn't be enabled");
         }
+    }
+
+    @Override
+    public void invalidateBackpackCache(String uuid) {
+        BackpackUsageCache.invalidate(uuid);
     }
 }
