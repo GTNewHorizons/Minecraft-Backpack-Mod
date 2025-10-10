@@ -12,6 +12,7 @@ import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.slot.SlotCraftingAdvanced;
 import de.eydamos.backpack.inventory.slot.SlotPhantom;
@@ -79,6 +80,11 @@ public class ContainerAdvanced extends Container {
         if (inventory != null) {
             inventory.closeInventory();
         }
+
+        if (backpackSave != null) {
+            Backpack.proxy.invalidateBackpackCache(backpackSave.getUUID());
+        }
+
         super.onContainerClosed(entityPlayer);
     }
 
