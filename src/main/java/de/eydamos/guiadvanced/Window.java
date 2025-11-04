@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiScreen;
 
 import de.eydamos.guiadvanced.misc.AbstractGui;
 import de.eydamos.guiadvanced.misc.AbstractGuiPart;
+import de.eydamos.guiadvanced.util.Rectangle;
 import de.eydamos.guiadvanced.util.RenderHelper;
 
 public class Window extends GuiScreen implements AbstractGui {
@@ -69,15 +70,18 @@ public class Window extends GuiScreen implements AbstractGui {
     @Override
     public void drawScreen(int mouseX, int mouseY, float something) {
         // draw background
-        RenderHelper.drawOuterCornerTopLeft(guiLeft, guiTop);
-        RenderHelper.drawBorderTop(guiLeft + 4, guiTop, xSize - 8, 4);
-        RenderHelper.drawOuterCornerTopRight(guiLeft + xSize - 4, guiTop);
-        RenderHelper.drawBorderLeft(guiLeft, guiTop + 4, 4, ySize - 8);
-        RenderHelper.drawBackground(guiLeft + 4, guiTop + 4, xSize - 8, ySize - 8);
-        RenderHelper.drawBorderRight(guiLeft + xSize - 4, guiTop + 4, 4, ySize - 8);
-        RenderHelper.drawOuterCornerBottomLeft(guiLeft, guiTop + ySize - 4);
-        RenderHelper.drawBorderBottom(guiLeft + 4, guiTop + ySize - 4, xSize - 8, 4);
-        RenderHelper.drawOuterCornerBottomRight(guiLeft + xSize - 4, guiTop + ySize - 4);
+        Rectangle rect = new Rectangle();
+        rect.startDrawing();
+        RenderHelper.drawOuterCornerTopLeft(rect, guiLeft, guiTop);
+        RenderHelper.drawBorderTop(rect, guiLeft + 4, guiTop, xSize - 8, 4);
+        RenderHelper.drawOuterCornerTopRight(rect, guiLeft + xSize - 4, guiTop);
+        RenderHelper.drawBorderLeft(rect, guiLeft, guiTop + 4, 4, ySize - 8);
+        RenderHelper.drawBackground(rect, guiLeft + 4, guiTop + 4, xSize - 8, ySize - 8);
+        RenderHelper.drawBorderRight(rect, guiLeft + xSize - 4, guiTop + 4, 4, ySize - 8);
+        RenderHelper.drawOuterCornerBottomLeft(rect, guiLeft, guiTop + ySize - 4);
+        RenderHelper.drawBorderBottom(rect, guiLeft + 4, guiTop + ySize - 4, xSize - 8, 4);
+        RenderHelper.drawOuterCornerBottomRight(rect, guiLeft + xSize - 4, guiTop + ySize - 4);
+        rect.performDrawing();
 
         // draw subparts
         for (AbstractGuiPart guiPart : subParts) {

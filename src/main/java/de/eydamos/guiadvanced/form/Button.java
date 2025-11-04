@@ -69,6 +69,7 @@ public class Button extends GuiButton implements AbstractGuiPart {
             Rectangle rectangle = new Rectangle(2, 2);
             rectangle.setBackground(buttonTextures);
             rectangle.setBackgroundSize(2, 2);
+            rectangle.startDrawing();
             // draw upper left corner
             rectangle.setBackgroundPosition(0, 46 + offset * 20);
             rectangle.draw(xPosition, yPosition);
@@ -110,6 +111,7 @@ public class Button extends GuiButton implements AbstractGuiPart {
             rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT);
             rectangle.setBackgroundPosition(2, 48 + offset * 20);
             rectangle.draw(xPosition + 2, yPosition + 2);
+            rectangle.performDrawing();
 
             mouseDragged(mc, mouseX, mouseY);
             int l = 14737632;

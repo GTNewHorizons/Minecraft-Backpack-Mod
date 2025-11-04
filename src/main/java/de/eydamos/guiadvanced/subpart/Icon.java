@@ -67,12 +67,14 @@ public class Icon implements AbstractGuiPart {
     @Override
     public void draw(Minecraft mc, int mouseX, int mouseY, float something) {
         Rectangle icon = new Rectangle(width, height);
+        icon.startDrawing();
         if (image != null) {
             icon.setBackground(image);
         }
         icon.setBackgroundPosition(uPosition, vPosition);
         icon.setBackgroundSize(width, height);
         icon.draw(xPosition, yPosition);
+        icon.performDrawing();
     }
 
     @Override

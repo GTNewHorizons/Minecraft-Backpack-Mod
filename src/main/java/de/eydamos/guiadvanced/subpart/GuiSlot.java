@@ -53,6 +53,7 @@ public class GuiSlot implements AbstractGuiPart {
     @Override
     public void draw(Minecraft mc, int mouseX, int mouseY, float something) {
         Rectangle rectangle = new Rectangle(1, 1);
+        rectangle.startDrawing();
         // draw upper left corner
         rectangle.setBackgroundPosition(201, 0);
         rectangle.draw(xPosition, yPosition);
@@ -94,6 +95,7 @@ public class GuiSlot implements AbstractGuiPart {
         rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT);
         rectangle.setBackgroundPosition(202, 1);
         rectangle.draw(xPosition + 1, yPosition + 1);
+        rectangle.performDrawing();
     }
 
     @Override
