@@ -21,6 +21,11 @@ public class Rectangle {
     protected int vMax = 1;
     protected ResourceLocation graphic = Constants.guiCombined;
     protected BackgroundRepeat repeat = BackgroundRepeat.NONE;
+    protected Tessellator tessellator = Tessellator.instance;
+
+    public Rectangle() {
+        this(0, 0);
+    }
 
     public Rectangle(int width, int height) {
         this.width = width;
@@ -57,20 +62,18 @@ public class Rectangle {
         graphic = resourceLocation;
     }
 
-    public void draw(int x, int y) {
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        getMinecraft().getTextureManager().bindTexture(graphic);
+    public void startDrawing() {
+        tessellator.startDrawingQuads();
+    }
 
+    public void addBoxVertices(int x, int y) {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.instance;
         if (repeat == BackgroundRepeat.NONE) {
-            tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(x, y + height, z, u * f, (v + height) * f1);
             tessellator.addVertexWithUV(x + width, y + height, z, (u + width) * f, (v + height) * f1);
             tessellator.addVertexWithUV(x + width, y, z, (u + width) * f, v * f1);
             tessellator.addVertexWithUV(x, y, z, u * f, v * f1);
-            tessellator.draw();
         } else if (repeat == BackgroundRepeat.REPEAT) {
             uMax = Math.min(width, uMax);
             vMax = Math.min(height, vMax);
@@ -79,12 +82,10 @@ public class Rectangle {
                 for (int j = 0; j <= height; j += vMax) {
                     drawWidth = Math.min(i + uMax, width);
                     drawHeight = Math.min(j + vMax, height);
-                    tessellator.startDrawingQuads();
                     tessellator.addVertexWithUV(x + i, y + drawHeight, z, u * f, (v + vMax) * f1);
                     tessellator.addVertexWithUV(x + drawWidth, y + drawHeight, z, (u + uMax) * f, (v + vMax) * f1);
                     tessellator.addVertexWithUV(x + drawWidth, y, z, (u + uMax) * f, v * f1);
                     tessellator.addVertexWithUV(x + i, y, z, u * f, v * f1);
-                    tessellator.draw();
                 }
             }
         } else if (repeat == BackgroundRepeat.REPEAT_X) {
@@ -92,32 +93,32 @@ public class Rectangle {
             int drawWidth;
             for (int i = 0; i <= width; i += uMax) {
                 drawWidth = Math.min(i + uMax, width);
-                tessellator.startDrawingQuads();
                 tessellator.addVertexWithUV(x + i, y + drawHeight, z, u * f, (v + drawHeight) * f1);
                 tessellator.addVertexWithUV(x + drawWidth, y + drawHeight, z, (u + uMax) * f, (v + drawHeight) * f1);
                 tessellator.addVertexWithUV(x + drawWidth, y, z, (u + uMax) * f, v * f1);
                 tessellator.addVertexWithUV(x + i, y, z, u * f, v * f1);
-                tessellator.draw();
             }
         } else if (repeat == BackgroundRepeat.REPEAT_Y) {
             int drawWidth = uMax = Math.min(width, uMax);
             int drawHeight;
             for (int i = 0; i <= height; i += vMax) {
                 drawHeight = Math.min(i + vMax, height);
-                tessellator.startDrawingQuads();
                 tessellator.addVertexWithUV(x, y + drawHeight, z, u * f, (v + vMax) * f1);
                 tessellator.addVertexWithUV(x + drawWidth, y + drawHeight, z, (u + drawWidth) * f, (v + vMax) * f1);
                 tessellator.addVertexWithUV(x + drawWidth, y + i, z, (u + drawWidth) * f, v * f1);
                 tessellator.addVertexWithUV(x, y + i, z, u * f, v * f1);
-                tessellator.draw();
             }
         } else {
-            tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(x, y + height, z, u * f, vMax * f1);
             tessellator.addVertexWithUV(x + width, y + height, z, uMax * f, vMax * f1);
             tessellator.addVertexWithUV(x + width, y, z, uMax * f, v * f1);
             tessellator.addVertexWithUV(x, y, z, u * f, v * f1);
-            tessellator.draw();
         }
+    }
+
+    public void performDrawing() {
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        getMinecraft().getTextureManager().bindTexture(graphic);
+        tessellator.draw();
     }
 }
