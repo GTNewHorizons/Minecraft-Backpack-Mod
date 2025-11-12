@@ -69,28 +69,29 @@ public class Button extends GuiButton implements AbstractGuiPart {
             Rectangle rectangle = new Rectangle(2, 2);
             rectangle.setBackground(buttonTextures);
             rectangle.setBackgroundSize(2, 2);
+            rectangle.startDrawing();
             // draw upper left corner
             rectangle.setBackgroundPosition(0, 46 + offset * 20);
-            rectangle.draw(xPosition, yPosition);
+            rectangle.addBoxVertices(xPosition, yPosition);
             // draw upper right corner
             rectangle.setBackgroundPosition(198, 46 + offset * 20);
-            rectangle.draw(xPosition + width - 2, yPosition);
+            rectangle.addBoxVertices(xPosition + width - 2, yPosition);
             // draw lower left corner
             rectangle.setBackgroundPosition(0, 64 + offset * 20);
-            rectangle.draw(xPosition, yPosition + height - 2);
+            rectangle.addBoxVertices(xPosition, yPosition + height - 2);
             // draw lower right corner
             rectangle.setBackgroundPosition(198, 64 + offset * 20);
-            rectangle.draw(xPosition + width - 2, yPosition + height - 2);
+            rectangle.addBoxVertices(xPosition + width - 2, yPosition + height - 2);
 
             // borders top/bottom
             rectangle.setWidth(width - 4);
             rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT_X);
             // draw top border
             rectangle.setBackgroundPosition(2, 46 + offset * 20);
-            rectangle.draw(xPosition + 2, yPosition);
+            rectangle.addBoxVertices(xPosition + 2, yPosition);
             // draw bottom border
             rectangle.setBackgroundPosition(2, 64 + offset * 20);
-            rectangle.draw(xPosition + 2, yPosition + height - 2);
+            rectangle.addBoxVertices(xPosition + 2, yPosition + height - 2);
 
             // borders left/right
             rectangle.setWidth(2);
@@ -98,10 +99,10 @@ public class Button extends GuiButton implements AbstractGuiPart {
             rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT_Y);
             // draw left border
             rectangle.setBackgroundPosition(0, 48 + offset * 20);
-            rectangle.draw(xPosition, yPosition + 2);
+            rectangle.addBoxVertices(xPosition, yPosition + 2);
             // draw right border
             rectangle.setBackgroundPosition(198, 48 + offset * 20);
-            rectangle.draw(xPosition + width - 2, yPosition + 2);
+            rectangle.addBoxVertices(xPosition + width - 2, yPosition + 2);
 
             // draw background
             rectangle.setWidth(width - 4);
@@ -109,7 +110,8 @@ public class Button extends GuiButton implements AbstractGuiPart {
             rectangle.setBackgroundSize(18, 18);
             rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT);
             rectangle.setBackgroundPosition(2, 48 + offset * 20);
-            rectangle.draw(xPosition + 2, yPosition + 2);
+            rectangle.addBoxVertices(xPosition + 2, yPosition + 2);
+            rectangle.performDrawing();
 
             mouseDragged(mc, mouseX, mouseY);
             int l = 14737632;

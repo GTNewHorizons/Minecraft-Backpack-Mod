@@ -53,28 +53,29 @@ public class GuiSlot implements AbstractGuiPart {
     @Override
     public void draw(Minecraft mc, int mouseX, int mouseY, float something) {
         Rectangle rectangle = new Rectangle(1, 1);
+        rectangle.startDrawing();
         // draw upper left corner
         rectangle.setBackgroundPosition(201, 0);
-        rectangle.draw(xPosition, yPosition);
+        rectangle.addBoxVertices(xPosition, yPosition);
         // draw upper right corner
         rectangle.setBackgroundPosition(218, 0);
-        rectangle.draw(xPosition + width - 1, yPosition);
+        rectangle.addBoxVertices(xPosition + width - 1, yPosition);
         // draw lower left corner
         rectangle.setBackgroundPosition(201, 17);
-        rectangle.draw(xPosition, yPosition + height - 1);
+        rectangle.addBoxVertices(xPosition, yPosition + height - 1);
         // draw lower right corner
         rectangle.setBackgroundPosition(218, 17);
-        rectangle.draw(xPosition + width - 1, yPosition + height - 1);
+        rectangle.addBoxVertices(xPosition + width - 1, yPosition + height - 1);
 
         // borders top/bottom
         rectangle.setWidth(width - 2);
         rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT_X);
         // draw top border
         rectangle.setBackgroundPosition(202, 0);
-        rectangle.draw(xPosition + 1, yPosition);
+        rectangle.addBoxVertices(xPosition + 1, yPosition);
         // draw bottom border
         rectangle.setBackgroundPosition(202, 17);
-        rectangle.draw(xPosition + 1, yPosition + height - 1);
+        rectangle.addBoxVertices(xPosition + 1, yPosition + height - 1);
 
         // borders left/right
         rectangle.setWidth(1);
@@ -82,10 +83,10 @@ public class GuiSlot implements AbstractGuiPart {
         rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT_Y);
         // draw left border
         rectangle.setBackgroundPosition(201, 1);
-        rectangle.draw(xPosition, yPosition + 1);
+        rectangle.addBoxVertices(xPosition, yPosition + 1);
         // draw right border
         rectangle.setBackgroundPosition(218, 1);
-        rectangle.draw(xPosition + width - 1, yPosition + 1);
+        rectangle.addBoxVertices(xPosition + width - 1, yPosition + 1);
 
         // draw background
         rectangle.setWidth(width - 2);
@@ -93,7 +94,8 @@ public class GuiSlot implements AbstractGuiPart {
         rectangle.setBackgroundSize(14, 14);
         rectangle.setBackgroundRepeat(BackgroundRepeat.REPEAT);
         rectangle.setBackgroundPosition(202, 1);
-        rectangle.draw(xPosition + 1, yPosition + 1);
+        rectangle.addBoxVertices(xPosition + 1, yPosition + 1);
+        rectangle.performDrawing();
     }
 
     @Override
