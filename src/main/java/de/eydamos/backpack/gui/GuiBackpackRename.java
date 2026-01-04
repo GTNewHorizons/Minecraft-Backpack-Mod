@@ -46,7 +46,6 @@ public class GuiBackpackRename extends Window {
 
         // create text field
         txt_backpackName = new Textbox(fontRendererObj, 20, 40, 200, 20);
-        txt_backpackName.setFocused(true);
         txt_backpackName.setMaxStringLength(32);
         addSubPart(txt_backpackName);
     }
@@ -56,6 +55,7 @@ public class GuiBackpackRename extends Window {
         super.initGui();
 
         Keyboard.enableRepeatEvents(false);
+        txt_backpackName.setFocused(true);
     }
 
     @Override
