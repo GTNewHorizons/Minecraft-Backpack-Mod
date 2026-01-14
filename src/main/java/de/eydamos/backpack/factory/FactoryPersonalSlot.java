@@ -104,10 +104,13 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
         ContainerPersonalSlot container = (ContainerPersonalSlot) getContainer(player, inventories, entityPlayer);
         GuiBackpack guiBackpack = new GuiBackpack(container);
 
+        int inventoryStart = container.getBoundary(Boundaries.INVENTORY);
+        int hotbarEnd = container.getBoundary(Boundaries.HOTBAR_END);
         GuiSlot guiSlot;
         for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
-            guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
+            int yOffset = (i >= inventoryStart && i < hotbarEnd) ? 44 : 0;
+            guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 18, 18, yOffset);
             guiBackpack.addSubPart(guiSlot);
         }
 

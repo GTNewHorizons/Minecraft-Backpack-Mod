@@ -88,11 +88,14 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
         int slotsPerRow = backpack.getSlotsPerRow();
         int inventoryRows = (int) Math.ceil(inventories[1].getSizeInventory() / (float) slotsPerRow);
         int textPositionY = 17 + inventoryRows * SLOT + 2;
+        int inventoryStart = container.getBoundary(Boundaries.INVENTORY);
+        int hotbarEnd = container.getBoundary(Boundaries.HOTBAR_END);
 
         GuiSlot guiSlot;
         for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
-            guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
+            int yOffset = (i >= inventoryStart && i < hotbarEnd) ? 44 : 0;
+            guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 18, 18, yOffset);
             guiBackpack.addSubPart(guiSlot);
         }
 
