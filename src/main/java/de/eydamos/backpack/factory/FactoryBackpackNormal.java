@@ -1,10 +1,12 @@
 package de.eydamos.backpack.factory;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.StatCollector;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,6 +15,7 @@ import de.eydamos.backpack.inventory.AbstractInventoryBackpack;
 import de.eydamos.backpack.inventory.container.Boundaries;
 import de.eydamos.backpack.inventory.container.ContainerAdvanced;
 import de.eydamos.backpack.inventory.slot.SlotBackpack;
+import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.guiadvanced.form.Label;
 import de.eydamos.guiadvanced.subpart.GuiSlot;
@@ -95,7 +98,13 @@ public class FactoryBackpackNormal extends AbstractFactory<BackpackSave> {
 
         int inventorySpaceBefore = (int) Math.round(container.getWidth() / 2. - (SLOT * 9) / 2.);
 
-        guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, inventories[1].getInventoryName()));
+        String baseTitle = I18n.format(inventories[1].getInventoryName());
+        String guiTitle = baseTitle;
+        if (StatCollector.canTranslate(Localizations.GUI_TITLE_FORMAT)) {
+            guiTitle = I18n.format(Localizations.GUI_TITLE_FORMAT, baseTitle);
+        }
+
+        guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, guiTitle));
         guiBackpack.addSubPart(new Label(inventorySpaceBefore, textPositionY, 0x404040, "container.inventory"));
 
         return guiBackpack;
