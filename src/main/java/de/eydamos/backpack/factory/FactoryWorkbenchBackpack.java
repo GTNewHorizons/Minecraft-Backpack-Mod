@@ -165,13 +165,16 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
         ContainerAdvanced container = getContainer(backpack, inventories, entityPlayer);
         GuiWorkbenchBackpack guiBackpack = new GuiWorkbenchBackpack(container);
 
+        int inventoryStart = container.getBoundary(Boundaries.INVENTORY);
+        int hotbarEnd = container.getBoundary(Boundaries.HOTBAR_END);
         GuiSlot guiSlot;
         for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
+            int yOffset = (i >= inventoryStart && i < hotbarEnd) ? 44 : 0;
             if (i == 0) {
-                guiSlot = new GuiSlot(slot.xDisplayPosition - 5, slot.yDisplayPosition - 5, 26);
+                guiSlot = new GuiSlot(slot.xDisplayPosition - 5, slot.yDisplayPosition - 5, 26, 26, yOffset);
             } else {
-                guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
+                guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 18, 18, yOffset);
             }
             guiBackpack.addSubPart(guiSlot);
         }

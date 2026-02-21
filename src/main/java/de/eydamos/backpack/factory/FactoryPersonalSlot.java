@@ -1,9 +1,11 @@
 package de.eydamos.backpack.factory;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.StatCollector;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -102,14 +104,23 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
         ContainerPersonalSlot container = (ContainerPersonalSlot) getContainer(player, inventories, entityPlayer);
         GuiBackpack guiBackpack = new GuiBackpack(container);
 
+        int inventoryStart = container.getBoundary(Boundaries.INVENTORY);
+        int hotbarEnd = container.getBoundary(Boundaries.HOTBAR_END);
         GuiSlot guiSlot;
         for (int i = 0; i < container.inventorySlots.size(); i++) {
             Slot slot = (Slot) container.inventorySlots.get(i);
-            guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1);
+            int yOffset = (i >= inventoryStart && i < hotbarEnd) ? 44 : 0;
+            guiSlot = new GuiSlot(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 18, 18, yOffset);
             guiBackpack.addSubPart(guiSlot);
         }
 
-        guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, container.getInventoryToSave().getInventoryName()));
+        String baseTitle = I18n.format(container.getInventoryToSave().getInventoryName());
+        String guiTitle = baseTitle;
+        if (StatCollector.canTranslate(Localizations.GUI_TITLE_FORMAT)) {
+            guiTitle = I18n.format(Localizations.GUI_TITLE_FORMAT, baseTitle);
+        }
+
+        guiBackpack.addSubPart(new Label(X_SPACING, 6, 0x404040, guiTitle));
         guiBackpack.addSubPart(new Label(X_SPACING, 38, 0x404040, container.getInventoryPickup().getInventoryName()));
 
         return guiBackpack;

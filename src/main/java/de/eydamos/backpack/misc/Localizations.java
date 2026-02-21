@@ -26,6 +26,7 @@ public class Localizations {
 
     public static final String LABEL_NEW_NAME = "text.backpack.new_name";
     public static final String LABEL_BACKPACK_CONFIG = "text.backpack.configuration";
+    public static final String GUI_TITLE_FORMAT = "text.backpack.title_format";
 
     public static final String BUTTON_OK = "button.backpack.ok";
     public static final String BUTTON_CANCEL = "button.backpack.cancel";
