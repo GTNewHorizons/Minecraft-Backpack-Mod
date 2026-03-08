@@ -136,7 +136,7 @@ public class ItemBackpackBase extends Item {
         String name = super.getUnlocalizedName();
 
         int damage = itemStack.getItemDamage();
-        int tier = damage / 100 < 3 ? damage / 100 : 0;
+        int tier = BackpackUtil.getTier(itemStack);
         int meta = damage % 100;
         name += (tier == 0 ? "" : '.') + ItemsBackpack.BACKPACK_TIERS[tier];
         if (meta > 0 && meta < 17) { // add color
@@ -177,26 +177,46 @@ public class ItemBackpackBase extends Item {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack itemStack, EntityPlayer entityPlayer, List information,
             boolean advancedTooltip) {
+        int damage = itemStack.getItemDamage();
+
+        if (damage == ItemsBackpack.ENDERBACKPACK) {
+            information
+                    .add(EnumChatFormatting.AQUA + StatCollector.translateToLocal(Localizations.ENDER_BACKPACK_INFO));
+            return;
+        }
+
+        int tier = BackpackUtil.getTier(itemStack);
+        int meta = damage % 100;
+
+        if (meta == 17) {
+            int craftSlots = tier == 0 ? 9 : 18;
+            information.add(
+                    EnumChatFormatting.AQUA
+                            + String.format(StatCollector.translateToLocal(Localizations.CRAFTING_SLOTS), craftSlots));
+            return;
+        }
+
+        int slots = 36 + tier * 27;
+        information.add(
+                EnumChatFormatting.AQUA
+                        + String.format(StatCollector.translateToLocal(Localizations.SLOTS_TOTAL), slots));
+
         if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-            if (itemStack.getItemDamage() != ItemsBackpack.ENDERBACKPACK) {
-                // TODO BackpackUtil.getTier()
-                information.add(
-                        EnumChatFormatting.YELLOW + StatCollector.translateToLocal(Localizations.TIER)
-                                + " "
-                                + (itemStack.getItemDamage() / 100 + 1));
-
-                if (itemStack.stackTagCompound == null) return;
-
+            information.add(
+                    EnumChatFormatting.YELLOW + StatCollector.translateToLocal(Localizations.TIER) + " " + (tier + 1));
+            if (itemStack.stackTagCompound != null) {
                 String uuid = itemStack.stackTagCompound.getString(Constants.NBT.UID);
-                if (uuid == null) return;
-
-                BackpackUsageCache.BackpackSlotUsageInfo info = BackpackUsageCache.getBackpackInfo(uuid);
-
-                if (info != null) {
-                    String slotsText = StatCollector.translateToLocal(Localizations.SLOTS_USED);
-                    information.add(info.usedSlots + "/" + info.totalSlots + ' ' + slotsText);
-                } else {
-                    BackpackUsageCache.requestBackpackInfo(uuid);
+                if (uuid != null) {
+                    BackpackUsageCache.BackpackSlotUsageInfo info = BackpackUsageCache.getBackpackInfo(uuid);
+                    if (info != null) {
+                        information.add(
+                                info.usedSlots + "/"
+                                        + info.totalSlots
+                                        + " "
+                                        + StatCollector.translateToLocal(Localizations.SLOTS_USED));
+                    } else {
+                        BackpackUsageCache.requestBackpackInfo(uuid);
+                    }
                 }
             }
         } else {

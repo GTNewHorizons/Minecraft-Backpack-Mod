@@ -30,4 +30,8 @@ public class Localizations {
 
     public static final String BUTTON_OK = "button.backpack.ok";
     public static final String BUTTON_CANCEL = "button.backpack.cancel";
+
+    public static final String SLOTS_TOTAL = "tooltip.slots";
+    public static final String CRAFTING_SLOTS = "tooltip.crafting_slots";
+    public static final String ENDER_BACKPACK_INFO = "tooltip.ender";
 }

@@ -61,6 +61,11 @@ public class BackpackUtil {
         return 0;
     }
 
+    public static int getTier(ItemStack itemStack) {
+        int tier = itemStack.getItemDamage() / 100;
+        return tier < 3 ? tier : 0;
+    }
+
     public static void pickupItem(EntityPlayer entityPlayer, ItemStack itemStack) {
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         ItemStack backpack = playerSave.getPersonalBackpack();
