@@ -55,7 +55,7 @@ public class BackpackSave extends AbstractSave {
             NBTItemStackUtil
                     .setString(backpack, Constants.NBT.NAME, backpack.getItem().getUnlocalizedName(backpack) + ".name");
             if (!NBTItemStackUtil.hasTag(backpack, Constants.NBT.UID)) {
-                UID = UUID.randomUUID().toString();
+                do UID = UUID.randomUUID().toString(); while (Backpack.saveFileHandler.backpackSaveExists(UID));
                 NBTItemStackUtil.setString(backpack, Constants.NBT.UID, UID);
             }
 
