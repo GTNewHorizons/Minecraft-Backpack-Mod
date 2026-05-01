@@ -362,6 +362,10 @@ public class ContainerAdvanced extends Container {
         return inventory;
     }
 
+    public BackpackSave getBackpackSave() {
+        return backpackSave;
+    }
+
     @ContainerSectionCallback
     public Map<ContainerSection, List<Slot>> getContainerSections() {
         Map<ContainerSection, List<Slot>> slotRefs = new HashMap<>();

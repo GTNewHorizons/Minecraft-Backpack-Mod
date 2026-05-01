@@ -12,6 +12,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import de.eydamos.backpack.inventory.InventoryPickup;
+import de.eydamos.backpack.inventory.container.ContainerAdvanced;
 import de.eydamos.backpack.inventory.container.ContainerPickup;
 import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.item.ItemsBackpack;
@@ -69,25 +70,43 @@ public class BackpackUtil {
     public static void pickupItem(EntityPlayer entityPlayer, ItemStack itemStack) {
         PlayerSave playerSave = new PlayerSave(entityPlayer);
         ItemStack backpack = playerSave.getPersonalBackpack();
-        if (backpack != null) {
-            InventoryPickup inventoryPickup = new InventoryPickup();
-            inventoryPickup.setInventoryContent(backpack);
+        if (backpack == null) {
+            return;
+        }
 
-            ContainerPickup container = new ContainerPickup(
-                    ItemBackpackBase.getInventory(backpack, entityPlayer),
-                    new BackpackSave(backpack));
-            boolean hasPickedUp = false;
-            for (int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
-                ItemStack pickupItemStack = inventoryPickup.getStackInSlot(i);
-                if (areStacksEqual(pickupItemStack, itemStack, true)) {
-                    hasPickedUp = container.pickupItem(itemStack) || hasPickedUp;
-                }
-            }
+        if (isPersonalBackpackOpen(entityPlayer, backpack)) {
+            return;
+        }
 
-            if (hasPickedUp) {
-                container.onContainerClosed(entityPlayer);
+        InventoryPickup inventoryPickup = new InventoryPickup();
+        inventoryPickup.setInventoryContent(backpack);
+
+        ContainerPickup container = new ContainerPickup(
+                ItemBackpackBase.getInventory(backpack, entityPlayer),
+                new BackpackSave(backpack));
+        boolean hasPickedUp = false;
+        for (int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
+            ItemStack pickupItemStack = inventoryPickup.getStackInSlot(i);
+            if (areStacksEqual(pickupItemStack, itemStack, true)) {
+                hasPickedUp = container.pickupItem(itemStack) || hasPickedUp;
             }
         }
+
+        if (hasPickedUp) {
+            container.onContainerClosed(entityPlayer);
+        }
+    }
+
+    private static boolean isPersonalBackpackOpen(EntityPlayer entityPlayer, ItemStack personalBackpack) {
+        if (personalBackpack == null || !(entityPlayer.openContainer instanceof ContainerAdvanced)) {
+            return false;
+        }
+        BackpackSave openSave = ((ContainerAdvanced) entityPlayer.openContainer).getBackpackSave();
+        if (openSave == null) {
+            return false;
+        }
+        String personalUUID = BackpackSave.getUUID(personalBackpack);
+        return UUIDEquals(openSave.getUUID(), personalUUID);
     }
 
     public static boolean canStack(ItemStack stack1, ItemStack stack2) {
