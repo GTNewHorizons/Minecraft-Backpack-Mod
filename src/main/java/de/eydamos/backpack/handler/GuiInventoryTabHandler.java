@@ -44,13 +44,15 @@ public class GuiInventoryTabHandler {
 
             // Vanilla inventory tab — selected (current), not clickable
             GuiButtonInventoryTab inventoryTab = new GuiButtonInventoryTab(
-                    TAB_ID_INVENTORY, guiLeft, guiTop - 28, inventoryStack);
+                    TAB_ID_INVENTORY,
+                    guiLeft,
+                    guiTop - 28,
+                    inventoryStack);
             inventoryTab.enabled = false;
             event.buttonList.add(inventoryTab);
 
             // Backpack tab — clickable
-            event.buttonList.add(
-                    new GuiButtonInventoryTab(TAB_ID_BACKPACK, guiLeft + 28, guiTop - 28, backpackStack));
+            event.buttonList.add(new GuiButtonInventoryTab(TAB_ID_BACKPACK, guiLeft + 28, guiTop - 28, backpackStack));
 
         } else if (event.gui instanceof GuiAdvanced) {
             GuiAdvanced guiAdvanced = (GuiAdvanced) event.gui;
@@ -58,12 +60,14 @@ public class GuiInventoryTabHandler {
             int guiTop = (event.gui.height - guiAdvanced.getHeight()) / 2;
 
             // Vanilla inventory tab — clickable
-            event.buttonList.add(
-                    new GuiButtonInventoryTab(TAB_ID_INVENTORY, guiLeft, guiTop - 28, inventoryStack));
+            event.buttonList.add(new GuiButtonInventoryTab(TAB_ID_INVENTORY, guiLeft, guiTop - 28, inventoryStack));
 
             // Backpack tab — selected (current), not clickable
             GuiButtonInventoryTab backpackTab = new GuiButtonInventoryTab(
-                    TAB_ID_BACKPACK, guiLeft + 28, guiTop - 28, backpackStack);
+                    TAB_ID_BACKPACK,
+                    guiLeft + 28,
+                    guiTop - 28,
+                    backpackStack);
             backpackTab.enabled = false;
             event.buttonList.add(backpackTab);
         }
@@ -77,8 +81,7 @@ public class GuiInventoryTabHandler {
             GuiHelper.sendOpenPersonalGui(Constants.Guis.OPEN_PERSONAL_BACKPACK);
 
         } else if (event.gui instanceof GuiAdvanced && event.button.id == TAB_ID_INVENTORY) {
-            mc.thePlayer.sendQueue.addToSendQueue(
-                    new C0DPacketCloseWindow(mc.thePlayer.openContainer.windowId));
+            mc.thePlayer.sendQueue.addToSendQueue(new C0DPacketCloseWindow(mc.thePlayer.openContainer.windowId));
             mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
         }
     }
