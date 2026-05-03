@@ -28,17 +28,4 @@ public class InventoryTabVanilla extends AbstractInventoryTab {
         return true;
     }
 
-    @Override
-    protected void drawUnselectedTabDecorations(Minecraft mc, int textureXOffset, int textureYStart, int tabTopY,
-            int tabHeight) {
-        int textureX = textureXOffset * 28;
-        int sourceY = 29;
-        int targetY = tabTopY + tabHeight;
-
-        // Extend the bottom-left corner on the unselected vanilla tab.
-        // 0,29 -> two extra pixels down; 1,29 -> one extra pixel down.
-        drawTexturedModalRect(xPosition, targetY, textureX, sourceY, 1, 1);
-        drawTexturedModalRect(xPosition, targetY + 1, textureX, sourceY, 1, 1);
-        drawTexturedModalRect(xPosition + 1, targetY, textureX + 1, sourceY, 1, 1);
-    }
 }

@@ -21,7 +21,7 @@ public abstract class AbstractInventoryTab extends GuiButton {
     private static final RenderItem ITEM_RENDERER = new RenderItem();
 
     protected final ItemStack renderStack;
-    protected final int xOffset;
+    protected int xOffset;
 
     public AbstractInventoryTab(int id, int posX, int posY, ItemStack renderStack, int xOffset) {
         super(id, posX, posY, 28, 32, "");
@@ -66,7 +66,14 @@ public abstract class AbstractInventoryTab extends GuiButton {
     }
 
     protected void drawUnselectedTabDecorations(Minecraft mc, int textureXOffset, int textureYStart, int tabTopY,
-            int tabHeight) {}
+            int tabHeight) {
+        if (xOffset != 0) return;
+        // Bottom-left corner step pixels for the leftmost tab (matches TConstruct PR #259)
+        int targetY = tabTopY + tabHeight;
+        drawTexturedModalRect(xPosition, targetY, 0, 29, 1, 1);
+        drawTexturedModalRect(xPosition, targetY + 1, 0, 29, 1, 1);
+        drawTexturedModalRect(xPosition + 1, targetY, 1, 29, 1, 1);
+    }
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
@@ -77,6 +84,10 @@ public abstract class AbstractInventoryTab extends GuiButton {
         if (!inWindow || !enabled) return false;
         onTabClicked();
         return true;
+    }
+
+    public void setXOffset(int xOffset) {
+        this.xOffset = xOffset;
     }
 
     public abstract void onTabClicked();

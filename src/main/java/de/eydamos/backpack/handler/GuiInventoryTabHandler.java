@@ -13,10 +13,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.gui.GuiAdvanced;
 import de.eydamos.backpack.gui.GuiBackpack;
+import de.eydamos.backpack.gui.GuiPersonalSlot;
 import de.eydamos.backpack.gui.tab.AbstractInventoryTab;
 import de.eydamos.backpack.gui.tab.InventoryTabBackpack;
 import de.eydamos.backpack.gui.tab.InventoryTabVanilla;
 import de.eydamos.backpack.network.message.MessagePersonalBackpack;
+import tconstruct.client.tabs.AbstractTab;
 import tconstruct.client.tabs.TabRegistry;
 
 @SideOnly(Side.CLIENT)
@@ -39,14 +41,16 @@ public class GuiInventoryTabHandler {
 
     @SubscribeEvent
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
-        if (event.gui instanceof GuiAdvanced) {
+        if (event.gui instanceof GuiPersonalSlot) {
+            return;
+        } else if (event.gui instanceof GuiAdvanced) {
             GuiAdvanced gui = (GuiAdvanced) event.gui;
             int guiLeft = (event.gui.width - gui.getWidth()) / 2;
             int guiTop = (event.gui.height - gui.getHeight()) / 2;
             boolean isBackpackGui = event.gui instanceof GuiBackpack;
             if (Loader.isModLoaded("TConstruct")) {
-                // Let TConstruct add its tabs (vanilla + tinkers); it also includes the vanilla tab
-                TabRegistry.updateTabValues(guiLeft, guiTop, null);
+                // AbstractTab.class won't match any concrete tab, so all TConstruct tabs are enabled
+                TabRegistry.updateTabValues(guiLeft, guiTop, AbstractTab.class);
                 TabRegistry.addTabsToList(event.buttonList);
                 addTabs(event, guiLeft, guiTop, TABS_BACKPACK_ONLY, isBackpackGui);
             } else {
@@ -60,20 +64,26 @@ public class GuiInventoryTabHandler {
     }
 
     private void addBackpackTabIfTabsPresent(GuiScreenEvent.InitGuiEvent.Post event) {
+        int guiLeft = (event.gui.width - 176) / 2;
+        if (Loader.isModLoaded("TConstruct")) {
+            addBackpackTabAfterTConstructTabs(event, guiLeft);
+        } else if (event.gui instanceof GuiInventory) {
+            int guiTop = (event.gui.height - 166) / 2;
+            // Add vanilla tab (selected/disabled) + backpack tab — mirrors TConstruct behaviour
+            addTabs(event, guiLeft, guiTop, TABS_ALL, false);
+        }
+    }
+
+    // Separate method so AbstractTab is only resolved by the JVM when TConstruct is actually loaded
+    private void addBackpackTabAfterTConstructTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft) {
         int tabY = Integer.MIN_VALUE;
         for (Object obj : event.buttonList) {
-            if (!(obj instanceof GuiButton)) continue;
-            GuiButton btn = (GuiButton) obj;
-            if (btn.width == 28 && btn.height == 32) {
-                tabY = Math.max(tabY, btn.yPosition);
+            if (obj instanceof AbstractTab) {
+                tabY = Math.max(tabY, ((GuiButton) obj).yPosition);
             }
         }
-        if (tabY == Integer.MIN_VALUE) {
-            // No existing tabs found; fall back for plain GuiInventory (TConstruct not loaded)
-            if (!(event.gui instanceof GuiInventory)) return;
-            tabY = (event.gui.height - 166) / 2 - 28;
-        }
-        addTabs(event, 0, tabY + 28, TABS_BACKPACK_ONLY, false);
+        if (tabY == Integer.MIN_VALUE) return;
+        addTabs(event, guiLeft, tabY + 28, TABS_BACKPACK_ONLY, false);
     }
 
     private void addTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft, int guiTop, AbstractInventoryTab[] tabs,
@@ -90,6 +100,8 @@ public class GuiInventoryTabHandler {
             }
         }
 
+        boolean hasExistingTabs = nextTabX > guiLeft;
+
         int count = 0;
         for (AbstractInventoryTab tab : tabs) {
             if (!tab.shouldAddToList()) continue;
@@ -97,6 +109,7 @@ public class GuiInventoryTabHandler {
             tab.id = nextId + count;
             tab.xPosition = nextTabX + count * 28;
             tab.yPosition = guiTop - 28;
+            tab.setXOffset((hasExistingTabs || count > 0) ? 1 : 0);
 
             if (tab instanceof InventoryTabBackpack) {
                 ((InventoryTabBackpack) tab).updateIcon();
