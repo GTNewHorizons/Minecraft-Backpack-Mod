@@ -24,12 +24,6 @@ public class InventoryTabBackpack extends AbstractInventoryTab {
     }
 
     @Override
-    public boolean onShiftTabClicked() {
-        GuiHelper.sendOpenPersonalGui(Constants.Guis.OPEN_PERSONAL_SLOT);
-        return true;
-    }
-
-    @Override
     public boolean shouldAddToList() {
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if (player == null) return false;

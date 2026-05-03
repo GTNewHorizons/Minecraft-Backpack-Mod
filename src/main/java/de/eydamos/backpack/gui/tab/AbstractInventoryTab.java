@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -75,24 +74,12 @@ public abstract class AbstractInventoryTab extends GuiButton {
                 && mouseY >= yPosition
                 && mouseX < xPosition + width
                 && mouseY < yPosition + height;
-        if (!inWindow) return false;
-
-        boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-        if (shift) {
-            return onShiftTabClicked();
-        }
-        if (enabled) {
-            onTabClicked();
-            return true;
-        }
-        return false;
+        if (!inWindow || !enabled) return false;
+        onTabClicked();
+        return true;
     }
 
     public abstract void onTabClicked();
-
-    public boolean onShiftTabClicked() {
-        return false;
-    }
 
     public abstract boolean shouldAddToList();
 }
