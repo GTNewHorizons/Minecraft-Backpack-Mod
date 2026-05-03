@@ -1,11 +1,7 @@
 package de.eydamos.backpack.handler;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -27,16 +23,6 @@ public class GuiInventoryTabHandler {
     private static final InventoryTabVanilla TAB_VANILLA = new InventoryTabVanilla();
     private static final InventoryTabBackpack TAB_BACKPACK = new InventoryTabBackpack();
     private static final AbstractInventoryTab[] TABS = { TAB_VANILLA, TAB_BACKPACK };
-
-    private static Method drawHoveringTextMethod;
-
-    static {
-        try {
-            drawHoveringTextMethod = GuiScreen.class
-                    .getDeclaredMethod("drawHoveringText", List.class, int.class, int.class, FontRenderer.class);
-            drawHoveringTextMethod.setAccessible(true);
-        } catch (NoSuchMethodException ignored) {}
-    }
 
     @SubscribeEvent
     public void onPlayerJoinWorld(EntityJoinWorldEvent event) {
@@ -64,30 +50,21 @@ public class GuiInventoryTabHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onDrawScreen(GuiScreenEvent.DrawScreenEvent.Post event) {
-        if (!(event.gui instanceof GuiInventory) && !(event.gui instanceof GuiAdvanced)) return;
-        if (drawHoveringTextMethod == null) return;
-
-        Minecraft mc = Minecraft.getMinecraft();
-        for (AbstractInventoryTab tab : TABS) {
-            if (!tab.shouldAddToList()) continue;
-            if (!tab.isHovering(event.mouseX, event.mouseY)) continue;
-            List<String> tooltip = tab.getTooltip();
-            if (tooltip == null) continue;
-            try {
-                drawHoveringTextMethod.invoke(event.gui, tooltip, event.mouseX, event.mouseY, mc.fontRenderer);
-            } catch (Exception ignored) {}
-            break;
+    private void addTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft, int guiTop,
+            boolean vanillaSelected, boolean backpackSelected) {
+        // Find the highest button ID already in use to avoid conflicts
+        int nextId = 0;
+        for (Object obj : event.buttonList) {
+            if (obj instanceof GuiButton) {
+                nextId = Math.max(nextId, ((GuiButton) obj).id + 1);
+            }
         }
-    }
 
-    private void addTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft, int guiTop, boolean vanillaSelected,
-            boolean backpackSelected) {
         int count = 0;
         for (AbstractInventoryTab tab : TABS) {
             if (!tab.shouldAddToList()) continue;
 
+            tab.id = nextId + count;
             tab.xPosition = guiLeft + count * 28;
             tab.yPosition = guiTop - 28;
 

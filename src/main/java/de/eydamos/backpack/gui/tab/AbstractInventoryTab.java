@@ -1,7 +1,5 @@
 package de.eydamos.backpack.gui.tab;
 
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
@@ -90,21 +88,10 @@ public abstract class AbstractInventoryTab extends GuiButton {
         return false;
     }
 
-    public boolean isHovering(int mouseX, int mouseY) {
-        return visible && mouseX >= xPosition
-                && mouseY >= yPosition
-                && mouseX < xPosition + width
-                && mouseY < yPosition + height;
-    }
-
     public abstract void onTabClicked();
 
     public boolean onShiftTabClicked() {
         return false;
-    }
-
-    public List<String> getTooltip() {
-        return null;
     }
 
     public abstract boolean shouldAddToList();
