@@ -50,8 +50,8 @@ public class GuiInventoryTabHandler {
         }
     }
 
-    private void addTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft, int guiTop,
-            boolean vanillaSelected, boolean backpackSelected) {
+    private void addTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft, int guiTop, boolean vanillaSelected,
+            boolean backpackSelected) {
         // Find the highest button ID already in use to avoid conflicts
         int nextId = 0;
         for (Object obj : event.buttonList) {
