@@ -30,6 +30,8 @@ public class Localizations {
 
     public static final String BUTTON_OK = "button.backpack.ok";
     public static final String BUTTON_CANCEL = "button.backpack.cancel";
+    public static final String BUTTON_CLEAR = "button.backpack.clear";
+    public static final String BUTTON_SAVE = "button.backpack.save";
 
     public static final String SLOTS_TOTAL = "tooltip.slots";
     public static final String CRAFTING_SLOTS = "tooltip.crafting_slots";
