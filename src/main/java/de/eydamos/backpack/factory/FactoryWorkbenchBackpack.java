@@ -1,6 +1,7 @@
 package de.eydamos.backpack.factory;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -17,6 +18,7 @@ import de.eydamos.backpack.inventory.container.ContainerWorkbenchBackpack;
 import de.eydamos.backpack.inventory.slot.SlotBackpack;
 import de.eydamos.backpack.inventory.slot.SlotCraftingAdvanced;
 import de.eydamos.backpack.inventory.slot.SlotPhantom;
+import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.guiadvanced.form.Button;
 import de.eydamos.guiadvanced.form.Label;
@@ -183,11 +185,11 @@ public class FactoryWorkbenchBackpack extends AbstractFactory<BackpackSave> {
             // arrow
             guiBackpack.addSubPart(new Icon(0, 238, 90, 35, 22, 15));
             // clear button
-            Button btn_clear = new Button(0, 88, 16, 11, 11, "c");
+            Button btn_clear = new Button(0, 88, 16, 11, 11, I18n.format(Localizations.BUTTON_CLEAR));
             guiBackpack.addSubPart(btn_clear);
         } else {
-            Button btn_clear = new Button(0, 66, 16, 11, 11, "c");
-            Button btn_save = new Button(1, 81, 16, 11, 11, "s");
+            Button btn_clear = new Button(0, 66, 16, 11, 11, I18n.format(Localizations.BUTTON_CLEAR));
+            Button btn_save = new Button(1, 81, 16, 11, 11, I18n.format(Localizations.BUTTON_SAVE));
             guiBackpack.addSubPart(btn_clear);
             guiBackpack.addSubPart(btn_save);
         }
