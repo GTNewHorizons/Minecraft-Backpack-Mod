@@ -62,7 +62,7 @@ public class ContainerWorkbenchBackpack extends ContainerAdvanced {
 
     @Override
     public ItemStack slotClick(int slotIndex, int mouseButton, int modifier, EntityPlayer player) {
-        Slot slot = slotIndex < 0 ? null : (Slot) inventorySlots.get(slotIndex);
+        Slot slot = slotIndex < 0 || slotIndex >= inventorySlots.size() ? null : (Slot) inventorySlots.get(slotIndex);
         if (slot instanceof SlotPhantom) {
             if (slot.inventory == recipes) {
                 if (BackpackUtil.isServerSide(player.worldObj)) {
