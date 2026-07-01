@@ -33,12 +33,12 @@ public class SaveFileHandler {
         if (worldDir == null) return;
 
         backpackDir = new File(worldDir, "backpacks/backpacks");
-        if (!backpackDir.exists()) {
-            backpackDir.mkdirs();
+        if (!backpackDir.isDirectory() && !backpackDir.mkdirs()) {
+            logger.warn("[Backpack] Couldn't create backpack save directory: {}", backpackDir);
         }
         playerDir = new File(worldDir, "backpacks/player");
-        if (!playerDir.exists()) {
-            playerDir.mkdirs();
+        if (!playerDir.isDirectory() && !playerDir.mkdirs()) {
+            logger.warn("[Backpack] Couldn't create player save directory: {}", playerDir);
         }
     }
 
@@ -100,7 +100,7 @@ public class SaveFileHandler {
                 cachedFiles.put(file, (NBTTagCompound) nbtTagCompound.copy());
                 return nbtTagCompound;
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                logger.warn("[Backpack] Couldn't load data from {}.", file, ioException);
             }
         }
 
@@ -113,8 +113,7 @@ public class SaveFileHandler {
                 nbtTagCompound = CompressedStreamTools.readCompressed(new FileInputStream(file));
                 cachedFiles.put(file, (NBTTagCompound) nbtTagCompound.copy());
             } catch (IOException ioException) {
-                ioException.printStackTrace();
-                logger.warn("[Backpack] Couldn't load data at all.");
+                logger.warn("[Backpack] Couldn't load fallback data from {}.", file, ioException);
             }
         }
 
@@ -131,26 +130,24 @@ public class SaveFileHandler {
         try {
             CompressedStreamTools.writeCompressed(data, new FileOutputStream(fileNew));
 
-            if (fileOld.exists()) {
-                fileOld.delete();
+            if (!deleteIfExists(fileOld)) return;
+
+            if (!renameIfExists(file, fileOld)) return;
+
+            if (!deleteIfExists(file)) return;
+
+            if (!renameIfExists(fileNew, file)) {
+                renameIfExists(fileOld, file);
+                return;
             }
 
-            file.renameTo(fileOld);
-
-            if (file.exists()) {
-                file.delete();
-            }
-
-            fileNew.renameTo(file);
-
-            if (fileNew.exists()) {
-                fileNew.delete();
+            if (fileNew.exists() && !fileNew.delete()) {
+                logger.warn("[Backpack] Couldn't delete temporary save file: {}", fileNew);
             }
 
             cachedFiles.put(file, (NBTTagCompound) data.copy());
         } catch (IOException fileNotFoundException) {
-            fileNotFoundException.printStackTrace();
-            logger.warn("[Backpack] Couldn't save data.");
+            logger.warn("[Backpack] Couldn't save data to {}.", file, fileNotFoundException);
         }
     }
 
@@ -161,19 +158,25 @@ public class SaveFileHandler {
         File fileOld = new File(directory, fileName + ".dat_old");
         File file = new File(directory, fileName + ".dat");
 
-        if (fileOld.exists()) {
-            fileOld.delete();
-        }
-
-        if (file.exists()) {
-            file.delete();
-        }
-
-        if (fileNew.exists()) {
-            fileNew.delete();
-        }
+        deleteIfExists(fileOld);
+        deleteIfExists(file);
+        deleteIfExists(fileNew);
 
         cachedFiles.remove(file);
+    }
+
+    private boolean deleteIfExists(File file) {
+        if (!file.exists()) return true;
+        if (file.delete()) return true;
+        logger.warn("[Backpack] Couldn't delete save file: {}", file);
+        return false;
+    }
+
+    private boolean renameIfExists(File from, File to) {
+        if (!from.exists()) return true;
+        if (from.renameTo(to)) return true;
+        logger.warn("[Backpack] Couldn't rename save file from {} to {}.", from, to);
+        return false;
     }
 
     private boolean isValidUUID(String value) {
