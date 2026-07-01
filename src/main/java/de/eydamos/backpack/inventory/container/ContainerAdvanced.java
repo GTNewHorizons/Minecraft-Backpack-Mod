@@ -94,6 +94,9 @@ public class ContainerAdvanced extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotPos) {
         ItemStack returnStack = null;
+        if (slotPos < 0 || slotPos >= inventorySlots.size()) {
+            return null;
+        }
         Slot slot = (Slot) inventorySlots.get(slotPos);
 
         if (slot != null && slot.getHasStack()) {
