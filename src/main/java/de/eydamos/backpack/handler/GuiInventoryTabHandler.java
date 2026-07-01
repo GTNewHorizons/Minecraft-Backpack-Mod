@@ -2,7 +2,11 @@ package de.eydamos.backpack.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
@@ -17,7 +21,11 @@ import de.eydamos.backpack.gui.GuiPersonalSlot;
 import de.eydamos.backpack.gui.tab.AbstractInventoryTab;
 import de.eydamos.backpack.gui.tab.InventoryTabBackpack;
 import de.eydamos.backpack.gui.tab.InventoryTabVanilla;
+import de.eydamos.backpack.inventory.container.ContainerAdvanced;
+import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.network.message.MessagePersonalBackpack;
+import de.eydamos.backpack.saves.BackpackSave;
+import de.eydamos.backpack.util.BackpackUtil;
 import tconstruct.client.tabs.AbstractTab;
 import tconstruct.client.tabs.TabRegistry;
 
@@ -47,14 +55,16 @@ public class GuiInventoryTabHandler {
             GuiAdvanced gui = (GuiAdvanced) event.gui;
             int guiLeft = (event.gui.width - gui.getWidth()) / 2;
             int guiTop = (event.gui.height - gui.getHeight()) / 2;
-            boolean isBackpackGui = event.gui instanceof GuiBackpack;
+            // The backpack tab is active only when the open backpack is the equipped one.
+            // On any other backpack no tab is active, so the inventory tab is not highlighted either.
+            AbstractInventoryTab activeTab = isEquippedBackpackOpen(event.gui) ? TAB_BACKPACK : null;
             if (Loader.isModLoaded("TConstruct")) {
                 // AbstractTab.class won't match any concrete tab, so all TConstruct tabs are enabled
                 TabRegistry.updateTabValues(guiLeft, guiTop, AbstractTab.class);
                 TabRegistry.addTabsToList(event.buttonList);
-                addTabs(event, guiLeft, guiTop, TABS_BACKPACK_ONLY, isBackpackGui);
+                addTabs(event, guiLeft, guiTop, TABS_BACKPACK_ONLY, activeTab);
             } else {
-                addTabs(event, guiLeft, guiTop, TABS_ALL, isBackpackGui);
+                addTabs(event, guiLeft, guiTop, TABS_ALL, activeTab);
             }
         } else {
             // Handles GuiInventory and other mod GUIs (TConstruct, Galacticraft, etc.)
@@ -63,14 +73,27 @@ public class GuiInventoryTabHandler {
         }
     }
 
+    // True only when the currently open backpack is the one the player has equipped.
+    private boolean isEquippedBackpackOpen(GuiScreen gui) {
+        if (!(gui instanceof GuiBackpack)) return false;
+        Container container = ((GuiContainer) gui).inventorySlots;
+        if (!(container instanceof ContainerAdvanced)) return false;
+        BackpackSave openSave = ((ContainerAdvanced) container).getBackpackSave();
+        if (openSave == null) return false;
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (player == null) return false;
+        String equippedUUID = player.getEntityData().getString(Constants.NBT.PERSONAL_BACKPACK_UUID);
+        return !equippedUUID.isEmpty() && BackpackUtil.UUIDEquals(openSave.getUUID(), equippedUUID);
+    }
+
     private void addBackpackTabIfTabsPresent(GuiScreenEvent.InitGuiEvent.Post event) {
         int guiLeft = (event.gui.width - 176) / 2;
         if (Loader.isModLoaded("TConstruct")) {
             addBackpackTabAfterTConstructTabs(event, guiLeft);
         } else if (event.gui instanceof GuiInventory) {
             int guiTop = (event.gui.height - 166) / 2;
-            // Add vanilla tab (selected/disabled) + backpack tab — mirrors TConstruct behaviour
-            addTabs(event, guiLeft, guiTop, TABS_ALL, false);
+            // In the inventory the vanilla tab is the active one, backpack tab is a shortcut
+            addTabs(event, guiLeft, guiTop, TABS_ALL, TAB_VANILLA);
         }
     }
 
@@ -83,11 +106,12 @@ public class GuiInventoryTabHandler {
             }
         }
         if (tabY == Integer.MIN_VALUE) return;
-        addTabs(event, guiLeft, tabY + 28, TABS_BACKPACK_ONLY, false);
+        // TConstruct owns the active inventory tab here, so ours is just a shortcut
+        addTabs(event, guiLeft, tabY + 28, TABS_BACKPACK_ONLY, null);
     }
 
     private void addTabs(GuiScreenEvent.InitGuiEvent.Post event, int guiLeft, int guiTop, AbstractInventoryTab[] tabs,
-            boolean backpackSelected) {
+            AbstractInventoryTab activeTab) {
         int nextId = 0;
         int nextTabX = guiLeft;
         for (Object obj : event.buttonList) {
@@ -113,10 +137,9 @@ public class GuiInventoryTabHandler {
 
             if (tab instanceof InventoryTabBackpack) {
                 ((InventoryTabBackpack) tab).updateIcon();
-                tab.enabled = !backpackSelected;
-            } else {
-                tab.enabled = backpackSelected;
             }
+            // The active tab is drawn selected (disabled); every other tab stays clickable
+            tab.enabled = tab != activeTab;
 
             event.buttonList.add(tab);
             count++;

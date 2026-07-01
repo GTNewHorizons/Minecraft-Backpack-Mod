@@ -31,7 +31,7 @@ public class EventHandlerClientOnly {
         backRenderer.renderAt(entityPlayer, backMeta);
     }
 
-    public static void updateTag(String uuid, int meta) {
+    public static void updateTag(String uuid, int meta, String backpackUUID) {
 
         World worldClient = Minecraft.getMinecraft().theWorld;
 
@@ -44,6 +44,7 @@ public class EventHandlerClientOnly {
             }
             // Update tag
             player.getEntityData().setInteger(Constants.NBT.PERSONAL_BACKPACK_META, meta);
+            player.getEntityData().setString(Constants.NBT.PERSONAL_BACKPACK_UUID, backpackUUID);
         }
     }
 }

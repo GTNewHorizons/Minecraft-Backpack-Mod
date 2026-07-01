@@ -61,8 +61,9 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
                 // right away instead of waiting for the periodic client sync.
                 ItemStack backpack = playerSave.getPersonalBackpack();
                 int damage = backpack != null ? backpack.getItemDamage() : -1;
+                String backpackUUID = backpack != null ? new BackpackSave(backpack).getUUID() : "";
                 Backpack.packetHandler.networkWrapper.sendTo(
-                        new MessagePersonalBackpack(entityPlayer.getUniqueID().toString(), damage),
+                        new MessagePersonalBackpack(entityPlayer.getUniqueID().toString(), damage, backpackUUID),
                         (EntityPlayerMP) entityPlayer);
             }
         }

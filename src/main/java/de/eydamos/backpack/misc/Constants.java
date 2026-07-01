@@ -52,6 +52,7 @@ public class Constants {
         public static final String TYPE = "type";
         public static final String PERSONAL_BACKPACK_OPEN = "personalBackpackOpen";
         public static final String PERSONAL_BACKPACK_META = "pBackpackMeta";
+        public static final String PERSONAL_BACKPACK_UUID = "pBackpackUUID";
     }
 
     public static class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {
