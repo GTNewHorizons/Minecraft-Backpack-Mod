@@ -43,13 +43,14 @@ public class MessagePersonalBackpack implements IMessage, IMessageHandler<Messag
     public IMessage onMessage(MessagePersonalBackpack message, MessageContext ctx) {
         IMessage returnMessage = null;
         if (BackpackUtil.isServerSide()) {
+            String playerUUID = ctx.getServerHandler().playerEntity.getUniqueID().toString();
 
-            PlayerSave playerSave = new PlayerSave(message.playerUUID);
+            PlayerSave playerSave = new PlayerSave(playerUUID);
             ItemStack backpack = playerSave.getPersonalBackpack();
             if (backpack != null) {
-                returnMessage = new MessagePersonalBackpack(message.playerUUID, backpack.getItemDamage());
+                returnMessage = new MessagePersonalBackpack(playerUUID, backpack.getItemDamage());
             } else {
-                returnMessage = new MessagePersonalBackpack(message.playerUUID);
+                returnMessage = new MessagePersonalBackpack(playerUUID);
             }
         } else {
             // Client
