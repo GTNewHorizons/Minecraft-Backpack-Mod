@@ -3,6 +3,7 @@ package de.eydamos.backpack.network.message;
 import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -59,11 +60,11 @@ public class MessageBackpackInfoRequest implements IMessage, IMessageHandler<Mes
     }
 
     private boolean canRequestBackpackInfo(EntityPlayerMP player, String uuid) {
-        for (ItemStack stack : player.inventory.mainInventory) {
-            if (BackpackUtil.UUIDEquals(stack, uuid)) return true;
-        }
-        for (ItemStack stack : player.inventory.armorInventory) {
-            if (BackpackUtil.UUIDEquals(stack, uuid)) return true;
+        for (Object slotObject : player.openContainer.inventorySlots) {
+            Slot slot = (Slot) slotObject;
+            if (slot != null && BackpackUtil.UUIDEquals(slot.getStack(), uuid)) {
+                return true;
+            }
         }
 
         ItemStack personalBackpack = new PlayerSave(player).getPersonalBackpack();
