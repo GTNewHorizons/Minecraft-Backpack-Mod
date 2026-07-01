@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -70,12 +71,16 @@ public class SaveFileHandler {
     }
 
     public boolean backpackSaveExists(String UUID) {
+        if (!isValidUUID(UUID)) return false;
+
         File f = new File(backpackDir, UUID + ".dat");
         if (cachedFiles.containsKey(f)) return true;
         return f.exists();
     }
 
     public boolean playerSaveExists(String UUID) {
+        if (!isValidUUID(UUID)) return false;
+
         File f = new File(playerDir, UUID + ".dat");
         if (cachedFiles.containsKey(f)) return true;
         return f.exists();
@@ -83,6 +88,7 @@ public class SaveFileHandler {
 
     public NBTTagCompound load(File directory, String fileName) {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        if (!isValidUUID(fileName)) return nbtTagCompound;
 
         File file = new File(directory, fileName + ".dat");
 
@@ -116,6 +122,8 @@ public class SaveFileHandler {
     }
 
     public void save(NBTTagCompound data, File directory, String fileName) {
+        if (!isValidUUID(fileName)) return;
+
         File fileNew = new File(directory, fileName + ".dat_new");
         File fileOld = new File(directory, fileName + ".dat_old");
         File file = new File(directory, fileName + ".dat");
@@ -147,6 +155,8 @@ public class SaveFileHandler {
     }
 
     public void delete(File directory, String fileName) {
+        if (!isValidUUID(fileName)) return;
+
         File fileNew = new File(directory, fileName + ".dat_new");
         File fileOld = new File(directory, fileName + ".dat_old");
         File file = new File(directory, fileName + ".dat");
@@ -164,5 +174,14 @@ public class SaveFileHandler {
         }
 
         cachedFiles.remove(file);
+    }
+
+    private boolean isValidUUID(String value) {
+        try {
+            UUID.fromString(value);
+            return true;
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return false;
+        }
     }
 }
