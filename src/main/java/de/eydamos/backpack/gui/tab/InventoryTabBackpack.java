@@ -20,6 +20,7 @@ public class InventoryTabBackpack extends AbstractInventoryTab {
 
     @Override
     public void onTabClicked() {
+        GuiHelper.saveCursorPosition();
         GuiHelper.sendOpenPersonalGui(Constants.Guis.OPEN_PERSONAL_BACKPACK);
     }
 

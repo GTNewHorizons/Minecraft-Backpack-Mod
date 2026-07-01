@@ -5,8 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 
-import org.lwjgl.input.Mouse;
-
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,6 +12,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.factory.FactoryBackpack;
+import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.InventoryBasic;
 import de.eydamos.backpack.misc.Constants;
@@ -83,17 +82,13 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
 
         BackpackSave backpackSave = new BackpackSave(nbtTagCompound);
 
-        int mouseX = Mouse.isGrabbed() ? -1 : Mouse.getX();
-        int mouseY = Mouse.isGrabbed() ? -1 : Mouse.getY();
         Minecraft.getMinecraft().displayGuiScreen(
                 FactoryBackpack.getGuiContainer(
                         backpackSave,
                         new IInventory[] { entityPlayer.inventory, backpackInventory },
                         entityPlayer));
         entityPlayer.openContainer.windowId = message.windowId;
-        if (mouseX >= 0) {
-            Mouse.setCursorPosition(mouseX, mouseY);
-        }
+        GuiHelper.restoreCursorPosition();
 
         return null;
     }

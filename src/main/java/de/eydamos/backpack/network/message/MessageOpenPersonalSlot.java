@@ -10,6 +10,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.factory.FactoryBackpack;
+import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.saves.PlayerSave;
 import io.netty.buffer.ByteBuf;
 
@@ -44,6 +45,7 @@ public class MessageOpenPersonalSlot implements IMessage, IMessageHandler<Messag
         Minecraft.getMinecraft().displayGuiScreen(
                 FactoryBackpack.getGuiContainer(playerSave, new IInventory[] { entityPlayer.inventory }, entityPlayer));
         entityPlayer.openContainer.windowId = message.windowId;
+        GuiHelper.restoreCursorPosition();
 
         return null;
     }

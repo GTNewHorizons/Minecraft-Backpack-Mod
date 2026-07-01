@@ -5,6 +5,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.Backpack;
@@ -21,6 +24,27 @@ import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 
 public class GuiHelper {
+
+    // Cursor position captured when a tab is clicked, so opening the backpack GUI
+    // through the network round-trip does not warp the cursor to the screen center.
+    private static int savedCursorX = -1;
+    private static int savedCursorY = -1;
+
+    @SideOnly(Side.CLIENT)
+    public static void saveCursorPosition() {
+        savedCursorX = Mouse.getX();
+        savedCursorY = Mouse.getY();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void restoreCursorPosition() {
+        if (savedCursorX < 0) return;
+        // Mouse.getY() measures from the bottom, but setCursorPosition places from the top here,
+        // so the Y axis has to be flipped to land the cursor back where it was clicked.
+        Mouse.setCursorPosition(savedCursorX, Display.getHeight() - savedCursorY);
+        savedCursorX = -1;
+        savedCursorY = -1;
+    }
 
     @SideOnly(Side.CLIENT)
     public static void displayRenameGui() {
