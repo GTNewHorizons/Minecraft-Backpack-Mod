@@ -56,6 +56,7 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
         }
         inventory.closeInventory();
         inventoryPickup.closeInventory();
+        super.onContainerClosed(entityPlayer);
     }
 
     public IInventory getInventoryPickup() {
