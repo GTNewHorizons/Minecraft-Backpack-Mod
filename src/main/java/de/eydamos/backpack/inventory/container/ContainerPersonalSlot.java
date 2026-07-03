@@ -8,7 +8,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 
 import de.eydamos.backpack.inventory.AbstractInventoryBackpack;
-import de.eydamos.backpack.inventory.ISaveableInventory;
+import de.eydamos.backpack.inventory.InventoryBackpackSlot;
 import de.eydamos.backpack.inventory.InventoryPickup;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
@@ -22,7 +22,7 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
 
     protected final InventoryPickup inventoryPickup;
 
-    public ContainerPersonalSlot(AbstractInventoryBackpack slotInventory, InventoryPickup pickupInventory) {
+    public ContainerPersonalSlot(AbstractInventoryBackpack<?> slotInventory, InventoryPickup pickupInventory) {
         super(slotInventory);
         slotInventory.setEventHandler(this);
         inventoryPickup = pickupInventory;
@@ -50,8 +50,8 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
     @Override
     public void onContainerClosed(EntityPlayer entityPlayer) {
         if (BackpackUtil.isServerSide(entityPlayer.worldObj)) {
-            if (inventory instanceof ISaveableInventory) {
-                ((ISaveableInventory) inventory).writeToNBT(new PlayerSave(entityPlayer));
+            if (inventory instanceof InventoryBackpackSlot) {
+                ((InventoryBackpackSlot) inventory).writeToNBT(new PlayerSave(entityPlayer));
             }
         }
         inventory.closeInventory();
