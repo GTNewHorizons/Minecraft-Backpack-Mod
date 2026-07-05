@@ -12,6 +12,7 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.factory.FactoryBackpack;
+import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.InventoryBasic;
 import de.eydamos.backpack.misc.Constants;
@@ -87,6 +88,7 @@ public class MessageOpenBackpack implements IMessage, IMessageHandler<MessageOpe
                         new IInventory[] { entityPlayer.inventory, backpackInventory },
                         entityPlayer));
         entityPlayer.openContainer.windowId = message.windowId;
+        GuiHelper.restoreCursorPosition();
 
         return null;
     }
