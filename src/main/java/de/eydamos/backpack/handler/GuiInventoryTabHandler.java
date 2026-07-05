@@ -2,11 +2,8 @@ package de.eydamos.backpack.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
@@ -36,6 +33,7 @@ public class GuiInventoryTabHandler {
     private static final InventoryTabBackpack TAB_BACKPACK = new InventoryTabBackpack();
     private static final AbstractInventoryTab[] TABS_ALL = { TAB_VANILLA, TAB_BACKPACK };
     private static final AbstractInventoryTab[] TABS_BACKPACK_ONLY = { TAB_BACKPACK };
+    private static final boolean TCONSTRUCT_LOADED = Loader.isModLoaded("TConstruct");
 
     @SubscribeEvent
     public void onPlayerJoinWorld(EntityJoinWorldEvent event) {
@@ -51,14 +49,13 @@ public class GuiInventoryTabHandler {
     public void onInitGui(GuiScreenEvent.InitGuiEvent.Post event) {
         if (event.gui instanceof GuiPersonalSlot) {
             return;
-        } else if (event.gui instanceof GuiAdvanced) {
-            GuiAdvanced gui = (GuiAdvanced) event.gui;
+        } else if (event.gui instanceof GuiAdvanced gui) {
             int guiLeft = (event.gui.width - gui.getWidth()) / 2;
             int guiTop = (event.gui.height - gui.getHeight()) / 2;
             // The backpack tab is active only when the open backpack is the equipped one.
             // On any other backpack no tab is active, so the inventory tab is not highlighted either.
-            AbstractInventoryTab activeTab = isEquippedBackpackOpen(event.gui) ? TAB_BACKPACK : null;
-            if (Loader.isModLoaded("TConstruct")) {
+            AbstractInventoryTab activeTab = isEquippedBackpackOpen(gui) ? TAB_BACKPACK : null;
+            if (TCONSTRUCT_LOADED) {
                 // AbstractTab.class won't match any concrete tab, so all TConstruct tabs are enabled
                 TabRegistry.updateTabValues(guiLeft, guiTop, AbstractTab.class);
                 TabRegistry.addTabsToList(event.buttonList);
@@ -74,11 +71,10 @@ public class GuiInventoryTabHandler {
     }
 
     // True only when the currently open backpack is the one the player has equipped.
-    private boolean isEquippedBackpackOpen(GuiScreen gui) {
+    private boolean isEquippedBackpackOpen(GuiAdvanced gui) {
         if (!(gui instanceof GuiBackpack)) return false;
-        Container container = ((GuiContainer) gui).inventorySlots;
-        if (!(container instanceof ContainerAdvanced)) return false;
-        BackpackSave openSave = ((ContainerAdvanced) container).getBackpackSave();
+        if (!(gui.inventorySlots instanceof ContainerAdvanced advanced)) return false;
+        BackpackSave openSave = advanced.getBackpackSave();
         if (openSave == null) return false;
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         if (player == null) return false;
@@ -88,7 +84,7 @@ public class GuiInventoryTabHandler {
 
     private void addBackpackTabIfTabsPresent(GuiScreenEvent.InitGuiEvent.Post event) {
         int guiLeft = (event.gui.width - 176) / 2;
-        if (Loader.isModLoaded("TConstruct")) {
+        if (TCONSTRUCT_LOADED) {
             addBackpackTabAfterTConstructTabs(event, guiLeft);
         } else if (event.gui instanceof GuiInventory) {
             int guiTop = (event.gui.height - 166) / 2;
