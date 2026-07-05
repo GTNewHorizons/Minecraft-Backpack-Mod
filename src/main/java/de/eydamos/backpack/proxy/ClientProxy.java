@@ -11,6 +11,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import de.eydamos.backpack.gui.GuiWorkbenchBackpack;
 import de.eydamos.backpack.handler.EventHandlerClientOnly;
+import de.eydamos.backpack.handler.GuiInventoryTabHandler;
 import de.eydamos.backpack.handler.KeyInputHandler;
 import de.eydamos.backpack.misc.BackpackUsageCache;
 import de.eydamos.backpack.misc.ConfigurationBackpack;
@@ -27,6 +28,8 @@ public class ClientProxy extends CommonProxy {
         if (ConfigurationBackpack.RENDER_BACKPACK_MODEL) {
             MinecraftForge.EVENT_BUS.register(new EventHandlerClientOnly());
         }
+
+        MinecraftForge.EVENT_BUS.register(new GuiInventoryTabHandler());
     }
 
     @Override

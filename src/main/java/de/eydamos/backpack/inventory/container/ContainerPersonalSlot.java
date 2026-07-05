@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 
+import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.inventory.AbstractInventoryBackpack;
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.InventoryPickup;
+import de.eydamos.backpack.network.message.MessagePersonalBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
@@ -51,7 +55,16 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
     public void onContainerClosed(EntityPlayer entityPlayer) {
         if (BackpackUtil.isServerSide(entityPlayer.worldObj)) {
             if (inventory instanceof ISaveableInventory) {
-                ((ISaveableInventory) inventory).writeToNBT(new PlayerSave(entityPlayer));
+                PlayerSave playerSave = new PlayerSave(entityPlayer);
+                ((ISaveableInventory) inventory).writeToNBT(playerSave);
+                // Push the new worn backpack state so the inventory tab appears/disappears
+                // right away instead of waiting for the periodic client sync.
+                ItemStack backpack = playerSave.getPersonalBackpack();
+                int damage = backpack != null ? backpack.getItemDamage() : -1;
+                String backpackUUID = backpack != null ? new BackpackSave(backpack).getUUID() : "";
+                Backpack.packetHandler.networkWrapper.sendTo(
+                        new MessagePersonalBackpack(entityPlayer.getUniqueID().toString(), damage, backpackUUID),
+                        (EntityPlayerMP) entityPlayer);
             }
         }
         inventory.closeInventory();

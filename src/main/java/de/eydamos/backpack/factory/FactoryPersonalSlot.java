@@ -9,7 +9,7 @@ import net.minecraft.util.StatCollector;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import de.eydamos.backpack.gui.GuiBackpack;
+import de.eydamos.backpack.gui.GuiPersonalSlot;
 import de.eydamos.backpack.inventory.AbstractInventoryBackpack;
 import de.eydamos.backpack.inventory.InventoryBackpackSlot;
 import de.eydamos.backpack.inventory.InventoryBasic;
@@ -102,7 +102,7 @@ public class FactoryPersonalSlot extends AbstractFactory<PlayerSave> {
     @SideOnly(Side.CLIENT)
     public GuiContainer getGuiContainer(PlayerSave player, IInventory[] inventories, EntityPlayer entityPlayer) {
         ContainerPersonalSlot container = (ContainerPersonalSlot) getContainer(player, inventories, entityPlayer);
-        GuiBackpack guiBackpack = new GuiBackpack(container);
+        GuiPersonalSlot guiBackpack = new GuiPersonalSlot(container);
 
         int inventoryStart = container.getBoundary(Boundaries.INVENTORY);
         int hotbarEnd = container.getBoundary(Boundaries.HOTBAR_END);

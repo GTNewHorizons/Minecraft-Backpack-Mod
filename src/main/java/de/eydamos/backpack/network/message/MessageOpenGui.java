@@ -42,11 +42,13 @@ public class MessageOpenGui implements IMessage, IMessageHandler<MessageOpenGui,
                 ItemStack backpack = playerSave.getPersonalBackpack();
                 if (backpack != null) {
                     BackpackSave backpackSave = new BackpackSave(backpack);
-                    playerSave.setPersonalBackpackOpen(backpackSave.getUUID());
                     GuiHelper.displayBackpack(
                             backpackSave,
                             ItemBackpackBase.getInventory(backpack, entityPlayer),
                             entityPlayer);
+                    // Set the open flag after displaying: closing a previously open backpack
+                    // clears it, so setting it earlier would be undone and the GUI would close.
+                    new PlayerSave(entityPlayer).setPersonalBackpackOpen(backpackSave.getUUID());
                 }
             }
             case Constants.Guis.OPEN_PERSONAL_SLOT -> GuiHelper.displayPersonalSlot(entityPlayer);

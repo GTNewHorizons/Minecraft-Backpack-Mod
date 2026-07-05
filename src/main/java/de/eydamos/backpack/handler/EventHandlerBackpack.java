@@ -35,15 +35,12 @@ public class EventHandlerBackpack {
     @SubscribeEvent
     public void serverTick(PlayerTickEvent event) {
 
-        // On client
-        if (ConfigurationBackpack.RENDER_BACKPACK_MODEL) {
-            if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
-                int ticks = event.player.ticksExisted;
-                // Update players bags 3 sec
-                if (ticks % (3 * 20) == 0) {
-                    String pUid = event.player.getUniqueID().toString();
-                    Backpack.packetHandler.networkWrapper.sendToServer(new MessagePersonalBackpack(pUid));
-                }
+        // On client — sync personal backpack state periodically (needed for tab and model rendering)
+        if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.END) {
+            int ticks = event.player.ticksExisted;
+            if (ticks % (3 * 20) == 0) {
+                String pUid = event.player.getUniqueID().toString();
+                Backpack.packetHandler.networkWrapper.sendToServer(new MessagePersonalBackpack(pUid));
             }
         }
 
