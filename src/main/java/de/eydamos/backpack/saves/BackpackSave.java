@@ -39,7 +39,7 @@ public class BackpackSave extends AbstractSave {
         } else {
             if (backpack.getItem() instanceof ItemBackpackBase) {
                 load(NBTItemStackUtil.getString(backpack, Constants.NBT.UID));
-                if (force) {
+                if (force || getType() != BackpackUtil.getType(backpack) || getSize() != getSize(backpack)) {
                     initialize(backpack);
                 }
             }

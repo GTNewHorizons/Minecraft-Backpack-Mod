@@ -1,5 +1,8 @@
 package de.eydamos.backpack.network.message;
 
+import java.util.UUID;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -48,21 +51,36 @@ public class MessagePersonalBackpack implements IMessage, IMessageHandler<Messag
     public IMessage onMessage(MessagePersonalBackpack message, MessageContext ctx) {
         IMessage returnMessage = null;
         if (BackpackUtil.isServerSide()) {
+            EntityPlayer target = resolveOnlinePlayer(ctx, message.playerUUID);
+            if (target == null) {
+                return null;
+            }
+            String playerUUID = target.getUniqueID().toString();
 
-            PlayerSave playerSave = new PlayerSave(message.playerUUID);
+            PlayerSave playerSave = new PlayerSave(playerUUID);
             ItemStack backpack = playerSave.getPersonalBackpack();
             if (backpack != null) {
+                // Only the requester needs their own backpack UUID
+                boolean self = target == ctx.getServerHandler().playerEntity;
                 returnMessage = new MessagePersonalBackpack(
-                        message.playerUUID,
+                        playerUUID,
                         backpack.getItemDamage(),
-                        new BackpackSave(backpack).getUUID());
+                        self ? new BackpackSave(backpack).getUUID() : "");
             } else {
-                returnMessage = new MessagePersonalBackpack(message.playerUUID);
+                returnMessage = new MessagePersonalBackpack(playerUUID);
             }
         } else {
             // Client
             EventHandlerClientOnly.updateTag(message.playerUUID, message.backpackDamage, message.backpackUUID);
         }
         return returnMessage;
+    }
+
+    private EntityPlayer resolveOnlinePlayer(MessageContext ctx, String uuid) {
+        try {
+            return ctx.getServerHandler().playerEntity.worldObj.func_152378_a(UUID.fromString(uuid));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return null;
+        }
     }
 }

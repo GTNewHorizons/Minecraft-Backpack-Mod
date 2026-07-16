@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.inventory.AbstractInventoryBackpack;
-import de.eydamos.backpack.inventory.ISaveableInventory;
+import de.eydamos.backpack.inventory.InventoryBackpackSlot;
 import de.eydamos.backpack.inventory.InventoryPickup;
 import de.eydamos.backpack.network.message.MessagePersonalBackpack;
 import de.eydamos.backpack.saves.BackpackSave;
@@ -26,7 +26,7 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
 
     protected final InventoryPickup inventoryPickup;
 
-    public ContainerPersonalSlot(AbstractInventoryBackpack slotInventory, InventoryPickup pickupInventory) {
+    public ContainerPersonalSlot(AbstractInventoryBackpack<?> slotInventory, InventoryPickup pickupInventory) {
         super(slotInventory);
         slotInventory.setEventHandler(this);
         inventoryPickup = pickupInventory;
@@ -54,9 +54,9 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
     @Override
     public void onContainerClosed(EntityPlayer entityPlayer) {
         if (BackpackUtil.isServerSide(entityPlayer.worldObj)) {
-            if (inventory instanceof ISaveableInventory) {
+            if (inventory instanceof InventoryBackpackSlot) {
                 PlayerSave playerSave = new PlayerSave(entityPlayer);
-                ((ISaveableInventory) inventory).writeToNBT(playerSave);
+                ((InventoryBackpackSlot) inventory).writeToNBT(playerSave);
                 // Push the new worn backpack state so the inventory tab appears/disappears
                 // right away instead of waiting for the periodic client sync.
                 ItemStack backpack = playerSave.getPersonalBackpack();
@@ -69,6 +69,7 @@ public class ContainerPersonalSlot extends ContainerAdvanced {
         }
         inventory.closeInventory();
         inventoryPickup.closeInventory();
+        super.onContainerClosed(entityPlayer);
     }
 
     public IInventory getInventoryPickup() {

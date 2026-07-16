@@ -94,6 +94,9 @@ public class ContainerAdvanced extends Container {
     @Override
     public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int slotPos) {
         ItemStack returnStack = null;
+        if (slotPos < 0 || slotPos >= inventorySlots.size()) {
+            return null;
+        }
         Slot slot = (Slot) inventorySlots.get(slotPos);
 
         if (slot != null && slot.getHasStack()) {
@@ -371,23 +374,32 @@ public class ContainerAdvanced extends Container {
         Map<ContainerSection, List<Slot>> slotRefs = new HashMap<>();
 
         if (boundaries.containsKey(Boundaries.CRAFTING)) {
-            slotRefs.put(ContainerSection.CRAFTING_OUT, inventorySlots.subList(0, 1));
-            slotRefs.put(
+            if (!inventorySlots.isEmpty()) {
+                slotRefs.put(ContainerSection.CRAFTING_OUT, inventorySlots.subList(0, 1));
+            }
+            addContainerSection(
+                    slotRefs,
                     ContainerSection.CRAFTING_IN_PERSISTENT,
-                    inventorySlots.subList(getBoundary(Boundaries.CRAFTING), getBoundary(Boundaries.CRAFTING_END)));
+                    Boundaries.CRAFTING,
+                    Boundaries.CRAFTING_END);
         }
-        slotRefs.put(
-                ContainerSection.INVENTORY,
-                inventorySlots.subList(getBoundary(Boundaries.INVENTORY), getBoundary(Boundaries.HOTBAR_END)));
-        slotRefs.put(
+        addContainerSection(slotRefs, ContainerSection.INVENTORY, Boundaries.INVENTORY, Boundaries.HOTBAR_END);
+        addContainerSection(
+                slotRefs,
                 ContainerSection.INVENTORY_NOT_HOTBAR,
-                inventorySlots.subList(getBoundary(Boundaries.INVENTORY), getBoundary(Boundaries.INVENTORY_END)));
-        slotRefs.put(
-                ContainerSection.INVENTORY_HOTBAR,
-                inventorySlots.subList(getBoundary(Boundaries.HOTBAR), getBoundary(Boundaries.HOTBAR_END)));
-        slotRefs.put(
-                ContainerSection.CHEST,
-                inventorySlots.subList(getBoundary(Boundaries.BACKPACK), getBoundary(Boundaries.BACKPACK_END)));
+                Boundaries.INVENTORY,
+                Boundaries.INVENTORY_END);
+        addContainerSection(slotRefs, ContainerSection.INVENTORY_HOTBAR, Boundaries.HOTBAR, Boundaries.HOTBAR_END);
+        addContainerSection(slotRefs, ContainerSection.CHEST, Boundaries.BACKPACK, Boundaries.BACKPACK_END);
         return slotRefs;
+    }
+
+    private void addContainerSection(Map<ContainerSection, List<Slot>> slotRefs, ContainerSection section,
+            Boundaries startBoundary, Boundaries endBoundary) {
+        int start = getBoundary(startBoundary);
+        int end = getBoundary(endBoundary);
+        if (start >= 0 && start <= end && end <= inventorySlots.size()) {
+            slotRefs.put(section, inventorySlots.subList(start, end));
+        }
     }
 }
