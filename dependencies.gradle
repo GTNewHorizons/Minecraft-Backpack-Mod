@@ -4,4 +4,8 @@ dependencies {
     api('com.github.GTNewHorizons:NotEnoughItems:2.8.109-GTNH:dev')
     api('com.github.GTNewHorizons:inventory-tweaks:1.7.1:dev')
     compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.14.58-GTNH:dev') { transitive = false }
+
+    testImplementation(platform('org.junit:junit-bom:5.14.1'))
+    testImplementation('org.junit.jupiter:junit-jupiter')
+    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
 }
