@@ -19,7 +19,11 @@ import net.minecraftforge.common.DimensionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/** Caches backpack data and queues dirty files on Minecraft's file IO thread during world saves. */
 public class SaveFileHandler {
+
+    /** Checked in order when the primary file is missing or unreadable. */
+    private static final String[] FALLBACK_SUFFIXES = { ".dat_old", ".dat_new" };
 
     protected final Logger logger = LogManager.getLogger();
 
@@ -48,40 +52,39 @@ public class SaveFileHandler {
         }
     }
 
-    public NBTTagCompound loadBackpack(String UUID) {
+    public synchronized NBTTagCompound loadBackpack(String UUID) {
         return load(backpackDir, UUID);
     }
 
-    public void saveBackpack(NBTTagCompound data, String UUID) {
+    public synchronized void saveBackpack(NBTTagCompound data, String UUID) {
         save(data, backpackDir, UUID);
     }
 
-    public void deleteBackpack(String UUID) {
+    public synchronized void deleteBackpack(String UUID) {
         delete(backpackDir, UUID);
     }
 
-    public NBTTagCompound loadPlayer(String UUID) {
+    public synchronized NBTTagCompound loadPlayer(String UUID) {
         return load(playerDir, UUID);
     }
 
-    public void savePlayer(NBTTagCompound data, String UUID) {
+    public synchronized void savePlayer(NBTTagCompound data, String UUID) {
         save(data, playerDir, UUID);
     }
 
     public synchronized boolean backpackSaveExists(String UUID) {
-        if (!isValidUUID(UUID)) return false;
-
-        File f = new File(backpackDir, UUID + ".dat");
-        if (cachedFiles.containsKey(f)) return true;
-        return f.exists() || new File(backpackDir, UUID + ".dat_old").exists();
+        return saveExists(backpackDir, UUID);
     }
 
     public synchronized boolean playerSaveExists(String UUID) {
-        if (!isValidUUID(UUID)) return false;
+        return saveExists(playerDir, UUID);
+    }
 
-        File f = new File(playerDir, UUID + ".dat");
-        if (cachedFiles.containsKey(f)) return true;
-        return f.exists() || new File(playerDir, UUID + ".dat_old").exists();
+    private boolean saveExists(File directory, String fileName) {
+        if (directory == null || !isValidUUID(fileName)) return false;
+
+        CachedFile cachedFile = cachedFiles.get(new File(directory, fileName + ".dat"));
+        return cachedFile != null ? cachedFile.exists : readExists(directory, fileName);
     }
 
     public synchronized NBTTagCompound load(File directory, String fileName) {
@@ -94,8 +97,8 @@ public class SaveFileHandler {
 
         NBTTagCompound loaded = read(file);
         boolean loadedFallback = false;
-        if (loaded == null) {
-            File fallback = new File(directory, fileName + ".dat_old");
+        for (int i = 0; loaded == null && i < FALLBACK_SUFFIXES.length; i++) {
+            File fallback = new File(directory, fileName + FALLBACK_SUFFIXES[i]);
             loaded = read(fallback);
             if (loaded != null) {
                 loadedFallback = true;
@@ -103,7 +106,10 @@ public class SaveFileHandler {
             }
         }
 
-        if (loaded == null) return nbtTagCompound;
+        if (loaded == null) {
+            cachedFiles.put(file, CachedFile.missing());
+            return nbtTagCompound;
+        }
 
         CachedFile loadedFile = new CachedFile((NBTTagCompound) loaded.copy());
         if (loadedFallback) loadedFile.version = ++nextVersion;
@@ -121,8 +127,19 @@ public class SaveFileHandler {
             cachedFiles.put(file, cachedFile);
         } else {
             cachedFile.data = (NBTTagCompound) data.copy();
+            cachedFile.exists = true;
         }
         cachedFile.version = ++nextVersion;
+    }
+
+    private boolean readExists(File directory, String fileName) {
+        if (new File(directory, fileName + ".dat").isFile()) return true;
+
+        for (String suffix : FALLBACK_SUFFIXES) {
+            if (new File(directory, fileName + suffix).isFile()) return true;
+        }
+
+        return false;
     }
 
     public synchronized void queueDirtyFiles() {
@@ -136,8 +153,13 @@ public class SaveFileHandler {
                     .add(new PendingSave(entry.getKey(), (NBTTagCompound) cachedFile.data.copy(), cachedFile.version));
         }
         if (!pendingSaves.isEmpty()) {
-            ThreadedFileIOBase.threadedIOInstance.queueIO(new SaveBatch(pendingSaves));
+            queueIO(new SaveBatch(pendingSaves));
         }
+    }
+
+    // Package-private for deterministic tests.
+    void queueIO(IThreadedFileIO batch) {
+        ThreadedFileIOBase.threadedIOInstance.queueIO(batch);
     }
 
     private NBTTagCompound read(File file) {
@@ -182,6 +204,7 @@ public class SaveFileHandler {
         }
     }
 
+    // ponytail: no current callers; add per-file serialization if deletion is used with queued writes.
     public synchronized void delete(File directory, String fileName) {
         if (directory == null || !isValidUUID(fileName)) return;
 
@@ -233,11 +256,19 @@ public class SaveFileHandler {
     private static class CachedFile {
 
         private NBTTagCompound data;
+        /** False for a cached missing file. */
+        private boolean exists = true;
         private long version;
         private long queuedVersion;
 
         private CachedFile(NBTTagCompound data) {
             this.data = data;
+        }
+
+        private static CachedFile missing() {
+            CachedFile cachedFile = new CachedFile(new NBTTagCompound());
+            cachedFile.exists = false;
+            return cachedFile;
         }
     }
 
@@ -266,8 +297,14 @@ public class SaveFileHandler {
         @Override
         public boolean writeNextIO() {
             PendingSave pendingSave = pendingSaves.get(nextSave++);
-            if (isCurrent(pendingSave)) {
-                if (!write(pendingSave.data, pendingSave.file)) retryOnNextSave(pendingSave);
+            try {
+                if (isCurrent(pendingSave) && !write(pendingSave.data, pendingSave.file)) {
+                    retryOnNextSave(pendingSave);
+                }
+            } catch (RuntimeException exception) {
+                retryOnNextSave(pendingSave);
+                // Do not let mod code kill Minecraft's shared file IO thread.
+                logger.error("[Backpack] Unexpected error while saving backpack data.", exception);
             }
             return nextSave < pendingSaves.size();
         }
