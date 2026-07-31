@@ -301,10 +301,9 @@ public class SaveFileHandler {
                 if (isCurrent(pendingSave) && !write(pendingSave.data, pendingSave.file)) {
                     retryOnNextSave(pendingSave);
                 }
-            } catch (RuntimeException exception) {
-                retryOnNextSave(pendingSave);
-                // Do not let mod code kill Minecraft's shared file IO thread.
-                logger.error("[Backpack] Unexpected error while saving backpack data.", exception);
+            } catch (RuntimeException | StackOverflowError failure) {
+                // Do not let malformed backpack data kill Minecraft's shared file IO thread.
+                logger.error("[Backpack] Unexpected error while saving backpack data.", failure);
             }
             return nextSave < pendingSaves.size();
         }
