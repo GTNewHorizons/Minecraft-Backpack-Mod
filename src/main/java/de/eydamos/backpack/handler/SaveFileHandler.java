@@ -204,7 +204,7 @@ public class SaveFileHandler {
         }
     }
 
-    // ponytail: no current callers; add per-file serialization if deletion is used with queued writes.
+    // No current callers, add per-file serialization if deletion is used with queued writes.
     public synchronized void delete(File directory, String fileName) {
         if (directory == null || !isValidUUID(fileName)) return;
 
