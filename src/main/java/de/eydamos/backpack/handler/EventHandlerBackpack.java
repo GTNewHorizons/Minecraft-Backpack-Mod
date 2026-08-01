@@ -100,6 +100,13 @@ public class EventHandlerBackpack {
     }
 
     @SubscribeEvent
+    public void worldSave(WorldEvent.Save event) {
+        if (!event.world.isRemote && event.world.provider.dimensionId == 0) {
+            Backpack.saveFileHandler.queueDirtyFiles();
+        }
+    }
+
+    @SubscribeEvent
     public void playerDies(PlayerDropsEvent event) {
         EntityPlayer entityPlayer = event.entityPlayer;
 
