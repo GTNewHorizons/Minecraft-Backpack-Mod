@@ -56,16 +56,25 @@ public class ContainerAdvanced extends Container {
         }
 
         PlayerSave playerSave = new PlayerSave(entityPlayer);
-        String UUID = null;
+        String uuid = null;
         if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
-            UUID = playerSave.getPersonalBackpackOpen();
-        } else if (entityPlayer.getCurrentEquippedItem() != null) {
-            UUID = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
+            uuid = playerSave.getPersonalBackpackOpen();
         }
-        if (UUID == null || backpackSave == null) {
+        else if (playerSave.hasMainInventorySlot()) {
+            int slotIdx = playerSave.getMainInventorySlot();
+
+            assert slotIdx >= 0 && slotIdx < 40;
+
+            uuid = BackpackSave.getUUID(entityPlayer.inventory.mainInventory[slotIdx]);
+        }
+        else if (entityPlayer.getCurrentEquippedItem() != null) {
+            uuid = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
+        }
+
+        if (uuid == null || backpackSave == null) {
             return false;
         }
-        return BackpackUtil.UUIDEquals(UUID, backpackSave.getUUID());
+        return BackpackUtil.UUIDEquals(uuid, backpackSave.getUUID());
     }
 
     @Override

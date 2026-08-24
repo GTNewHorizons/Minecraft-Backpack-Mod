@@ -2,6 +2,8 @@ package de.eydamos.backpack.item;
 
 import java.util.List;
 
+import cpw.mods.fml.common.Optional;
+import de.eydamos.backpack.saves.PlayerSave;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,6 +14,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide;
 import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.relauncher.Side;
@@ -27,7 +30,10 @@ import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.EnchUtils;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 
-public class ItemBackpackBase extends Item {
+@Optional.Interface(
+    iface = "net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide",
+    modid = "nohotbarneeded")
+public class ItemBackpackBase extends Item implements ActivatableFromInventoryServerSide {
 
     public ItemBackpackBase() {
         setMaxStackSize(1);
@@ -119,6 +125,8 @@ public class ItemBackpackBase extends Item {
 
         // when the player is not sneaking
         if (!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
+            new PlayerSave(entityPlayer).unsetMainInventorySlot();
+
             GuiHelper.displayBackpack(
                     new BackpackSave(itemStack),
                     getInventory(itemStack, entityPlayer),
@@ -233,5 +241,21 @@ public class ItemBackpackBase extends Item {
         String customName = NBTItemStackUtil.getString(itemStack, Constants.NBT.CUSTOM_NAME);
 
         return new InventoryBackpack(defaultName, customName);
+    }
+
+    @Override
+    public void activateFromInventory(EntityPlayerMP playerMP, int slotIdx) {
+        if (ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
+            return;
+        }
+        var itemStack = playerMP.inventory.mainInventory[slotIdx];
+
+        new PlayerSave(playerMP).setMainInventorySlot(slotIdx);
+
+        GuiHelper.displayBackpack(
+            new BackpackSave(itemStack),
+            getInventory(itemStack, playerMP),
+            playerMP
+        );
     }
 }

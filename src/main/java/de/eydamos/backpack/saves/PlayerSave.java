@@ -73,6 +73,30 @@ public class PlayerSave extends AbstractSave {
         }
     }
 
+    public int getMainInventorySlot() {
+        return NBTUtil.getInteger(nbtTagCompound, Constants.NBT.OPENED_FROM_MAIN_INVENTORY_SLOT);
+    }
+
+    public void setMainInventorySlot(int slotIdx) {
+        NBTUtil.setInteger(nbtTagCompound, Constants.NBT.OPENED_FROM_MAIN_INVENTORY_SLOT, slotIdx);
+
+        if (!manualSaving) {
+            save();
+        }
+    }
+
+    public void unsetMainInventorySlot() {
+        NBTUtil.removeTag(nbtTagCompound, Constants.NBT.OPENED_FROM_MAIN_INVENTORY_SLOT);
+
+        if (!manualSaving) {
+            save();
+        }
+    }
+
+    public boolean hasMainInventorySlot() {
+        return NBTUtil.hasTag(nbtTagCompound, Constants.NBT.OPENED_FROM_MAIN_INVENTORY_SLOT);
+    }
+
     @Override
     public byte getType() {
         return type;
