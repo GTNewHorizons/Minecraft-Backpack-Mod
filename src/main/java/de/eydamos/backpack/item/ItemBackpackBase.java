@@ -25,7 +25,6 @@ import de.eydamos.backpack.misc.ConfigurationBackpack;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
-import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.EnchUtils;
 import de.eydamos.backpack.util.NBTItemStackUtil;
@@ -254,6 +253,10 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
         }
 
         var itemStack = mainInventory[slotIdx];
+
+        if (itemStack == null) {
+            return;
+        }
 
         GuiHelper.displayBackpack(new BackpackSave(itemStack), getInventory(itemStack, playerMP), playerMP);
     }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.eydamos.backpack.item.ItemBackpackBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -17,6 +16,7 @@ import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.slot.SlotCraftingAdvanced;
 import de.eydamos.backpack.inventory.slot.SlotPhantom;
+import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
@@ -68,12 +68,9 @@ public class ContainerAdvanced extends Container {
         }
 
         for (ItemStack itemStack : entityPlayer.inventory.mainInventory) {
-            if (itemStack != null && itemStack.getItem() instanceof ItemBackpackBase) {
-                String uuid = BackpackSave.getUUID(itemStack);
-
-                if (BackpackUtil.UUIDEquals(uuid, backpackSave.getUUID())) {
-                    return true;
-                }
+            if (itemStack != null && itemStack.getItem() instanceof ItemBackpackBase
+                    && BackpackUtil.UUIDEquals(itemStack, backpackSave.getUUID())) {
+                return true;
             }
         }
 
