@@ -59,15 +59,13 @@ public class ContainerAdvanced extends Container {
         String uuid = null;
         if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
             uuid = playerSave.getPersonalBackpackOpen();
-        }
-        else if (playerSave.hasMainInventorySlot()) {
+        } else if (playerSave.hasMainInventorySlot()) {
             int slotIdx = playerSave.getMainInventorySlot();
 
             assert slotIdx >= 0 && slotIdx < 40;
 
             uuid = BackpackSave.getUUID(entityPlayer.inventory.mainInventory[slotIdx]);
-        }
-        else if (entityPlayer.getCurrentEquippedItem() != null) {
+        } else if (entityPlayer.getCurrentEquippedItem() != null) {
             uuid = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
         }
 

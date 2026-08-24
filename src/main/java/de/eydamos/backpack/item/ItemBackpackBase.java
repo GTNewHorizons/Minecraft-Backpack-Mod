@@ -2,8 +2,6 @@ package de.eydamos.backpack.item;
 
 import java.util.List;
 
-import cpw.mods.fml.common.Optional;
-import de.eydamos.backpack.saves.PlayerSave;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,10 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-
 import net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide;
+
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.helper.GuiHelper;
@@ -26,13 +25,14 @@ import de.eydamos.backpack.misc.ConfigurationBackpack;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.saves.BackpackSave;
+import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.EnchUtils;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 
 @Optional.Interface(
-    iface = "net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide",
-    modid = "nohotbarneeded")
+        iface = "net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide",
+        modid = "nohotbarneeded")
 public class ItemBackpackBase extends Item implements ActivatableFromInventoryServerSide {
 
     public ItemBackpackBase() {
@@ -252,10 +252,6 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
 
         new PlayerSave(playerMP).setMainInventorySlot(slotIdx);
 
-        GuiHelper.displayBackpack(
-            new BackpackSave(itemStack),
-            getInventory(itemStack, playerMP),
-            playerMP
-        );
+        GuiHelper.displayBackpack(new BackpackSave(itemStack), getInventory(itemStack, playerMP), playerMP);
     }
 }
