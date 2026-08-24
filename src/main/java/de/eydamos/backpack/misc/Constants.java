@@ -53,7 +53,6 @@ public class Constants {
         public static final String PERSONAL_BACKPACK_OPEN = "personalBackpackOpen";
         public static final String PERSONAL_BACKPACK_META = "pBackpackMeta";
         public static final String PERSONAL_BACKPACK_UUID = "pBackpackUUID";
-        public static final String OPENED_FROM_MAIN_INVENTORY_SLOT = "backpack-main-inventory-slot";
     }
 
     public static class NBTTypes extends net.minecraftforge.common.util.Constants.NBT {

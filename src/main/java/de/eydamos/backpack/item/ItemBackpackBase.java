@@ -125,7 +125,6 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
 
         // when the player is not sneaking
         if (!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
-            new PlayerSave(entityPlayer).unsetMainInventorySlot();
 
             GuiHelper.displayBackpack(
                     new BackpackSave(itemStack),
@@ -248,9 +247,13 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
         if (ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
             return;
         }
-        var itemStack = playerMP.inventory.mainInventory[slotIdx];
 
-        new PlayerSave(playerMP).setMainInventorySlot(slotIdx);
+        ItemStack[] mainInventory = playerMP.inventory.mainInventory;
+        if (slotIdx < 0 || slotIdx >= mainInventory.length) {
+            return;
+        }
+
+        var itemStack = mainInventory[slotIdx];
 
         GuiHelper.displayBackpack(new BackpackSave(itemStack), getInventory(itemStack, playerMP), playerMP);
     }

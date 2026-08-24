@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import de.eydamos.backpack.item.ItemBackpackBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -55,24 +56,29 @@ public class ContainerAdvanced extends Container {
             return true;
         }
 
-        PlayerSave playerSave = new PlayerSave(entityPlayer);
-        String uuid = null;
-        if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
-            uuid = playerSave.getPersonalBackpackOpen();
-        } else if (playerSave.hasMainInventorySlot()) {
-            int slotIdx = playerSave.getMainInventorySlot();
-
-            assert slotIdx >= 0 && slotIdx < 40;
-
-            uuid = BackpackSave.getUUID(entityPlayer.inventory.mainInventory[slotIdx]);
-        } else if (entityPlayer.getCurrentEquippedItem() != null) {
-            uuid = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
-        }
-
-        if (uuid == null || backpackSave == null) {
+        if (backpackSave == null) {
             return false;
         }
-        return BackpackUtil.UUIDEquals(uuid, backpackSave.getUUID());
+
+        PlayerSave playerSave = new PlayerSave(entityPlayer);
+        if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
+            String uuid = playerSave.getPersonalBackpackOpen();
+
+            return BackpackUtil.UUIDEquals(uuid, backpackSave.getUUID());
+        }
+
+        for (ItemStack itemStack : entityPlayer.inventory.mainInventory) {
+            if (itemStack != null && itemStack.getItem() instanceof ItemBackpackBase) {
+                String uuid = BackpackSave.getUUID(itemStack);
+
+                if (BackpackUtil.UUIDEquals(uuid, backpackSave.getUUID())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
     }
 
     @Override
