@@ -124,10 +124,7 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
 
         // when the player is not sneaking
         if (!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
-            GuiHelper.displayBackpack(
-                    itemStack,
-                    getInventory(itemStack, entityPlayer),
-                    (EntityPlayerMP) entityPlayer);
+            GuiHelper.displayBackpack(itemStack, getInventory(itemStack, entityPlayer), (EntityPlayerMP) entityPlayer);
         }
         return itemStack;
     }
