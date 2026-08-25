@@ -1,5 +1,6 @@
 package de.eydamos.backpack.helper;
 
+import de.eydamos.backpack.item.ItemBackpackBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
@@ -64,6 +65,34 @@ public class GuiHelper {
 
         Container container = FactoryBackpack
                 .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
+        openContainer(container, entityPlayer);
+
+        BackpackUtil.playOpenSound(entityPlayer);
+    }
+
+    /**
+     * Prepares containers and gui for rending backpack inventory window.
+     * TODO should have different from `displayBackpack` name because of code injection from different mod
+     *  <a href="https://github.com/GTNewHorizons/GT-New-Horizons-Modpack/issues/26484">issue</a>
+     *  Should be renamed back after issue with mixins will be resolved
+     *
+     * @param backpack ItemStack for backpack item.
+     * @param entityPlayer Player object.
+     */
+    public static void displayBackpackSelfSufficient(ItemStack backpack, EntityPlayerMP entityPlayer) {
+
+        if (!isDimensionAllowed(entityPlayer)) return;
+
+        prepare(entityPlayer);
+
+        BackpackSave backpackSave = new BackpackSave(backpack);
+        IInventory inventory = ItemBackpackBase.getInventory(backpack, entityPlayer);
+
+        MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
+        Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
+
+        Container container = FactoryBackpack
+            .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
         openContainer(container, entityPlayer);
 
         BackpackUtil.playOpenSound(entityPlayer);

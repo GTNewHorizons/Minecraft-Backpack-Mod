@@ -250,10 +250,10 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
 
         ItemStack itemStack = mainInventory[slotIdx];
 
-        if (itemStack == null) {
+        if (itemStack == null || itemStack.getItem() != this) {
             return;
         }
 
-        GuiHelper.displayBackpack(itemStack, getInventory(itemStack, playerMP), playerMP);
+        GuiHelper.displayBackpackSelfSufficient(itemStack,  playerMP);
     }
 }
