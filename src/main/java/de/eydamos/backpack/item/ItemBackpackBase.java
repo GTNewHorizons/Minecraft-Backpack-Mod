@@ -254,6 +254,6 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
             return;
         }
 
-        GuiHelper.displayBackpackSelfSufficient(itemStack,  playerMP);
+        GuiHelper.displayBackpackSelfSufficient(itemStack, playerMP);
     }
 }
