@@ -53,13 +53,12 @@ public class GuiHelper {
         Minecraft.getMinecraft().displayGuiScreen(new GuiBackpackRename());
     }
 
-    public static void displayBackpack(ItemStack backpack, IInventory inventory, EntityPlayerMP entityPlayer) {
+    public static void displayBackpack(BackpackSave backpackSave, IInventory inventory, EntityPlayerMP entityPlayer) {
 
         if (!isDimensionAllowed(entityPlayer)) return;
 
         prepare(entityPlayer);
 
-        BackpackSave backpackSave = new BackpackSave(backpack);
         MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
         Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
 
