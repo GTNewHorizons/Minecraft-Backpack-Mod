@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 
+import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
@@ -51,12 +52,13 @@ public class GuiHelper {
         Minecraft.getMinecraft().displayGuiScreen(new GuiBackpackRename());
     }
 
-    public static void displayBackpack(BackpackSave backpackSave, IInventory inventory, EntityPlayerMP entityPlayer) {
+    public static void displayBackpack(ItemStack backpack, IInventory inventory, EntityPlayerMP entityPlayer) {
 
         if (!isDimensionAllowed(entityPlayer)) return;
 
         prepare(entityPlayer);
 
+        BackpackSave backpackSave = new BackpackSave(backpack);
         MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
         Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
 

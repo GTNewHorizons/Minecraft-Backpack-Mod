@@ -124,9 +124,8 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
 
         // when the player is not sneaking
         if (!entityPlayer.isSneaking() && !ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
-
             GuiHelper.displayBackpack(
-                    new BackpackSave(itemStack),
+                    itemStack,
                     getInventory(itemStack, entityPlayer),
                     (EntityPlayerMP) entityPlayer);
         }
@@ -252,12 +251,12 @@ public class ItemBackpackBase extends Item implements ActivatableFromInventorySe
             return;
         }
 
-        var itemStack = mainInventory[slotIdx];
+        ItemStack itemStack = mainInventory[slotIdx];
 
         if (itemStack == null) {
             return;
         }
 
-        GuiHelper.displayBackpack(new BackpackSave(itemStack), getInventory(itemStack, playerMP), playerMP);
+        GuiHelper.displayBackpack(itemStack, getInventory(itemStack, playerMP), playerMP);
     }
 }
