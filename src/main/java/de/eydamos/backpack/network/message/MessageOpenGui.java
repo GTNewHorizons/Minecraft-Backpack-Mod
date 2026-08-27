@@ -7,7 +7,6 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import de.eydamos.backpack.helper.GuiHelper;
-import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.misc.Constants;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
@@ -41,14 +40,10 @@ public class MessageOpenGui implements IMessage, IMessageHandler<MessageOpenGui,
                 PlayerSave playerSave = new PlayerSave(entityPlayer);
                 ItemStack backpack = playerSave.getPersonalBackpack();
                 if (backpack != null) {
-                    BackpackSave backpackSave = new BackpackSave(backpack);
-                    GuiHelper.displayBackpack(
-                            backpackSave,
-                            ItemBackpackBase.getInventory(backpack, entityPlayer),
-                            entityPlayer);
+                    GuiHelper.displayBackpackSelfSufficient(backpack, entityPlayer);
                     // Set the open flag after displaying: closing a previously open backpack
                     // clears it, so setting it earlier would be undone and the GUI would close.
-                    new PlayerSave(entityPlayer).setPersonalBackpackOpen(backpackSave.getUUID());
+                    new PlayerSave(entityPlayer).setPersonalBackpackOpen(BackpackSave.getUUID(backpack));
                 }
             }
             case Constants.Guis.OPEN_PERSONAL_SLOT -> GuiHelper.displayPersonalSlot(entityPlayer);

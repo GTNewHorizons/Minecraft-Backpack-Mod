@@ -70,31 +70,28 @@ public class GuiHelper {
     }
 
     /**
-     * Prepares containers and gui for rending backpack inventory window. TODO should have different from
-     * `displayBackpack` name because of code injection from different mod
-     * <a href="https://github.com/GTNewHorizons/GT-New-Horizons-Modpack/issues/26484">issue</a> Should be renamed back
-     * after issue with mixins will be resolved
+     * Opens a backpack from its ItemStack, building the save and the inventory itself. Use this instead of
+     * {@link #displayBackpack}: it closes an already open container first, so the save is never read before that
+     * container has flushed.
+     * <p>
+     * TODO Kept under a separate name because Backhand mixes into {@link #displayBackpack} by bare method name. Once
+     * Backhand targets this method instead, fold the other overload into it, see
+     * <a href="https://github.com/GTNewHorizons/GT-New-Horizons-Modpack/issues/26484">modpack issue 26484</a>.
      *
-     * @param backpack     ItemStack for backpack item.
-     * @param entityPlayer Player object.
+     * @param backpack     ItemStack of the backpack to open.
+     * @param entityPlayer Player to open it for.
      */
     public static void displayBackpackSelfSufficient(ItemStack backpack, EntityPlayerMP entityPlayer) {
 
         if (!isDimensionAllowed(entityPlayer)) return;
 
+        // flush the open container first, or closing it later writes its stale contents back over the save
         prepare(entityPlayer);
 
-        BackpackSave backpackSave = new BackpackSave(backpack);
-        IInventory inventory = ItemBackpackBase.getInventory(backpack, entityPlayer);
-
-        MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
-        Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
-
-        Container container = FactoryBackpack
-                .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
-        openContainer(container, entityPlayer);
-
-        BackpackUtil.playOpenSound(entityPlayer);
+        displayBackpack(
+                new BackpackSave(backpack),
+                ItemBackpackBase.getInventory(backpack, entityPlayer),
+                entityPlayer);
     }
 
     public static void displayPersonalSlot(EntityPlayerMP entityPlayer) {
