@@ -16,6 +16,7 @@ import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.inventory.ISaveableInventory;
 import de.eydamos.backpack.inventory.slot.SlotCraftingAdvanced;
 import de.eydamos.backpack.inventory.slot.SlotPhantom;
+import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.saves.BackpackSave;
 import de.eydamos.backpack.saves.PlayerSave;
 import de.eydamos.backpack.util.BackpackUtil;
@@ -55,17 +56,25 @@ public class ContainerAdvanced extends Container {
             return true;
         }
 
-        PlayerSave playerSave = new PlayerSave(entityPlayer);
-        String UUID = null;
-        if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
-            UUID = playerSave.getPersonalBackpackOpen();
-        } else if (entityPlayer.getCurrentEquippedItem() != null) {
-            UUID = BackpackSave.getUUID(entityPlayer.getCurrentEquippedItem());
-        }
-        if (UUID == null || backpackSave == null) {
+        if (backpackSave == null) {
             return false;
         }
-        return BackpackUtil.UUIDEquals(UUID, backpackSave.getUUID());
+
+        PlayerSave playerSave = new PlayerSave(entityPlayer);
+        if (!Objects.equals(playerSave.getPersonalBackpackOpen(), "")) {
+            String uuid = playerSave.getPersonalBackpackOpen();
+
+            return BackpackUtil.UUIDEquals(uuid, backpackSave.getUUID());
+        }
+
+        for (ItemStack itemStack : entityPlayer.inventory.mainInventory) {
+            if (itemStack != null && itemStack.getItem() instanceof ItemBackpackBase
+                    && BackpackUtil.UUIDEquals(itemStack, backpackSave.getUUID())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

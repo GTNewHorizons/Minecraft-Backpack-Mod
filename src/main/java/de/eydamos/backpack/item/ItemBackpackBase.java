@@ -11,9 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide;
 
 import org.lwjgl.input.Keyboard;
 
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.helper.GuiHelper;
@@ -27,7 +29,10 @@ import de.eydamos.backpack.util.BackpackUtil;
 import de.eydamos.backpack.util.EnchUtils;
 import de.eydamos.backpack.util.NBTItemStackUtil;
 
-public class ItemBackpackBase extends Item {
+@Optional.Interface(
+        iface = "net.xonich.mc.nohotbarneeded.api.ActivatableFromInventoryServerSide",
+        modid = "nohotbarneeded")
+public class ItemBackpackBase extends Item implements ActivatableFromInventoryServerSide {
 
     public ItemBackpackBase() {
         setMaxStackSize(1);
@@ -233,5 +238,25 @@ public class ItemBackpackBase extends Item {
         String customName = NBTItemStackUtil.getString(itemStack, Constants.NBT.CUSTOM_NAME);
 
         return new InventoryBackpack(defaultName, customName);
+    }
+
+    @Override
+    public void activateFromInventory(EntityPlayerMP playerMP, int slotIdx) {
+        if (ConfigurationBackpack.OPEN_ONLY_PERSONAL_BACKPACK) {
+            return;
+        }
+
+        ItemStack[] mainInventory = playerMP.inventory.mainInventory;
+        if (slotIdx < 0 || slotIdx >= mainInventory.length) {
+            return;
+        }
+
+        ItemStack itemStack = mainInventory[slotIdx];
+
+        if (itemStack == null || itemStack.getItem() != this) {
+            return;
+        }
+
+        GuiHelper.displayBackpackSelfSufficient(itemStack, playerMP);
     }
 }
