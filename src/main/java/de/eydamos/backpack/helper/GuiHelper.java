@@ -5,6 +5,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentTranslation;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -14,8 +16,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.eydamos.backpack.Backpack;
 import de.eydamos.backpack.factory.FactoryBackpack;
 import de.eydamos.backpack.gui.GuiBackpackRename;
+import de.eydamos.backpack.inventory.container.ContainerAdvanced;
 import de.eydamos.backpack.item.ItemBackpackBase;
 import de.eydamos.backpack.misc.ConfigurationBackpack;
+import de.eydamos.backpack.misc.Localizations;
 import de.eydamos.backpack.network.message.MessageGuiCommand;
 import de.eydamos.backpack.network.message.MessageOpenBackpack;
 import de.eydamos.backpack.network.message.MessageOpenGui;
@@ -56,6 +60,11 @@ public class GuiHelper {
     public static void displayBackpack(BackpackSave backpackSave, IInventory inventory, EntityPlayerMP entityPlayer) {
 
         if (!isDimensionAllowed(entityPlayer)) return;
+
+        if (isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
+            entityPlayer.addChatMessage(new ChatComponentTranslation(Localizations.MESSAGE_BACKPACK_IN_USE));
+            return;
+        }
 
         prepare(entityPlayer);
 
@@ -109,6 +118,21 @@ public class GuiHelper {
         Container container = FactoryBackpack
                 .getContainer(playerSave, new IInventory[] { entityPlayer.inventory }, entityPlayer);
         openContainer(container, entityPlayer);
+    }
+
+    /**
+     * Every open container works on its own copy of the save, so two players viewing the same backpack could both take
+     * its items out. Two backpack items can share one UUID, so the item alone can't prevent this.
+     */
+    private static boolean isOpenedByOtherPlayer(String uuid, EntityPlayerMP entityPlayer) {
+        for (Object object : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
+            EntityPlayerMP other = (EntityPlayerMP) object;
+            if (other != entityPlayer && other.openContainer instanceof ContainerAdvanced container) {
+                BackpackSave openSave = container.getBackpackSave();
+                if (openSave != null && BackpackUtil.UUIDEquals(openSave.getUUID(), uuid)) return true;
+            }
+        }
+        return false;
     }
 
     private static boolean isDimensionAllowed(EntityPlayerMP entityPlayer) {
