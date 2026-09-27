@@ -79,29 +79,27 @@ public class BackpackUtil {
             return;
         }
 
-        synchronized (GuiHelper.BACKPACK_LOCK) {
-            // another player closing a backpack with the same UUID would overwrite the picked up items
-            if (GuiHelper.isOpenedByOtherPlayer(BackpackSave.getUUID(backpack), entityPlayer)) {
-                return;
-            }
+        // another player closing a backpack with the same UUID would overwrite the picked up items
+        if (GuiHelper.isOpenedByOtherPlayer(BackpackSave.getUUID(backpack), entityPlayer)) {
+            return;
+        }
 
-            InventoryPickup inventoryPickup = new InventoryPickup();
-            inventoryPickup.setInventoryContent(backpack);
+        InventoryPickup inventoryPickup = new InventoryPickup();
+        inventoryPickup.setInventoryContent(backpack);
 
-            ContainerPickup container = new ContainerPickup(
-                    ItemBackpackBase.getInventory(backpack, entityPlayer),
-                    new BackpackSave(backpack));
-            boolean hasPickedUp = false;
-            for (int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
-                ItemStack pickupItemStack = inventoryPickup.getStackInSlot(i);
-                if (areStacksEqual(pickupItemStack, itemStack, true)) {
-                    hasPickedUp = container.pickupItem(itemStack) || hasPickedUp;
-                }
+        ContainerPickup container = new ContainerPickup(
+                ItemBackpackBase.getInventory(backpack, entityPlayer),
+                new BackpackSave(backpack));
+        boolean hasPickedUp = false;
+        for (int i = 0; i < inventoryPickup.getSizeInventory(); i++) {
+            ItemStack pickupItemStack = inventoryPickup.getStackInSlot(i);
+            if (areStacksEqual(pickupItemStack, itemStack, true)) {
+                hasPickedUp = container.pickupItem(itemStack) || hasPickedUp;
             }
+        }
 
-            if (hasPickedUp) {
-                container.onContainerClosed(entityPlayer);
-            }
+        if (hasPickedUp) {
+            container.onContainerClosed(entityPlayer);
         }
     }
 

@@ -38,9 +38,6 @@ public class GuiHelper {
     private static int savedCursorX = -1;
     private static int savedCursorY = -1;
 
-    /** Guards opening backpacks and background writes to them against each other. */
-    public static final Object BACKPACK_LOCK = new Object();
-
     @SideOnly(Side.CLIENT)
     public static void saveCursorPosition() {
         savedCursorX = Mouse.getX();
@@ -66,27 +63,20 @@ public class GuiHelper {
 
         if (!isDimensionAllowed(entityPlayer)) return;
 
-        // open packets are handled on Netty threads, so the check and the open must not interleave
-        synchronized (BACKPACK_LOCK) {
-            // the ender backpack shows each player's own ender chest, so sharing its UUID is harmless
-            if (!(inventory instanceof InventoryEnderChest)
-                    && isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
-                entityPlayer.addChatMessage(new ChatComponentTranslation(Localizations.MESSAGE_BACKPACK_IN_USE));
-                return;
-            }
-
-            prepare(entityPlayer);
-
-            MessageOpenBackpack message = new MessageOpenBackpack(
-                    backpackSave,
-                    inventory,
-                    entityPlayer.currentWindowId);
-            Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
-
-            Container container = FactoryBackpack
-                    .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
-            openContainer(container, entityPlayer);
+        // the ender backpack shows each player's own ender chest, so sharing its UUID is harmless
+        if (!(inventory instanceof InventoryEnderChest) && isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
+            entityPlayer.addChatMessage(new ChatComponentTranslation(Localizations.MESSAGE_BACKPACK_IN_USE));
+            return;
         }
+
+        prepare(entityPlayer);
+
+        MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
+        Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
+
+        Container container = FactoryBackpack
+                .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
+        openContainer(container, entityPlayer);
 
         BackpackUtil.playOpenSound(entityPlayer);
     }
