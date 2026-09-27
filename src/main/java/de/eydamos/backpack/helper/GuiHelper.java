@@ -1,9 +1,11 @@
 package de.eydamos.backpack.helper;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -36,6 +38,9 @@ public class GuiHelper {
     private static int savedCursorX = -1;
     private static int savedCursorY = -1;
 
+    /** Guards opening backpacks and background writes to them against each other. */
+    public static final Object BACKPACK_LOCK = new Object();
+
     @SideOnly(Side.CLIENT)
     public static void saveCursorPosition() {
         savedCursorX = Mouse.getX();
@@ -61,19 +66,27 @@ public class GuiHelper {
 
         if (!isDimensionAllowed(entityPlayer)) return;
 
-        if (isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
-            entityPlayer.addChatMessage(new ChatComponentTranslation(Localizations.MESSAGE_BACKPACK_IN_USE));
-            return;
+        // open packets are handled on Netty threads, so the check and the open must not interleave
+        synchronized (BACKPACK_LOCK) {
+            // the ender backpack shows each player's own ender chest, so sharing its UUID is harmless
+            if (!(inventory instanceof InventoryEnderChest)
+                    && isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
+                entityPlayer.addChatMessage(new ChatComponentTranslation(Localizations.MESSAGE_BACKPACK_IN_USE));
+                return;
+            }
+
+            prepare(entityPlayer);
+
+            MessageOpenBackpack message = new MessageOpenBackpack(
+                    backpackSave,
+                    inventory,
+                    entityPlayer.currentWindowId);
+            Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
+
+            Container container = FactoryBackpack
+                    .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
+            openContainer(container, entityPlayer);
         }
-
-        prepare(entityPlayer);
-
-        MessageOpenBackpack message = new MessageOpenBackpack(backpackSave, inventory, entityPlayer.currentWindowId);
-        Backpack.packetHandler.networkWrapper.sendTo(message, entityPlayer);
-
-        Container container = FactoryBackpack
-                .getContainer(backpackSave, new IInventory[] { entityPlayer.inventory, inventory }, entityPlayer);
-        openContainer(container, entityPlayer);
 
         BackpackUtil.playOpenSound(entityPlayer);
     }
@@ -124,7 +137,7 @@ public class GuiHelper {
      * Every open container works on its own copy of the save, so two players viewing the same backpack could both take
      * its items out. Two backpack items can share one UUID, so the item alone can't prevent this.
      */
-    private static boolean isOpenedByOtherPlayer(String uuid, EntityPlayerMP entityPlayer) {
+    public static boolean isOpenedByOtherPlayer(String uuid, EntityPlayer entityPlayer) {
         for (Object object : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
             EntityPlayerMP other = (EntityPlayerMP) object;
             if (other != entityPlayer && other.openContainer instanceof ContainerAdvanced container) {
