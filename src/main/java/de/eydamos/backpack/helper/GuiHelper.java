@@ -64,7 +64,8 @@ public class GuiHelper {
         if (!isDimensionAllowed(entityPlayer)) return;
 
         // the ender backpack shows each player's own ender chest, so sharing its UUID is harmless
-        if (!(inventory instanceof InventoryEnderChest) && isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
+        if (!(inventory instanceof InventoryEnderChest)
+                && isOpenedByOtherPlayer(backpackSave.getUUID(), entityPlayer)) {
             entityPlayer.addChatMessage(new ChatComponentTranslation(Localizations.MESSAGE_BACKPACK_IN_USE));
             return;
         }
