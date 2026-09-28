@@ -18,6 +18,7 @@ public class Localizations {
 
     public static final String MESSAGE_ALLOWED_BACKPACKS = "text.backpack.allowed_backpacks";
     public static final String MESSAGE_DROPPED_BACKPACKS = "text.backpack.dropped_backpacks";
+    public static final String MESSAGE_BACKPACK_IN_USE = "text.backpack.backpack_in_use";
 
     public static final String INVENTORY_RENAME = "text.backpack.rename";
     public static final String INVENTORY_PERSONAL = "text.backpack.backpack_slot";

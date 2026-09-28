@@ -11,6 +11,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import de.eydamos.backpack.helper.GuiHelper;
 import de.eydamos.backpack.inventory.InventoryPickup;
 import de.eydamos.backpack.inventory.container.ContainerAdvanced;
 import de.eydamos.backpack.inventory.container.ContainerPickup;
@@ -75,6 +76,11 @@ public class BackpackUtil {
         }
 
         if (isPersonalBackpackOpen(entityPlayer, backpack)) {
+            return;
+        }
+
+        // another player closing a backpack with the same UUID would overwrite the picked up items
+        if (GuiHelper.isOpenedByOtherPlayer(BackpackSave.getUUID(backpack), entityPlayer)) {
             return;
         }
 
