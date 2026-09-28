@@ -61,6 +61,7 @@ text.backpack.update_available=Обновление %s для Backpack Mod до�
 text.backpack.up_to_date=Используется самая актуальная версия Backpack Mod
 text.backpack.allowed_backpacks=Вам не разрешается иметь рюкзаков более %s в инвентаре.
 text.backpack.dropped_backpacks=%s рюкзаки были убраны из Вашего инвентаря. Посмотрите на пол.
+text.backpack.backpack_in_use=Этот рюкзак уже открыт другим игроком.
 text.backpack.autopickup=Подбирать автоматически:
 text.backpack.recipes=Рецепты
 text.backpack.configuration=Конфигурация рюкзаков
