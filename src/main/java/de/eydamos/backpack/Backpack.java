@@ -20,7 +20,8 @@ import de.eydamos.backpack.recipes.RecipeHelper;
         modid = Constants.MOD_ID,
         name = Constants.MOD_NAME,
         version = Constants.MOD_VERSION,
-        guiFactory = Constants.CLASS_GUI_FACTORY)
+        guiFactory = Constants.CLASS_GUI_FACTORY,
+        dependencies = "before:adventurebackpack")
 public class Backpack {
 
     @Instance(Constants.MOD_ID)
@@ -43,8 +44,8 @@ public class Backpack {
             // create an instance of the items
             ItemsBackpack.initItems();
 
-            // key bindings
-            proxy.registerKeybindings();
+            // register all Handlers
+            proxy.registerHandlers();
 
             FMLInterModComms
                     .sendRuntimeMessage(Constants.MOD_ID, "VersionChecker", "addVersionCheck", Constants.UPDATE_FILE);
@@ -57,8 +58,8 @@ public class Backpack {
             // register recipes
             RecipeHelper.registerRecipes();
 
-            // register all Handlers
-            proxy.registerHandlers();
+            // key bindings
+            proxy.registerKeybindings();
         }
     }
 
