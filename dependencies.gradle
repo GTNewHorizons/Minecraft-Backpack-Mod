@@ -5,4 +5,5 @@ dependencies {
     api('com.github.GTNewHorizons:inventory-tweaks:1.7.1:dev')
     compileOnly('com.github.GTNewHorizons:TinkersConstruct:1.14.58-GTNH:dev') { transitive = false }
     devOnlyNonPublishable('net.xonich.mc:NoHotbarNeeded:0.0.6:dev')
+    compileOnly('com.github.GTNewHorizons:Postea:1.4.0-mu:dev')
 }

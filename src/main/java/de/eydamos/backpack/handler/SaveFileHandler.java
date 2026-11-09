@@ -111,6 +111,7 @@ public class SaveFileHandler {
             return nbtTagCompound;
         }
 
+        PosteaCompat.transform("backpack:" + fileName, loaded);
         CachedFile loadedFile = new CachedFile((NBTTagCompound) loaded.copy());
         if (loadedFallback) loadedFile.version = ++nextVersion;
         cachedFiles.put(file, loadedFile);
@@ -120,6 +121,7 @@ public class SaveFileHandler {
     public synchronized void save(NBTTagCompound data, File directory, String fileName) {
         if (data == null || directory == null || !isValidUUID(fileName)) return;
 
+        PosteaCompat.stamp(data);
         File file = new File(directory, fileName + ".dat");
         CachedFile cachedFile = cachedFiles.get(file);
         if (cachedFile == null) {
