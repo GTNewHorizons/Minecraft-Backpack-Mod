@@ -1,6 +1,5 @@
 package de.eydamos.backpack.handler;
 
-import com.gtnewhorizons.postea.api.IVersionedTransformer;
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.gtnewhorizons.postea.api.CustomDataReplacementManager;
