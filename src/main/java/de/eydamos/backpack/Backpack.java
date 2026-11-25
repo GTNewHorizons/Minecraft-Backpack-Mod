@@ -20,6 +20,7 @@ import de.eydamos.backpack.recipes.RecipeHelper;
         modid = Constants.MOD_ID,
         name = Constants.MOD_NAME,
         version = Constants.MOD_VERSION,
+        dependencies = "after:postea@[1.4.0,)",
         guiFactory = Constants.CLASS_GUI_FACTORY)
 public class Backpack {
 
